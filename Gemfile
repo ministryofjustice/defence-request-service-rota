@@ -40,7 +40,7 @@ group :test do
   gem "poltergeist"
   gem "shoulda-matchers", require: false
   gem "simplecov", require: false
-  gem "webmock"
+  gem "webmock", require: false
 end
 
 group :production do
