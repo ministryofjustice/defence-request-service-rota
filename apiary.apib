@@ -1,0 +1,108 @@
+FORMAT: 1A
+
+# Defence Request Rota Internal API
+Defence Request Rota App Internal API's
+
+## Authorization
+Access tokens are obtained from the Auth app using OAuth
+
+Access tokens must be passed for each request in an Authorization header.
+
+A missing Authorization Header or invalid Authorization Token value for a protected endpoint will result in a 401 response
+
+# Group API Root [/]
+
+This resource does not have any attributes. Instead it offers the initial API affordances in the form of the links in the JSON body.
+
+It is recommended to follow the “url” link values, [Link](https://tools.ietf.org/html/rfc5988) or Location headers where applicable to retrieve resources. Instead of constructing your own URLs, to keep your client decoupled from implementation details. We will use link values for all collection responses.
+
+## Retrieve the Entry Point [GET]
+
++ Response 200 (application/json)
+
+        {
+            "schemes_url": "/api/v1/schemes"
+        }
+
+# Group Schemes
+Schemes contain a List of Solicitors that are on Duty
+
+## Schemes Collection [/api/v1/schemes]
+### List Schemes [GET]
++ Payload
+
+    + Headers
+        
+        Authorization: Bearer <TOKEN>
+
++ Response 200 (application/json)
+
+        {
+            "schemes": [
+                {
+                    "id": 123,
+                    "name": "Brighton West",
+                    "links": {
+                        "duty_url": "/api/v1/schemes/123/duty"
+                    }
+                },
+                {
+                    "id": 128,
+                    "name": "Brighton East",
+                    "links": {
+                        "duty_url": "/api/v1/schemes/128/duty"
+                    }
+                },
+            ]
+        }
+
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "You must provide a valid Authorization Token"
+            ]
+        }
+
+## Duty Solicitor [/api/v1/schemes/{id}/duty?{at_time}]
+Returns the Profile of the Solicitor that is on Duty for the given scheme at the current time
+
++ Parameters
+    + at_time (ISO 8061 timestamp)
+        Specify the date + time that we want to find the Duty Solicitor for
+        Will default to the current date+time
+
+### Find Duty Solicitor [GET]
++ Payload
+
+    + Headers
+        
+        Authorization: Bearer <TOKEN>
+
++ Response 200 (application/json)
+
+        {
+            "profile": {
+                "name": "Bob Smith",
+                "email": "bob.smith@world.com",
+                "telephone": "0123456789",
+                "mobile": "071234567",
+                "address": {
+                    "line1": "",
+                    "line2": "",
+                    "city": ""
+                    "postcode": ""
+                },
+                "PIN": "1234",
+                "organisation_ids": [1,2]
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "You must provide a valid Authorization Token"
+            ]
+        }
+
