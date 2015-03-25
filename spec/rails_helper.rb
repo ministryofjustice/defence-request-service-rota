@@ -1,11 +1,16 @@
-ENV['RAILS_ENV'] ||= 'test'
+unless ENV["NO_COVERAGE"]
+  require "simplecov"
+  SimpleCov.start "rails"
+end
 
-require File.expand_path('../../config/environment', __FILE__)
+ENV["RAILS_ENV"] ||= "test"
 
-require 'rspec/rails'
-require 'shoulda/matchers'
+require File.expand_path("../../config/environment", __FILE__)
 
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file }
+require "rspec/rails"
+require "shoulda/matchers"
+
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
 RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
