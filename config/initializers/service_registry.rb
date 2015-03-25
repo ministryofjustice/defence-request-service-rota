@@ -1,23 +1,19 @@
 module DefenceRequestServiceRota
-  def self.services(name, service = nil)
-    @services ||= {}
+  class ServiceNotRegistered < ArgumentError; end
 
-    if service
-      @services[name] = service
-      return true
-    else
-      if @services[name]
-        return @services[name]
-      else
-        raise ServiceNotRegisteredException.new(name)
-      end
-    end
+  def self.service(name)
+    services.fetch(name) { raise_missing_service_error(name) }
   end
 
-  class ServiceNotRegisteredException < Exception; end
-end
+  def self.register_service(name, service)
+    services[name] = service
+  end
 
-## Example usage:
-## 
-## require service file
-## DefenceRequestServiceRota.services(:service, service.new(args))
+  def self.raise_missing_service_error(name)
+    raise ServiceNotRegistered, "Service #{name} is not registered"
+  end
+
+  def self.services
+    @services ||= {}
+  end
+end
