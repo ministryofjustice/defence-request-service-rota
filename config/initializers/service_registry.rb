@@ -17,3 +17,8 @@ module DefenceRequestServiceRota
     @services ||= {}
   end
 end
+
+## Example usage:
+## 
+## require service file
+## DefenceRequestServiceRota.services(:service, Service.new(args))
