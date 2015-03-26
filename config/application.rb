@@ -32,8 +32,6 @@ module DefenceRequestServiceRota
     config.active_record.raise_in_transactional_callbacks = true
 
     config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
-    # Application Title (Populates <title>)
-    config.app_title = 'Defence Solicitor Duty Rota'
     # Proposition Title (Populates proposition header)
     config.proposition_title = 'Defence Solicitor Duty Rota'
     # Current Phase (Sets the current phase and the colour of phase tags)

@@ -1,2 +1,4 @@
 rails:
   secret_key_base: <%= ENV.fetch('SECRET_KEY_BASE') %>
+dsds:
+  app_title: "Defence Solicitor Duty Rota"
