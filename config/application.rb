@@ -30,5 +30,17 @@ module DefenceRequestServiceRota
 
     config.action_controller.action_on_unpermitted_parameters = :raise
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
+    # Proposition Title (Populates proposition header)
+    config.proposition_title = 'Defence Solicitor Duty Rota'
+    # Current Phase (Sets the current phase and the colour of phase tags)
+    # Presumed values: alpha, beta, live
+    config.phase = 'alpha'
+    # Product Type (Adds class to body based on service type)
+    # Presumed values: information, service
+    config.product_type = 'service'
+    # Feedback URL (URL for feedback link in phase banner)
+    config.feedback_url = config.relative_url_root + '/feedback/new'
   end
 end
