@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
   def create
-    redirect_to '/'
+    session[:user_token] = auth_hash['credentials']['token']
+    redirect_to root_path
   end
 
   protected
