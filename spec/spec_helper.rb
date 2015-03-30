@@ -1,10 +1,15 @@
 unless ENV["NO_COVERAGE"]
   require "simplecov"
-  SimpleCov.start "rails"
 
+  # Report code coverage to codeclimate
   if ENV["CODECLIMATE_REPO_TOKEN"]
     require "codeclimate-test-reporter"
     CodeClimate::TestReporter.start
+  end
+
+  # On circleci change the output dir to the artifacts
+  if ENV["CIRCLE_ARTIFACTS"]
+    SimpleCov.coverage_dir File.join("..", "..", "..", ENV["CIRCLE_ARTIFACTS"], "coverage")
   end
 
   SimpleCov.start "rails" do
