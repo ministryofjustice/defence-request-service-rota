@@ -1,7 +1,6 @@
 default: &default
   adapter: postgresql
-  encoding: unicode
-  database: <%= ENV.fetch("DEFENCE_REQUEST_SERVICE_ROTA_DATABASE_DATABASE", nil) %>
+  encoding: utf8
   host: <%= ENV.fetch("DEFENCE_REQUEST_SERVICE_ROTA_DATABASE_HOST", nil) %>
   password: <%= ENV.fetch("DEFENCE_REQUEST_SERVICE_ROTA_DATABASE_PASSWORD", nil) %>
   username: <%= ENV.fetch("DEFENCE_REQUEST_SERVICE_ROTA_DATABASE_USERNAME", nil) %>
@@ -9,9 +8,8 @@ default: &default
 
 development:
   <<: *default
+  database: defence-request-service-rota_development
 
 test:
   <<: *default
-
-production:
-  <<: *default
+  database: defence-request-service-rota_test
