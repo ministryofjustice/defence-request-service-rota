@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:create]
+
   def create
     session[:user_token] = auth_hash['credentials']['token']
     redirect_to root_path
