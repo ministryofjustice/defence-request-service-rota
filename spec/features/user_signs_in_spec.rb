@@ -6,8 +6,4 @@ RSpec.feature "User signs in" do
 
     expect(current_path).to eq "/dashboard"
   end
-
-  def sign_in_using_dsds_auth
-    visit root_path
-  end
 end
