@@ -17,3 +17,5 @@ module DefenceRequestServiceRota
     @services ||= {}
   end
 end
+
+DefenceRequestServiceRota.register_service(:auth_api, FakeDataApi.start)
