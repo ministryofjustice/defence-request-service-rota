@@ -17,11 +17,17 @@ module SSO
     def fetch_current_user
       return nil unless access_token
 
-      User.new AuthService::UserInfo.new(strategy).get_user_info
+      session.update(
+        current_user: build_user
+      )
 
     rescue OAuth2::Error
       session.clear
       nil
+    end
+
+    def build_user
+      User.build_from(AuthService::UserInfo.new(strategy).get_user_info)
     end
 
     def strategy
