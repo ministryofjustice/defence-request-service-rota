@@ -1,9 +1,17 @@
 class User
-  attr_reader :id, :email, :name
+  attr_reader :uid, :email, :name
 
-  def initialize(args = {})
-    args.slice(:id, :email, :name).each do |key, val|
-      instance_variable_set "@#{key}", val
-    end
-  end 
+  def self.build_from(auth_hash)
+    new(
+      uid: auth_hash.fetch(:uid),
+      email: auth_hash.fetch(:info).fetch(:email),
+      name: auth_hash.fetch(:info).fetch(:profile).fetch(:name),
+    )
+  end
+
+  def initialize(uid:, email:, name:)
+    @uid = uid
+    @email = email
+    @name = name
+  end
 end
