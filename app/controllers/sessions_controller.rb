@@ -2,13 +2,17 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:create]
 
   def create
-    session[:user_token] = auth_hash['credentials']['token']
-    redirect_to root_path
+    session.update(
+      current_user: User.build_from(auth_hash),
+      user_token: auth_hash.fetch(:credentials).fetch(:token)
+    )
+
+    redirect_to dashboard_url
   end
 
-  protected
+  private
 
   def auth_hash
-    request.env['omniauth.auth']
+    request.env["omniauth.auth"]
   end
 end

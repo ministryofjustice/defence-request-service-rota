@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
+  root "dashboards#show"
 
-  get '/auth/:provider/callback', to: 'sessions#create'
+  resource :dashboard, only: [:show]
 
-  resources :dashboard, only: [:index]
-
-  root 'dashboards#index'
+  get "/auth/:provider/callback", to: "sessions#create"
 end
