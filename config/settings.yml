@@ -2,3 +2,8 @@ rails:
   secret_key_base: <%= ENV.fetch('SECRET_KEY_BASE') %>
 dsds:
   app_title: "Defence Solicitor Duty Rota"
+authentication:
+  site_url: <%= ENV.fetch('AUTHENTICATION_SITE_URL') %>
+  redirect_uri: <%= ENV.fetch('AUTHENTICATION_REDIRECT_URI') %>
+  application_id: <%= ENV.fetch('AUTHENTICATION_APPLICATION_ID') %>
+  application_secret: <%= ENV.fetch('AUTHENTICATION_APPLICATION_SECRET') %>
