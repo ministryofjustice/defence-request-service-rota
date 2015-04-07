@@ -3,15 +3,11 @@ class User
 
   def self.build_from(auth_hash)
     new(
-      uid: auth_hash.fetch(:uid),
-      email: auth_hash.fetch(:info).fetch(:email),
-      name: auth_hash.fetch(:info).fetch(:profile).fetch(:name),
+      auth_hash.fetch("user").fetch("id")
     )
   end
 
-  def initialize(uid:, email:, name:)
+  def initialize(uid)
     @uid = uid
-    @email = email
-    @name = name
   end
 end

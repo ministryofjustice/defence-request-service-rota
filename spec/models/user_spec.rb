@@ -4,24 +4,35 @@ require "omniauth"
 
 RSpec.describe User, ".build_from" do
   it "builds a user from the auth hash" do
-    auth_hash = OmniAuth::AuthHash.new({
-      provider: "defence_request",
-      uid: "123456789",
-      info: {
-        email: "test_user@example.com",
-        profile: {
-          name: "Example user",
-        }
+    auth_hash = {
+      "user" => {
+          "id" => 1,
+          "first_name": "Bob",
+          "last_name": "Smith",
+          "username": "bob.smith",
+          "email": "bob.smith@world.com"
       },
-      credentials: {
-        token: "ABCDEF...",
-      }
-    })
+      "profile": {
+          "name": "Bob Smith",
+          "email": "bob.smith@world.com",
+          "telephone": "0123456789",
+          "mobile": "071234567",
+          "address": {
+              "line1": "",
+              "line2": "",
+              "city": "",
+              "postcode": ""
+          },
+          "PIN": "1234",
+          "organisation_ids": [1,2]
+      },
+      "roles": [
+          "admin", "foo", "bar"
+      ]
+    }
 
     user = User.build_from auth_hash
 
-    expect(user.uid).to eq "123456789"
-    expect(user.email).to eq "test_user@example.com"
-    expect(user.name).to eq "Example user"
+    expect(user.uid).to eq 1
   end
 end

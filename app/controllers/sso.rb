@@ -1,7 +1,7 @@
 module SSO
   module ControllerMethods
     def current_user
-      session.fetch(:current_user) { fetch_current_user }
+      @current_user ||= fetch_current_user
     end
 
     protected
@@ -16,10 +16,7 @@ module SSO
 
     def fetch_current_user
       return nil unless access_token
-
-      session.update(
-        current_user: build_user
-      )
+      build_user
 
     rescue OAuth2::Error
       session.clear
