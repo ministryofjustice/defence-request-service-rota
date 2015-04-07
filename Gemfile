@@ -25,7 +25,9 @@ gem "govuk_frontend_toolkit", "~> 2.0.1"
 gem "govuk_elements_rails", "~> 0.1.1"
 
 gem "omniauth-oauth2"
-gem "omniauth-dsds", github: "ministryofjustice/defence-request-service-omniauth-dsds"
+# TODO: Go back to master when new gem version pushed
+gem "omniauth-dsds", github: "ministryofjustice/defence-request-service-omniauth-dsds", branch: "rails-app-integration"
+
 
 group :development do
   gem "web-console", "~> 2.0"

@@ -4,12 +4,13 @@ require File.expand_path("../../config/environment", __FILE__)
 
 require "rspec/rails"
 require "shoulda/matchers"
+require "omniauth-dsds/spec/sign_in_helper"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
 module Features
   # Extend this module in spec/support/features/*.rb
-  # include Features::OmniauthSignInHelper
+  include Omniauth::Dsds::Spec::SignInHelper
 end
 
 RSpec.configure do |config|

@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include SSO::ControllerMethods
+  include Omniauth::Dsds::ControllerMethods
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
