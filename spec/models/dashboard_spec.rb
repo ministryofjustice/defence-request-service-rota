@@ -4,8 +4,6 @@ require_relative "../../app/models/solicitor"
 require_relative "../../app/models/dashboard"
 
 RSpec.describe Dashboard, "#solicitors" do
-  subject { Dashboard.new }
-
   it "asks for all Solicitor objects" do
     expect(Solicitor).to receive(:all)
 
