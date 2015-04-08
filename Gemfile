@@ -24,6 +24,9 @@ gem "moj_template", "~> 0.23.0"
 gem "govuk_frontend_toolkit", "~> 2.0.1"
 gem "govuk_elements_rails", "~> 0.1.1"
 
+gem "omniauth-oauth2"
+gem "omniauth-dsds", github: "ministryofjustice/defence-request-service-omniauth-dsds", tag: "0.2.0"
+
 group :development do
   gem "web-console", "~> 2.0"
 end
