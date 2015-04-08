@@ -1,8 +1,4 @@
 class FakeDataApi
-  def self.start
-    new
-  end
-
   def solicitors
     solicitors_endpoint[:profiles]
   end
