@@ -4,6 +4,12 @@ class FakeDataApi
   end
 
   def solicitors
+    solicitors_endpoint[:profiles]
+  end
+
+  private
+
+  def solicitors_endpoint
     {
       "profiles": [
         {

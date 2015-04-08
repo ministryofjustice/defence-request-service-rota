@@ -1,28 +1,14 @@
 require "spec_helper"
+require_relative "../../app/models/api_model"
 require_relative "../../app/models/solicitor"
 require_relative "../../app/models/dashboard"
 
 RSpec.describe Dashboard, "#solicitors" do
-  it "returns a list of Solicitor objects" do
-    fake_response = {
-      "profiles": [
-        {
-          "id": 1,
-          "name": "Bob Smith",
-          "type": "solicitor"
-        },
-        {
-          "id": 2,
-          "name": "Andy Brown",
-          "type": "agent"
-        }
-      ]
-    }
+  subject { Dashboard.new }
 
-    fake_data_api = double(:data_api, solicitors: fake_response)
+  it "asks for all Solicitor objects" do
+    expect(Solicitor).to receive(:all)
 
-    dashboard = Dashboard.new(fake_data_api)
-
-    expect(dashboard.solicitors.map(&:name)).to eq ["Bob Smith", "Andy Brown"]
+    subject.solicitors
   end
 end
