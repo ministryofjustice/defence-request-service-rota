@@ -13,6 +13,7 @@ RSpec.feature "User views a list of solicitors" do
 
     sign_in_using_dsds_auth
 
+    expect(page).to have_css "h2", text: "Solicitors"
     expect(page).to have_css "h3", text: "Bob Smith"
     expect(page).to have_css "h3", text: "Andy Brown"
   end
