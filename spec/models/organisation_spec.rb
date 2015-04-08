@@ -1,4 +1,5 @@
 require "spec_helper"
+require_relative "../../lib/service_registry"
 require_relative "../../app/models/api_model"
 require_relative "../../app/models/organisation"
 
