@@ -19,7 +19,7 @@ RSpec.describe Solicitor, ".all" do
 
     fake_api = double(:data_api, solicitors: fake_response)
 
-    allow(Solicitor).to receive(:data_api).and_return(fake_api)
+    allow(DefenceRequestServiceRota).to receive(:service).with(:auth_api).and_return(fake_api)
 
     expect(Solicitor.all.count).to eq 2
     expect(Solicitor.all[0].name).to eq "Bob Smith"
