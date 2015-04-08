@@ -3,6 +3,10 @@ class FakeDataApi
     solicitors_endpoint[:profiles]
   end
 
+  def organisations
+    organisations_endpoint[:organisations]
+  end
+
   private
 
   def solicitors_endpoint
@@ -28,7 +32,7 @@ class FakeDataApi
     }
   end
 
-  def organisations
+  def organisations_endpoint
     {
       "organisations": [
         {

@@ -1,9 +1,13 @@
-class Organisation
-  attr_reader :id, :name, :type, :profile_ids
+class Organisation < APIModel
+  def self.all
+    data_api.organisations.map { |attrs| build_from(attrs) }
+  end
 
   def self.build_from(attrs)
     new(attrs)
   end
+
+  attr_reader :id, :name, :type, :profile_ids
 
   def initialize(attrs)
     @id = attrs.fetch(:id)
