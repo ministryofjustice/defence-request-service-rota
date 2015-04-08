@@ -1,7 +1,6 @@
 GIT
   remote: git://github.com/ministryofjustice/defence-request-service-omniauth-dsds.git
-  revision: ebacfdc93b3f0fb398dab493a865f8ad68c07c33
-  branch: rails-app-integration
+  revision: 5475e868406f61948979a83895c8af294aca2b05
   specs:
     omniauth-dsds (0.1.0)
       multi_json (~> 1.11.0)
