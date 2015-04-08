@@ -1,7 +1,9 @@
 class APIModel
-  private
+  class << self
+    private
 
-  def self.data_api
-    DefenceRequestServiceRota.service(:auth_api)
+    def data_api
+      DefenceRequestServiceRota.service(:auth_api)
+    end
   end
 end
