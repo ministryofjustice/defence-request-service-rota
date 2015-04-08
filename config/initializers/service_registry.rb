@@ -2,7 +2,7 @@ module DefenceRequestServiceRota
   class ServiceNotRegistered < ArgumentError; end
 
   def self.service(name)
-    services.fetch(name) { raise_missing_service_error(name) }
+    services.fetch(name).new { raise_missing_service_error(name) }
   end
 
   def self.register_service(name, service)
@@ -17,3 +17,5 @@ module DefenceRequestServiceRota
     @services ||= {}
   end
 end
+
+DefenceRequestServiceRota.register_service(:auth_api, FakeDataApi)
