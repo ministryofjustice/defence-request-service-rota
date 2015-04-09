@@ -1,6 +1,17 @@
 <h2>Dashboard</h1>
 
-Current User: <%= current_user.inspect %>
+<% if current_user.name.present? %>
+  <p>
+    Welcome <%= current_user.name %>!
+  </p>
+  <p>
+    Email address: <%= current_user.email || "<no email provided>" %>
+  </p>
+<% else %>
+  <p>
+    Welcome! This user has no associated profile.
+  </p>
+<% end %>
 
 <h2>Solicitors</h2>
 <%= render @dashboard.solicitors %>
