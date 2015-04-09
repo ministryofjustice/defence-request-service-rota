@@ -2,14 +2,14 @@
 
 <% if current_user.name.present? %>
   <p>
-    Welcome <%= current_user.name %>!
-  </p>
-  <p>
-    Email address: <%= current_user.email || "<no email provided>" %>
+    Welcome to your Defence Service Rota dashboard, <%= current_user.name %>.
+    <% if current_user.email.present? %>
+      <small>Logged in as: <%= current_user.email %></small>
+    <% end %>
   </p>
 <% else %>
   <p>
-    Welcome! This user has no associated profile.
+    Welcome to your Defence Service Rota dashboard.
   </p>
 <% end %>
 
