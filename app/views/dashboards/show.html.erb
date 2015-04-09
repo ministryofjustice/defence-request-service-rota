@@ -1,6 +1,17 @@
 <h2>Dashboard</h1>
 
-Current User: <%= current_user.inspect %>
+<% if current_user.name.present? %>
+  <p>
+    Welcome to your Defence Service Rota dashboard, <%= current_user.name %>.
+    <% if current_user.email.present? %>
+      <small>Logged in as: <%= current_user.email %></small>
+    <% end %>
+  </p>
+<% else %>
+  <p>
+    Welcome to your Defence Service Rota dashboard.
+  </p>
+<% end %>
 
 <h2>Solicitors</h2>
 <%= render @dashboard.solicitors %>
