@@ -29,11 +29,12 @@ Schemes contain a List of Solicitors that are on Duty
 
 ## Schemes Collection [/api/v1/schemes]
 ### List Schemes [GET]
-+ Payload
++ Request
 
     + Headers
         
-        Authorization: Bearer <TOKEN>
+            Accept: application/json
+            Authorization: Bearer <TOKEN>
 
 + Response 200 (application/json)
 
@@ -43,14 +44,14 @@ Schemes contain a List of Solicitors that are on Duty
                     "id": 123,
                     "name": "Brighton West",
                     "links": {
-                        "duty_url": "/api/v1/schemes/123/duty"
+                        "duty": "/api/v1/schemes/123/duty"
                     }
                 },
                 {
                     "id": 128,
                     "name": "Brighton East",
                     "links": {
-                        "duty_url": "/api/v1/schemes/128/duty"
+                        "duty": "/api/v1/schemes/128/duty"
                     }
                 },
             ]
@@ -64,20 +65,22 @@ Schemes contain a List of Solicitors that are on Duty
             ]
         }
 
-## Duty Solicitor [/api/v1/schemes/{id}/duty?{at_time}]
+## Duty Solicitor [/api/v1/schemes/{id}/duty?at_time=1994-11-05T13%3A15%3A30Z]
 Returns the Profile of the Solicitor that is on Duty for the given scheme at the current time
 
 + Parameters
     + at_time (ISO 8061 timestamp)
         Specify the date + time that we want to find the Duty Solicitor for
+        
         Will default to the current date+time
 
 ### Find Duty Solicitor [GET]
-+ Payload
++ Request
 
     + Headers
         
-        Authorization: Bearer <TOKEN>
+            Accept: application/json
+            Authorization: Bearer <TOKEN>
 
 + Response 200 (application/json)
 
@@ -87,14 +90,9 @@ Returns the Profile of the Solicitor that is on Duty for the given scheme at the
                 "email": "bob.smith@world.com",
                 "telephone": "0123456789",
                 "mobile": "071234567",
-                "address": {
-                    "line1": "",
-                    "line2": "",
-                    "city": ""
-                    "postcode": ""
-                },
-                "PIN": "1234",
-                "organisation_ids": [1,2]
+                "address": "17A Frosts Road"
+                "postcode": "AB1 2CD"
+                "PIN": "1234"
             }
         }
 
