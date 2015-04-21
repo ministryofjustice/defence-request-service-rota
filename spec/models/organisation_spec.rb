@@ -7,16 +7,20 @@ RSpec.describe Organisation, ".all" do
   it "creates organisation objects from the API response" do
     fake_response = [
       {
-        "id": 1,
-        "name": "Tuckers",
-        "type": "law_firm",
-        "profile_ids": [1,2,3,5,6,7]
+        "uid" => "1234567890abcdef",
+        "name" => "Tuckers",
+        "type" => "law_firm",
+        "links" => {
+          "profiles" => "/api/v1/profiles?uids[]=1a2b3c&uids[]=4d5e6f&uids[]=a1b2c3"
+        }
       },
       {
-        "id": 2,
-        "name": "Brighton",
-        "type": "custody_suite",
-        "profile_ids": [5,8,9]
+        "uid" => "0987654321fedcba",
+        "name" => "Brighton",
+        "type" => "custody_suite",
+        "links" => {
+          "profiles" => "/api/v1/profiles?uids[]=0f9e8d&uids[]=7c6b5a"
+        }
       }
     ]
 
@@ -33,17 +37,19 @@ end
 RSpec.describe Organisation, ".build_from" do
   it "builds an organisation object from passed-in attributes" do
     attrs = {
-      "id": 1,
-      "name": "Tuckers",
-      "type": "law_firm",
-      "profile_ids": [1, 2, 3, 5, 6, 7]
+      "uid" => "1234567890abcdef",
+      "name" => "Tuckers",
+      "type" => "law_firm",
+      "links" => {
+        "profiles" => "/api/v1/profiles?uids[]=1a2b3c&uids[]=4d5e6f&uids[]=a1b2c3"
+      }
     }
 
     organisation = Organisation.build_from attrs
 
-    expect(organisation.id).to eq 1
+    expect(organisation.uid).to eq "1234567890abcdef"
     expect(organisation.name).to eq "Tuckers"
     expect(organisation.type).to eq "law_firm"
-    expect(organisation.profile_ids).to eq [1, 2, 3, 5, 6, 7]
+    expect(organisation.profiles_link).to eq "/api/v1/profiles?uids[]=1a2b3c&uids[]=4d5e6f&uids[]=a1b2c3"
   end
 end

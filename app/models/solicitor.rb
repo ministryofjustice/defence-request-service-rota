@@ -7,12 +7,13 @@ class Solicitor < APIModel
     new(attrs)
   end
 
-  attr_reader :id, :name, :type
+  attr_reader :uid, :name, :type, :organisation_link
 
   def initialize(attrs)
-    @id = attrs.fetch(:id)
-    @name = attrs.fetch(:name)
-    @type = attrs.fetch(:type)
+    @uid = attrs.fetch("uid")
+    @name = attrs.fetch("name")
+    @type = attrs.fetch("type")
+    @organisation_link = attrs.fetch("links").fetch("organisation")
   end
 
   def to_partial_path
