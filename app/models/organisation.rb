@@ -7,13 +7,13 @@ class Organisation < APIModel
     new(attrs)
   end
 
-  attr_reader :id, :name, :type, :profile_ids
+  attr_reader :uid, :name, :type, :profiles_link
 
   def initialize(attrs)
-    @id = attrs.fetch(:id)
-    @name = attrs.fetch(:name)
-    @type = attrs.fetch(:type)
-    @profile_ids = attrs.fetch(:profile_ids)
+    @uid = attrs.fetch("uid")
+    @name = attrs.fetch("name")
+    @type = attrs.fetch("type")
+    @profiles_link = attrs.fetch("links").fetch("profiles")
   end
 
   def to_partial_path
