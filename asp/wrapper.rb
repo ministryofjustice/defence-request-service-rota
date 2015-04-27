@@ -14,22 +14,23 @@ allocate_clauses = solutions.select { |x| x =~ /allocate/ }
 total_clauses = solutions.select { |x| x =~ /total/ }
 
 hsh = allocate_clauses.inject({}) do |acc, clause|
-  shift, date, firm = clause.match(/allocated\(([^,]*),(\d+),([^,]*)\)/).captures
+  shift, date, firm = clause.match(/allocated\(([^,]*),[^,]*,(\d+),([^,]*)\)/).captures
   date = date.to_i
-  acc[date] ||= []
-  acc[date] << [shift, firm]
+  date_obj = Date.new(2015, 5, date)
+  acc[date_obj] ||= []
+  acc[date_obj] << [shift, firm]
   acc
 end
 
 table = TinyTable::Table.new
-shifts = ["s1", "s2", "s3", "s4", "s5", "s6"]
+shifts = ["s1"]
 
 table.header = ["", [shifts]].flatten
 
 hsh.keys.sort.each do |date|
   table_row = []
   date_row = hsh[date]
-  table_row << date
+  table_row << date.strftime("%a, %d/%m/%Y")
   shifts.each do |s|
     firm_name = date_row.select { |x| x.first == s }.first.last
     table_row << firm_name
