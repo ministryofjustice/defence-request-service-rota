@@ -20,9 +20,3 @@ Metrics/LineLength:
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/AndOr:
   Enabled: false
-
-# Offense count: 23
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/StringLiterals:
-  Enabled: false
