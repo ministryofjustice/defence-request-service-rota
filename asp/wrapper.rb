@@ -23,7 +23,7 @@ hsh = allocate_clauses.inject({}) do |acc, clause|
 end
 
 table = TinyTable::Table.new
-shifts = ["s1"]
+shifts = ["s1", "s2"]
 
 table.header = ["", [shifts]].flatten
 

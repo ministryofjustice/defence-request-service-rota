@@ -21,8 +21,8 @@
 
 #end_lua.
 
-#const num_slots  = 56.
-#const num_firms  = 6.
+#const num_slots  = 97.
+#const num_firms  = 7.
 #const num_shifts = 1.
 #const num_days   = 31.
 
@@ -72,6 +72,8 @@ slots_for_shift_for_firm(F, S, N) :- N = #count { allocated(S, _, _, F) },
   N > @max_slots_per_shift_firm(num_shifts, num_days).
 
 % Make sure that each firm is on each shift at least once.
+% This gets complicated if there are more shifts than there are
+% days (hence why Lua does this minimum calculation).
 :- diff_shifts_for_firm(_, S, N), N < @min_num_shifts(num_shifts, num_days).
 
 % Define what it means to have two consecutive dates.
