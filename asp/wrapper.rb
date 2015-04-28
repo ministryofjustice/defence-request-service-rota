@@ -1,19 +1,19 @@
 #!/usr/bin/ruby
 
-require 'tinytable'
-require 'date'
+require "tinytable"
+require "date"
 
 answer = `clingo3 -n 1 *.lp 2> /dev/null`
 
 lines = answer.split("\n")
 
-unsatisfiable = lines.select { |l| l =~ /UNSATISFIABLE/ }.first
+unsatisfiable = lines.find { |l| l =~ /UNSATISFIABLE/ }
 
 if unsatisfiable
   puts "No solution possible."
 else
 
-  solution = lines.select { |l| l =~ /allocated/ }.last
+  solution = lines.reverse.find { |l| l =~ /allocated/ }
   solutions = solution.split(/\s/)
 
   allocate_clauses = solutions.select { |x| x =~ /allocate/ }
@@ -29,7 +29,7 @@ else
   end
 
   table = TinyTable::Table.new
-  shifts = ["s1", "s2", "s3", "s4", "s5", "s6"]
+  shifts = %w[s1 s2 s3 s4 s5 s6]
 
   table.header = ["", [shifts]].flatten
 
@@ -55,7 +55,7 @@ else
 
   totals_table = TinyTable::Table.new
 
-  totals_table.header = ["Firm", "Total"]
+  totals_table.header = %w[Firm Total]
 
   total_hsh.keys.sort.each do |firm|
     firm_total = total_hsh[firm]
