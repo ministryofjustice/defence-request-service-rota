@@ -1,3 +1,7 @@
+%%%%%%%
+% LUA %
+%%%%%%%
+
 #begin_lua
 
   -----------------------------------------------------------
@@ -7,42 +11,59 @@
   -- upper bound.                                          --
   -----------------------------------------------------------
 
-  -- The maximum total slots allowed for each firm
+  -- 1) The maximum total slots allowed for each firm
   function max_total_slots_allowed(num_slots, num_firms)
     return math.ceil(num_slots / num_firms)
   end
 
+  -- 2)
   function max_num_diff_shifts(num_slots, num_firms)
     return math.ceil(num_slots / num_firms)
   end
 
+  -- 3)
   function min_num_diff_shifts(num_slots, num_firms)
     return math.floor(num_slots / num_firms)
   end
 
+  -- 4)
   function min_slots_per_shift_firm(num_slots, num_shifts, num_firms)
     return math.floor(num_slots / (num_shifts * num_firms))
   end
 
+  -- 5)
   function max_slots_per_shift_firm(num_slots, num_shifts, num_firms)
     return math.ceil(num_slots / (num_shifts * num_firms))
   end
 
+  -- 6)
   function max_slots_per_day(num_firms_required, num_firms)
     return math.ceil(num_firms_required / num_firms)
   end
 
 #end_lua.
 
-#const num_slots  = 42.
+%%%%%%%%%%%%%
+% CONSTANTS %
+%%%%%%%%%%%%%
+
+#const num_slots  = 21.
 #const num_firms  = 2.
-#const num_shifts = 6.
+#const num_shifts = 3.
 #const num_days   = 7.
+
+%%%%%%%%%%%%%%
+% GENERATORS %
+%%%%%%%%%%%%%%
 
 % Generate enough allocations such that each shift has
 % the required number it needs for each date.
 N { allocated(S, Da, D, F) : firm(F) } N :- date(Da, D), shift(S),
   slots_per_shift_day(S, Da, N).
+
+%%%%%%%%%%%%%%%%%%%
+% UTILITY CLAUSES %
+%%%%%%%%%%%%%%%%%%%
 
 % Define a clause which states how many slots a firm
 % has been allocated in total.
@@ -70,6 +91,18 @@ diff_shifts_for_firm(F, S, N) :- N = #count { shift_allocated_to_firm(_, F) },
 slots_for_shift_for_firm(F, S, N) :- N = #count { allocated(S, _, _, F) },
   firm(F), shift(S).
 
+% Define what it means to have two consecutive dates.
+consecutive_dates(D1, D2) :- date(_, D1), date(_, D2), D1 + 1 == D2.
+consecutive_dates(D1, D2) :- date(_, D1), date(_, D2), D1 - 1 == D2.
+
+% Identify when a firm is on the same shift on two consecutive dates.
+allocated_on_consecutive_days(F) :- allocated(S1, Da1, D1, F),
+  allocated(S2, Da2, D2, F), S1 == S2, consecutive_dates(D1, D2).
+
+%%%%%%%%%%%%%%%
+% CONSTRAINTS %
+%%%%%%%%%%%%%%%
+
 % Calculate the average number of slots each firm should have
 % and round up. Ensure that all firms have within 1 of the average
 % number of slots each.
@@ -95,20 +128,17 @@ slots_for_shift_for_firm(F, S, N) :- N = #count { allocated(S, _, _, F) },
 % days (hence why Lua does this minimum calculation).
 :- diff_shifts_for_firm(_, S, N), num_days > num_shifts, N < num_shifts.
 :- diff_shifts_for_firm(_, S, N), num_days <= num_shifts, N >
-max_num_diff_shifts(num_slots, num_firms).
+  max_num_diff_shifts(num_slots, num_firms).
 :- diff_shifts_for_firm(_, S, N), num_days <= num_shifts, N <
-min_num_diff_shifts(num_slots, num_firms).
+  min_num_diff_shifts(num_slots, num_firms).
 
-% Define what it means to have two consecutive dates.
-consecutive_dates(D1, D2) :- date(_, D1), date(_, D2), D1 + 1 == D2.
-consecutive_dates(D1, D2) :- date(_, D1), date(_, D2), D1 - 1 == D2.
-
-% Make sure that a firm can't be on the same shift
-% on two consecutive dates.
-allocated_on_consecutive_days(F) :- allocated(S1, Da1, D1, F), allocated(S2, Da2, D2, F), S1 == S2,
-  consecutive_dates(D1, D2).
-
+% Minimize (don't completely disallow) the same shift on
+% consecutive days.
 #minimize { allocated_on_consecutive_days(_) }.
+
+%%%%%%%%%%%%%%%%
+% PRESENTATION %
+%%%%%%%%%%%%%%%%
 
 #hide.
 #show allocated/4.
