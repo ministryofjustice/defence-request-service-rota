@@ -21,7 +21,7 @@
 
 #end_lua.
 
-#const num_slots  = 31.
+#const num_slots  = 56.
 #const num_firms  = 6.
 #const num_shifts = 1.
 #const num_days   = 31.
@@ -29,7 +29,7 @@
 % Generate enough allocations such that each shift has
 % the required number it needs for each date.
 N { allocated(S, Da, D, F) : firm(F) } N :- date(Da, D), shift(S),
-  slots_per_shift_day(S, N).
+  slots_per_shift_day(S, Da, N).
 
 % Define a clause which states how many slots a firm
 % has been allocated in total.

@@ -32,7 +32,7 @@ hsh.keys.sort.each do |date|
   date_row = hsh[date]
   table_row << date.strftime("%a, %d/%m/%Y")
   shifts.each do |s|
-    firm_name = date_row.select { |x| x.first == s }.first.last
+    firm_name = date_row.select { |x| x.first == s }.map(&:last)
     table_row << firm_name
   end
   table << table_row
