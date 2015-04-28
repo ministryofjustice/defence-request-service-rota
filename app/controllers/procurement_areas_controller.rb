@@ -8,10 +8,12 @@ class ProcurementAreasController < ApplicationController
   end
 
   def create
-    procurement_area = ProcurementArea.new(procurement_area_params)
+    @procurement_area = ProcurementArea.new(procurement_area_params)
 
-    if procurement_area.save
+    if @procurement_area.save
       redirect_to procurement_areas_path
+    else
+      render :new
     end
   end
 
@@ -20,8 +22,12 @@ class ProcurementAreasController < ApplicationController
   end
 
   def update
-    if procurement_area.update_attributes(procurement_area_params)
+    @procurement_area = procurement_area
+
+    if @procurement_area.update_attributes(procurement_area_params)
       redirect_to procurement_areas_path
+    else
+      render :edit
     end
   end
 

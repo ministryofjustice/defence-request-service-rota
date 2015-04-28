@@ -1,7 +1,4 @@
-FactoryGirl.define do  factory :procurement_area do
-    name "MyString"
-  end
-
+FactoryGirl.define do
   factory :admin_user, class: Omniauth::Dsds::User do
     to_create { |instance| instance }
 
@@ -14,5 +11,9 @@ FactoryGirl.define do  factory :procurement_area do
         organisation_uids: []
       )
     }
+  end
+
+  factory :procurement_area do
+    name "Outlands"
   end
 end
