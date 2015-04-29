@@ -32,9 +32,9 @@ class ProcurementAreasController < ApplicationController
   end
 
   def destroy
-    if procurement_area.destroy
-      redirect_to procurement_areas_path
-    end
+    procurement_area.destroy
+
+    redirect_to procurement_areas_path
   end
 
   private
