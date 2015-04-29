@@ -1,15 +1,9 @@
 require "rails_helper"
 
 RSpec.feature "User signs in" do
-  def sign_in_using_dsds_auth
-    visit root_path
-  end
-
   scenario "and is redirected to the dashboard" do
-    mock_token
-    mock_profile
-
-    sign_in_using_dsds_auth
+    admin_user = create :admin_user
+    login_with admin_user
 
     expect(current_path).to eq "/dashboard"
   end

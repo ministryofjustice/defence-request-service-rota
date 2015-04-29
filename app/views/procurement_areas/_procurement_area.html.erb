@@ -1,0 +1,5 @@
+<div>
+  <h3><%= procurement_area.name %></h3>
+  <%= link_to "Edit", edit_procurement_area_path(procurement_area) %>
+  <%= link_to "Delete", procurement_area_path(procurement_area), method: :delete, data: { confirm: "Are you sure?" } %>
+</div>
