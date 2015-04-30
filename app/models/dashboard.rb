@@ -1,8 +1,7 @@
 class Dashboard
-  attr_reader :organisations, :solicitors
+  attr_reader :organisations
 
-  def initialize(organisations, solicitors)
+  def initialize(organisations)
     @organisations = organisations
-    @solicitors = solicitors
   end
 end

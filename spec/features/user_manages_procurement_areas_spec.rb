@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "User manages procurement areas" do
+  background { set_data_api_to FakeDataApi }
+
   scenario "creating a procurement area" do
     admin_user = create :admin_user
 

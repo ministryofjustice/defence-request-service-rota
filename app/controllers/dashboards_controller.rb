@@ -1,15 +1,19 @@
 class DashboardsController < ApplicationController
   def show
-    @dashboard = Dashboard.new(organisations, solicitors)
+    @dashboard = Dashboard.new(organisations)
   end
 
   private
 
   def organisations
-    Organisation.all
+    retrieve_organisations.map { |org| OrganisationPresenter.new(org) }
   end
 
-  def solicitors
-    Solicitor.all
+  def retrieve_organisations
+    OrganisationFinder.new(api_client).find_all
+  end
+
+  def api_client
+    DefenceRequestServiceRota.service(:auth_api).new(session[:user_token])
   end
 end
