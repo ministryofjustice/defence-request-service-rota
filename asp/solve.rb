@@ -17,13 +17,7 @@ def process_allocations(allocate_clauses)
 
   EOM
 
-  hsh = allocate_clauses.inject({}) do |acc, clause|
-    shift, date, firm = extract_allocation(clause)
-    date_obj = Date.new(2015, 5, date.to_i)
-    acc[date_obj] ||= []
-    acc[date_obj] << [shift, firm]
-    acc
-  end
+  hsh = hasherize_allocations(allocate_clauses)
 
   table_rows = []
   hsh.keys.sort.each do |date|
@@ -51,11 +45,7 @@ def process_totals(total_clauses)
 
   EOM
 
-  total_hsh = total_clauses.inject({}) do |acc, clause|
-    firm, total = extract_total(clause)
-    acc[firm] = total.to_i
-    acc
-  end
+  total_hsh = hasherize_totals(total_clauses)
 
   table_rows = []
   total_hsh.keys.sort.each do |firm|
@@ -76,12 +66,7 @@ def process_shift_totals(total_shift_clauses)
 +--------------+
 
   EOM
-  shift_hsh = total_shift_clauses.inject({}) do |acc, clause|
-    firm, shift, total = extract_shift_total(clause)
-    acc[firm] ||= {}
-    acc[firm][shift] = total.to_i
-    acc
-  end
+  shift_hsh = hasherize_shift_totals(total_shift_clauses)
 
   table_rows = []
   shift_hsh.keys.sort.each do |firm|
@@ -110,6 +95,39 @@ def extract_shift_total(clause)
   clause.match(/slots_for_shift_for_firm\(([^,]*),([^,]*),(\d+)\)/).captures
 end
 
+def hasherize_allocations(allocate_clauses)
+  hsh = allocate_clauses.inject({}) do |acc, clause|
+    shift, date, firm = extract_allocation(clause)
+    date_obj = Date.new(2015, 5, date.to_i)
+    acc[date_obj] ||= []
+    acc[date_obj] << [shift, firm]
+    acc
+  end
+
+  hsh
+end
+
+def hasherize_totals(total_clauses)
+  total_hsh = total_clauses.inject({}) do |acc, clause|
+    firm, total = extract_total(clause)
+    acc[firm] = total.to_i
+    acc
+  end
+
+  total_hsh
+end
+
+def hasherize_shift_totals(total_shift_clauses)
+  shift_hsh = total_shift_clauses.inject({}) do |acc, clause|
+    firm, shift, total = extract_shift_total(clause)
+    acc[firm] ||= {}
+    acc[firm][shift] = total.to_i
+    acc
+  end
+
+  shift_hsh
+end
+
 def print_table(header, rows)
   table = TinyTable::Table.new
 
@@ -136,8 +154,9 @@ def print_other_clauses(other_clauses)
     end
   end
 end
-answer = `clingo --const num_firms=#{NUM_FIRMS} --const num_days=#{NUM_DAYS}
-  --const num_shifts=#{NUM_SHIFTS} --const num_slots=#{NUM_SLOTS} *.lp 2>
+
+answer = `clingo --const num_firms=#{NUM_FIRMS} --const num_days=#{NUM_DAYS} \
+  --const num_shifts=#{NUM_SHIFTS} --const num_slots=#{NUM_SLOTS} *.lp 2> \
   /dev/null`
 
 lines = answer.split("\n")

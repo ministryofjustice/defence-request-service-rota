@@ -96,7 +96,7 @@ consecutive_dates(D1, D2) :- date(_, D1), date(_, D2), D1 + 1 == D2.
 consecutive_dates(D1, D2) :- date(_, D1), date(_, D2), D1 - 1 == D2.
 
 % Identify when a firm is on the same shift on two consecutive dates.
-allocated_on_consecutive_days(F) :- allocated(S1, Da1, D1, F),
+allocated_on_consecutive_dates(F) :- allocated(S1, Da1, D1, F),
   allocated(S2, Da2, D2, F), S1 == S2, consecutive_dates(D1, D2).
 
 %%%%%%%%%%%%%%%
@@ -134,7 +134,7 @@ allocated_on_consecutive_days(F) :- allocated(S1, Da1, D1, F),
 
 % Minimize (don't completely disallow) the same shift on
 % consecutive days.
-#minimize { allocated_on_consecutive_days(_) }.
+#minimize { allocated_on_consecutive_dates(_) }.
 
 %%%%%%%%%%%%%%%%
 % PRESENTATION %
@@ -144,4 +144,3 @@ allocated_on_consecutive_days(F) :- allocated(S1, Da1, D1, F),
 #show allocated/4.
 #show total_slots_for_firm/2.
 #show slots_for_shift_for_firm/3.
-#show allocated_on_consecutive_days/1.
