@@ -47,10 +47,10 @@
 % CONSTANTS %
 %%%%%%%%%%%%%
 
-#const num_slots  = 70.
-#const num_firms  = 4.
-#const num_shifts = 5.
-#const num_days   = 14.
+#const num_slots  = 7.
+#const num_firms  = 1.
+#const num_shifts = 1.
+#const num_days   = 7.
 
 %%%%%%%%%%%%%%
 % GENERATORS %

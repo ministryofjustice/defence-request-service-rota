@@ -3,8 +3,11 @@
 require "tinytable"
 require "date"
 
-NO_SHIFTS = 5
-SHIFT_NAMES = (1..NO_SHIFTS).map { |i| "s#{i}" }
+NUM_SHIFTS = `cat shifts.lp | wc -l`.to_i
+NUM_DAYS   = `cat dates.lp | wc -l`.to_i
+NUM_FIRMS  = `cat firms.lp | wc -l`.to_i
+NUM_SLOTS  = NUM_DAYS * NUM_SHIFTS
+SHIFT_NAMES = (1..NUM_SHIFTS).map { |i| "s#{i}" }
 
 def process_allocations(allocate_clauses)
   puts <<-EOM
@@ -119,7 +122,7 @@ def print_table(header, rows)
   puts table.to_text
 end
 
-answer = `clingo3 -n 1 *.lp 2> /dev/null`
+answer = `clingo3 -n 1 --const num_firms=#{NUM_FIRMS} --const num_days=#{NUM_DAYS} --const num_shifts=#{NUM_SHIFTS} --const num_slots=#{NUM_SLOTS} *.lp 2> /dev/null`
 
 lines = answer.split("\n")
 

@@ -1,31 +1,31 @@
-date(fri,1).
-date(sat,2).
-date(sun,3).
-date(mon,4).
-date(tue,5).
-date(wed,6).
-date(thu,7).
-date(fri,8).
-date(sat,9).
-date(sun,10).
-date(mon,11).
-date(tue,12).
-date(wed,13).
-date(thu,14).
-% date(fri,15).
-% date(sat,16).
-% date(sun,17).
-% date(mon,18).
-% date(tue,19).
-% date(wed,20).
-% date(thu,21).
-% date(fri,22).
-% date(sat,23).
-% date(sun,24).
-% date(mon,25).
-% date(tue,26).
-% date(wed,27).
-% date(thu,28).
-% date(fri,29).
-% date(sat,30).
-% date(sun,31).
+date(fri, 1).
+date(sat, 2).
+date(sun, 3).
+date(mon, 4).
+date(tue, 5).
+date(wed, 6).
+date(thu, 7).
+date(fri, 8).
+date(fri, 9).
+date(sat, 10).
+date(sun, 11).
+date(mon, 12).
+date(tue, 13).
+date(wed, 14).
+date(thu, 15).
+date(fri, 16).
+date(fri, 17).
+date(sat, 18).
+date(sun, 19).
+date(mon, 20).
+date(tue, 21).
+date(wed, 22).
+date(thu, 23).
+date(fri, 24).
+date(fri, 25).
+date(sat, 26).
+date(sun, 27).
+date(mon, 28).
+date(tue, 29).
+date(wed, 30).
+date(thu, 31).

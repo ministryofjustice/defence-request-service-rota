@@ -2,5 +2,8 @@ firm(a).
 firm(b).
 firm(c).
 firm(d).
-% firm(e).
-% firm(f).
+firm(e).
+firm(f).
+firm(g).
+firm(h).
+firm(i).
