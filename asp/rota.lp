@@ -47,10 +47,10 @@
 % CONSTANTS %
 %%%%%%%%%%%%%
 
-#const num_slots  = 21.
-#const num_firms  = 2.
-#const num_shifts = 3.
-#const num_days   = 7.
+#const num_slots  = 70.
+#const num_firms  = 4.
+#const num_shifts = 5.
+#const num_days   = 14.
 
 %%%%%%%%%%%%%%
 % GENERATORS %
@@ -143,3 +143,4 @@ allocated_on_consecutive_days(F) :- allocated(S1, Da1, D1, F),
 #hide.
 #show allocated/4.
 #show total_slots_for_firm/2.
+#show slots_for_shift_for_firm/3.

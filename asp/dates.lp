@@ -5,13 +5,13 @@ date(mon,4).
 date(tue,5).
 date(wed,6).
 date(thu,7).
-% date(fri,8).
-% date(sat,9).
-% date(sun,10).
-% date(mon,11).
-% date(tue,12).
-% date(wed,13).
-% date(thu,14).
+date(fri,8).
+date(sat,9).
+date(sun,10).
+date(mon,11).
+date(tue,12).
+date(wed,13).
+date(thu,14).
 % date(fri,15).
 % date(sat,16).
 % date(sun,17).
