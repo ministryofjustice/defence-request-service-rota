@@ -122,7 +122,7 @@ def print_table(header, rows)
   puts table.to_text
 end
 
-answer = `clingo3 -n 1 --const num_firms=#{NUM_FIRMS} --const num_days=#{NUM_DAYS} --const num_shifts=#{NUM_SHIFTS} --const num_slots=#{NUM_SLOTS} *.lp 2> /dev/null`
+answer = `clingo -n 1 --const num_firms=#{NUM_FIRMS} --const num_days=#{NUM_DAYS} --const num_shifts=#{NUM_SHIFTS} --const num_slots=#{NUM_SLOTS} *.lp 2> /dev/null`
 
 lines = answer.split("\n")
 
