@@ -122,6 +122,20 @@ def print_table(header, rows)
   puts table.to_text
 end
 
+def print_other_clauses(other_clauses)
+  if other_clauses.any?
+    puts <<-EOM
+===================================================================================================
++---------------+
+| OTHER CLAUSES |
++---------------+
+
+    EOM
+    other_clauses.each do |c|
+      puts c
+    end
+  end
+end
 answer = `clingo --const num_firms=#{NUM_FIRMS} --const num_days=#{NUM_DAYS} --const num_shifts=#{NUM_SHIFTS} --const num_slots=#{NUM_SLOTS} *.lp 2> /dev/null`
 
 lines = answer.split("\n")
@@ -144,4 +158,6 @@ else
   process_totals(total_clauses)
 
   process_shift_totals(total_shift_clauses)
+
+  print_other_clauses(clauses - allocate_clauses - total_clauses - total_shift_clauses)
 end
