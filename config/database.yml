@@ -13,3 +13,7 @@ development:
 test:
   <<: *default
   database: defence-request-service-rota_test
+
+production:
+  <<: *default
+  database: defence-request-service-rota_production
