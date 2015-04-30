@@ -43,7 +43,7 @@ end
 
 options = {}
 
-OptionParser.new do |opts|
+parser = OptionParser.new do |opts|
   opts.banner = "Usage: generate.rb [options]"
 
   opts.on("--shifts=SHIFTS", "Specify a number of shifts") do |sh|
@@ -68,10 +68,11 @@ OptionParser.new do |opts|
   end
 
   options[:shifts] ||= 4
-  options[:firms]  ||= 4
-  options[:days]   ||= 7
+  options[:firms] ||= 4
+  options[:days] ||= 7
+end
 
-end.parse!
+parser.parse!
 
 if options[:debug]
   puts "=== DEBUG ==="
