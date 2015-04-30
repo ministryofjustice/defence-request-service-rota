@@ -122,7 +122,7 @@ def print_table(header, rows)
   puts table.to_text
 end
 
-answer = `clingo -n 1 --const num_firms=#{NUM_FIRMS} --const num_days=#{NUM_DAYS} --const num_shifts=#{NUM_SHIFTS} --const num_slots=#{NUM_SLOTS} *.lp 2> /dev/null`
+answer = `clingo --const num_firms=#{NUM_FIRMS} --const num_days=#{NUM_DAYS} --const num_shifts=#{NUM_SHIFTS} --const num_slots=#{NUM_SLOTS} *.lp 2> /dev/null`
 
 lines = answer.split("\n")
 
@@ -133,9 +133,11 @@ if unsatisfiable
 else
   clauses = lines.reverse.find { |l| l =~ /allocated/ }.split(/\s/)
 
-  allocate_clauses    = clauses.select { |x| x =~ /allocate/ }
-  total_clauses       = clauses.select { |x| x =~ /total_slots_for_firm/ }
-  total_shift_clauses = clauses.select { |x| x =~ /slots_for_shift_for_firm/ }
+  allocate_clauses    = clauses.select { |x| x =~ /\Aallocated\(/ }
+  total_clauses       = clauses.select { |x| x =~ /\Atotal_slots_for_firm\(/ }
+  total_shift_clauses = clauses.select { |x| x =~ /\Aslots_for_shift_for_firm\(/ }
+
+  puts (clauses - allocate_clauses - total_shift_clauses - total_clauses)
 
   process_allocations(allocate_clauses)
 
