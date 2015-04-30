@@ -101,4 +101,4 @@ And receive the following output:
   **Note**: Ensure to download version `3.0.5` and **not** version
   `4.x`.
 * `tinytable` - a Ruby gem for outputting tables as ASCII, found
-  [here](http://sourceforge.net/projects/potassco/files/clingo/).
+  [here](https://github.com/leocassarani/tinytable).
