@@ -32,7 +32,7 @@ end
 
 def generate_days!(no_days)
   File.open("dates.lp", "w+") do |f|
-    days = %w{fri sat sun mon tue wed thu fri}
+    days = %w{fri sat sun mon tue wed thu}
     day = days.cycle
 
     (1..no_days).each do |i|
