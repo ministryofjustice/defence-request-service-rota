@@ -41,6 +41,15 @@ def generate_days!(no_days)
   end
 end
 
+def generate_constants!(options)
+  File.open("constants.lp", "w+") do |f|
+    f.write("#const num_firms = #{options[:firms]}.\n")
+    f.write("#const num_shifts = #{options[:shifts]}.\n")
+    f.write("#const num_days = #{options[:days]}.\n")
+    f.write("#const num_slots = #{options[:days] * options[:shifts]}.\n")
+  end
+end
+
 options = {}
 
 parser = OptionParser.new do |opts|
@@ -85,3 +94,4 @@ end
 generate_shifts!(options[:shifts])
 generate_firms!(options[:firms])
 generate_days!(options[:days])
+generate_constants!(options)

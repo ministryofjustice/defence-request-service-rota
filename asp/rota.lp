@@ -43,15 +43,6 @@
 
 #end_lua.
 
-%%%%%%%%%%%%%
-% CONSTANTS %
-%%%%%%%%%%%%%
-
-#const num_slots  = 70.
-#const num_firms  = 6.
-#const num_shifts = 5.
-#const num_days   = 14.
-
 %%%%%%%%%%%%%%
 % GENERATORS %
 %%%%%%%%%%%%%%
