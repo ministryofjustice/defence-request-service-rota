@@ -1,4 +1,4 @@
-#const num_firms = 4.
+#const num_firms = 6.
 #const num_shifts = 6.
-#const num_days = 21.
-#const num_slots = 126.
+#const num_days = 14.
+#const num_slots = 84.

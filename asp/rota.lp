@@ -17,13 +17,13 @@
   end
 
   -- 2)
-  function max_num_diff_shifts(num_slots, num_firms)
-    return math.ceil(num_slots / num_firms)
+  function max_num_diff_shifts(num_shifts, num_firms, num_days)
+    return math.min((math.ceil(num_shifts / num_firms) * num_days), num_shifts)
   end
 
   -- 3)
-  function min_num_diff_shifts(num_slots, num_firms)
-    return math.floor(num_slots / num_firms)
+  function min_num_diff_shifts(num_shifts, num_firms, num_days)
+    return math.min((math.floor(num_shifts / num_firms) * num_days), num_shifts)
   end
 
   -- 4)
@@ -39,6 +39,10 @@
   -- 6)
   function max_slots_for_date(num_firms_required, num_firms)
     return math.ceil(num_firms_required / num_firms)
+  end
+
+  function min_slots_for_date(num_firms_required, num_firms)
+    return math.floor(num_firms_required / num_firms)
   end
 
 #end_lua.
@@ -111,6 +115,8 @@ allocated_on_consecutive_dates(F) :- allocated(S1, Da1, D1, F),
 % on any given date.
 :- firm_slots_for_date(_, D, N), total_slots_required_on_date(D, R),
   N > @max_slots_for_date(R, num_firms).
+:- firm_slots_for_date(_, D, N), total_slots_required_on_date(D, R),
+  N < @min_slots_for_date(R, num_firms).
 
 % Make sure that no firm appears on one shift vastly more
 % than any other.
@@ -118,15 +124,6 @@ allocated_on_consecutive_dates(F) :- allocated(S1, Da1, D1, F),
   N > @max_slots_per_shift_firm(num_slots, num_shifts, num_firms).
 :- slots_for_shift_for_firm(_, _, N),
   N < @min_slots_per_shift_firm(num_slots, num_shifts, num_firms).
-
-% Make sure that each firm is on each shift at least once.
-% This gets complicated if there are more shifts than there are
-% days (hence why Lua does this minimum calculation).
-:- diff_shifts_for_firm(_, S, N), num_days > num_shifts, N < num_shifts.
-:- diff_shifts_for_firm(_, S, N), num_days <= num_shifts, N >
-  max_num_diff_shifts(num_slots, num_firms).
-:- diff_shifts_for_firm(_, S, N), num_days <= num_shifts, N <
-  min_num_diff_shifts(num_slots, num_firms).
 
 %%%%%%%%%%%%%%%%%
 % OPTIMIZATIONS %

@@ -12,10 +12,3 @@ date(mon, 11).
 date(tue, 12).
 date(wed, 13).
 date(thu, 14).
-date(fri, 15).
-date(sat, 16).
-date(sun, 17).
-date(mon, 18).
-date(tue, 19).
-date(wed, 20).
-date(thu, 21).
