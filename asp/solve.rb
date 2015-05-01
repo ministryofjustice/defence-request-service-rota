@@ -83,6 +83,32 @@ def process_shift_totals(total_shift_clauses)
   print_table(header, table_rows)
 end
 
+def process_day_totals(total_day_clauses)
+  puts <<-EOM
+===================================================================================================
++------------+
+| DAY TOTALS |
++------------+
+
+  EOM
+  days_hsh = hasherize_day_totals(total_day_clauses)
+  days = %w[mon tue wed thu fri sat sun]
+
+  table_rows = []
+  days_hsh.keys.sort.each do |firm|
+    this_row = [firm]
+    firm_days = days_hsh[firm]
+    days.each do |day|
+      this_row << firm_days[day]
+    end
+    table_rows << this_row
+  end
+
+  header = ["", days.map(&:capitalize)].flatten
+
+  print_table(header, table_rows)
+end
+
 def extract_allocation(clause)
   clause.match(/allocated\(([^,]*),[^,]*,(\d+),([^,]*)\)/).captures
 end
@@ -93,6 +119,10 @@ end
 
 def extract_shift_total(clause)
   clause.match(/slots_for_shift_for_firm\(([^,]*),([^,]*),(\d+)\)/).captures
+end
+
+def extract_day_total(clause)
+  clause.match(/slots_for_firm_on_day\(([^,]*),([^,]*),(\d+)\)/).captures
 end
 
 def hasherize_allocations(allocate_clauses)
@@ -126,6 +156,17 @@ def hasherize_shift_totals(total_shift_clauses)
   end
 
   shift_hsh
+end
+
+def hasherize_day_totals(total_day_clauses)
+  days_hsh = total_day_clauses.inject({}) do |acc, clause|
+    firm, day, total = extract_day_total(clause)
+    acc[firm] ||= {}
+    acc[firm][day] = total.to_i
+    acc
+  end
+
+  days_hsh
 end
 
 def print_table(header, rows)
@@ -171,8 +212,7 @@ else
   allocate_clauses    = clauses.select { |x| x =~ /\Aallocated\(/ }
   total_clauses       = clauses.select { |x| x =~ /\Atotal_slots_for_firm\(/ }
   total_shift_clauses = clauses.select { |x| x =~ /\Aslots_for_shift_for_firm\(/ }
-
-  puts (clauses - allocate_clauses - total_shift_clauses - total_clauses)
+  total_day_clauses   = clauses.select { |x| x =~ /\Aslots_for_firm_on_day\(/ }
 
   process_allocations(allocate_clauses)
 
@@ -180,5 +220,7 @@ else
 
   process_shift_totals(total_shift_clauses)
 
-  print_other_clauses(clauses - allocate_clauses - total_clauses - total_shift_clauses)
+  process_day_totals(total_day_clauses)
+
+  print_other_clauses(clauses - allocate_clauses - total_clauses - total_shift_clauses - total_day_clauses)
 end

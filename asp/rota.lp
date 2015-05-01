@@ -37,7 +37,7 @@
   end
 
   -- 6)
-  function max_slots_per_day(num_firms_required, num_firms)
+  function max_slots_for_date(num_firms_required, num_firms)
     return math.ceil(num_firms_required / num_firms)
   end
 
@@ -71,15 +71,20 @@ total_slots_for_firm(F, N) :- N = #count { allocated(_, _, _, F) }, firm(F).
 
 % Define a clause which states how many slots a firm
 % has on any given date.
-firm_slots_for_day(F, Da, N) :- N = #count { allocated(_, Da, D, F) },
-  date(Da, D), firm(F).
+firm_slots_for_date(F, D, N) :- N = #count { allocated(_, _, D, F) },
+  date(_, D), firm(F).
 
 % Define a clause which ignores the date, and just tells
 % whether a firm is on shift S at any point.
 shift_allocated_to_firm(S, F) :- allocated(S, _, _, F).
 
-total_slots_required_on_day(Da, N) :-
-  N = #sum [ slots_per_shift_day(_, Da, X) = X], date(Da, _).
+% Define a clause which states how many slots are required across
+% shifts for a given day of the week.
+total_slots_required_on_date(D, N) :- date(Da, D),
+  N = #sum [ slots_per_shift_day(_, Da, X) = X].
+
+slots_for_firm_on_day(F, Da, N) :- N = #count { allocated(_, Da, _, F) },
+  date(Da, _), firm(F).
 
 % Define a clause which states how many different shifts
 % a firm has been allocated on one shift.
@@ -113,8 +118,8 @@ allocated_on_consecutive_dates(F) :- allocated(S1, Da1, D1, F),
 
 % Make sure that no firm has more than one slot
 % on any given date.
-:- firm_slots_for_day(_, Da, N), total_slots_required_on_day(Da, R),
-  N > @max_slots_per_day(R, num_firms).
+:- firm_slots_for_date(_, D, N), total_slots_required_on_date(D, R),
+  N > @max_slots_for_date(R, num_firms).
 
 % Make sure that no firm appears on one shift vastly more
 % than any other.
@@ -132,6 +137,10 @@ allocated_on_consecutive_dates(F) :- allocated(S1, Da1, D1, F),
 :- diff_shifts_for_firm(_, S, N), num_days <= num_shifts, N <
   min_num_diff_shifts(num_slots, num_firms).
 
+%%%%%%%%%%%%%%%%%
+% OPTIMIZATIONS %
+%%%%%%%%%%%%%%%%%
+
 % Minimize (don't completely disallow) the same shift on
 % consecutive days.
 #minimize { allocated_on_consecutive_dates(_) }.
@@ -144,3 +153,4 @@ allocated_on_consecutive_dates(F) :- allocated(S1, Da1, D1, F),
 #show allocated/4.
 #show total_slots_for_firm/2.
 #show slots_for_shift_for_firm/3.
+#show slots_for_firm_on_day/3.
