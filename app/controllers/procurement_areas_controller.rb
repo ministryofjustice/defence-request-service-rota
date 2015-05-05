@@ -1,6 +1,6 @@
 class ProcurementAreasController < ApplicationController
   def index
-    @procurement_areas = procurement_areas_ordered_by_name
+    @procurement_areas = ProcurementArea.ordered_by_name
   end
 
   def show
@@ -42,10 +42,6 @@ class ProcurementAreasController < ApplicationController
   end
 
   private
-
-  def procurement_areas_ordered_by_name
-    ProcurementArea.ordered_by_name
-  end
 
   def api_client
     DefenceRequestServiceRota.service(:auth_api).new(session[:user_token])
