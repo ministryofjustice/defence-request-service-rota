@@ -11,15 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424184044) do
+ActiveRecord::Schema.define(version: 20150501145629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "procurement_areas", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",                     null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.jsonb    "memberships", default: []
   end
+
+  add_index "procurement_areas", ["memberships"], name: "index_procurement_areas_on_memberships", using: :gin
 
 end

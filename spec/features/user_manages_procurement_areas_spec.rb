@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "User manages procurement areas" do
-  background { set_data_api_to FakeDataApi }
+  background { set_data_api_to FakeDataApis::FakeLawFirmsApi }
 
   scenario "creating a procurement area" do
     admin_user = create :admin_user
@@ -21,6 +21,7 @@ RSpec.feature "User manages procurement areas" do
 
     login_with admin_user
     click_link "Procurement areas"
+    click_link "View"
     click_link "Edit"
     fill_in "Name", with: "Monkey Island"
     click_button "Update Procurement area"
@@ -34,8 +35,37 @@ RSpec.feature "User manages procurement areas" do
 
     login_with admin_user
     click_link "Procurement areas"
+    click_link "View"
     click_link "Delete"
 
     expect(page).not_to have_css "h3", text: "Alderaan"
+  end
+
+  scenario "viewing a procurement area" do
+    admin_user = create :admin_user
+    create :procurement_area, name: "The Dig"
+
+    login_with admin_user
+    click_link "Procurement areas"
+    click_link "View"
+
+    expect(page).to have_css "h3", text: "The Dig"
+  end
+
+  scenario "associating a law firm with a procurement area" do
+    law_firms_set_by_fake_api = [
+      "Guilded Groom & Groom",
+      "The Impecably Suited Co."
+    ]
+    admin_user = create :admin_user
+    create :procurement_area, name: "The Dig"
+
+    login_with admin_user
+    click_link "Procurement areas"
+    click_link "View"
+    click_link "Add procurement area member"
+    click_button "Add", match: :first
+
+    expect(page).to have_content "Guilded Groom & Groom"
   end
 end

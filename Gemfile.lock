@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/ministryofjustice/defence-request-service-auth.git
-  revision: 75cf44d278bc3417695a3c1b5c7cd151dca4cada
+  revision: 16244f7998029b3194bee5334538a13dfb6f9f1e
   specs:
-    drs-auth_client (0.1.0)
+    drs-auth_client (0.2.0)
       activesupport (~> 4.2.0)
       faraday (~> 0.9.1)
 

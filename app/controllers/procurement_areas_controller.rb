@@ -1,6 +1,10 @@
 class ProcurementAreasController < ApplicationController
   def index
-    @procurement_areas = ProcurementArea.ordered_by_name
+    @procurement_areas = procurement_areas_ordered_by_name
+  end
+
+  def show
+    @procurement_area = ProcurementAreaPresenter.new(procurement_area, api_client)
   end
 
   def new
@@ -38,6 +42,14 @@ class ProcurementAreasController < ApplicationController
   end
 
   private
+
+  def procurement_areas_ordered_by_name
+    ProcurementArea.ordered_by_name
+  end
+
+  def api_client
+    DefenceRequestServiceRota.service(:auth_api).new(session[:user_token])
+  end
 
   def procurement_area_params
     params.require(:procurement_area).permit(:name)
