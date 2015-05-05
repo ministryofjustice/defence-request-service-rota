@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "User views a list of organisations" do
+  background { set_data_api_to FakeDataApi }
+
   scenario "on their dashboard" do
     admin_user = create :admin_user
     expected_organisation_names = "Tuckers", "Brighton"
