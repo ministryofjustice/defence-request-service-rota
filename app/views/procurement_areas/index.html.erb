@@ -2,4 +2,11 @@
 
 <%= link_to "Create procurement area", new_procurement_area_path %>
 
-<%= render @procurement_areas %>
+<ul>
+<% @procurement_areas.each do |procurement_area| %>
+  <li>
+    <h3><%= procurement_area.name %></h3>
+    <%= link_to "View", procurement_area_path(procurement_area) %>
+  </li>
+<% end %>
+</ul>
