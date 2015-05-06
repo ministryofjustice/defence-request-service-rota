@@ -1,48 +1,30 @@
-slots_per_shift_day(s1, mon, 1).
-slots_per_shift_day(s1, tue, 1).
-slots_per_shift_day(s1, wed, 1).
-slots_per_shift_day(s1, thu, 1).
-slots_per_shift_day(s1, fri, 1).
-slots_per_shift_day(s1, sat, 1).
-slots_per_shift_day(s1, sun, 1).
+slots_per_shift_date(s1, fri, 1, 3).
+slots_per_shift_date(s1, sat, 2, 3).
+slots_per_shift_date(s1, sun, 3, 3).
+slots_per_shift_date(s1, mon, 4, 2).
+slots_per_shift_date(s1, tue, 5, 2).
+slots_per_shift_date(s1, wed, 6, 1).
+slots_per_shift_date(s1, thu, 7, 1).
+slots_per_shift_date(s1, fri, 8, 3).
+slots_per_shift_date(s1, sat, 9, 3).
+slots_per_shift_date(s1, sun, 10, 3).
+slots_per_shift_date(s1, mon, 11, 2).
+slots_per_shift_date(s1, tue, 12, 2).
+slots_per_shift_date(s1, wed, 13, 1).
+slots_per_shift_date(s1, thu, 14, 1).
 
-slots_per_shift_day(s2, mon, 1).
-slots_per_shift_day(s2, tue, 1).
-slots_per_shift_day(s2, wed, 1).
-slots_per_shift_day(s2, thu, 1).
-slots_per_shift_day(s2, fri, 1).
-slots_per_shift_day(s2, sat, 1).
-slots_per_shift_day(s2, sun, 1).
-
-slots_per_shift_day(s3, mon, 1).
-slots_per_shift_day(s3, tue, 1).
-slots_per_shift_day(s3, wed, 1).
-slots_per_shift_day(s3, thu, 1).
-slots_per_shift_day(s3, fri, 1).
-slots_per_shift_day(s3, sat, 1).
-slots_per_shift_day(s3, sun, 1).
-
-slots_per_shift_day(s4, mon, 1).
-slots_per_shift_day(s4, tue, 1).
-slots_per_shift_day(s4, wed, 1).
-slots_per_shift_day(s4, thu, 1).
-slots_per_shift_day(s4, fri, 1).
-slots_per_shift_day(s4, sat, 1).
-slots_per_shift_day(s4, sun, 1).
-
-slots_per_shift_day(s5, mon, 1).
-slots_per_shift_day(s5, tue, 1).
-slots_per_shift_day(s5, wed, 1).
-slots_per_shift_day(s5, thu, 1).
-slots_per_shift_day(s5, fri, 1).
-slots_per_shift_day(s5, sat, 1).
-slots_per_shift_day(s5, sun, 1).
-
-slots_per_shift_day(s6, mon, 1).
-slots_per_shift_day(s6, tue, 1).
-slots_per_shift_day(s6, wed, 1).
-slots_per_shift_day(s6, thu, 1).
-slots_per_shift_day(s6, fri, 1).
-slots_per_shift_day(s6, sat, 1).
-slots_per_shift_day(s6, sun, 1).
+slots_per_shift_date(s2, fri, 1, 2).
+slots_per_shift_date(s2, sat, 2, 2).
+slots_per_shift_date(s2, sun, 3, 2).
+slots_per_shift_date(s2, mon, 4, 1).
+slots_per_shift_date(s2, tue, 5, 1).
+slots_per_shift_date(s2, wed, 6, 1).
+slots_per_shift_date(s2, thu, 7, 1).
+slots_per_shift_date(s2, fri, 8, 2).
+slots_per_shift_date(s2, sat, 9, 2).
+slots_per_shift_date(s2, sun, 10, 2).
+slots_per_shift_date(s2, mon, 11, 1).
+slots_per_shift_date(s2, tue, 12, 1).
+slots_per_shift_date(s2, wed, 13, 1).
+slots_per_shift_date(s2, thu, 14, 1).
 
