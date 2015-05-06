@@ -68,4 +68,23 @@ RSpec.feature "User manages procurement areas" do
 
     expect(page).to have_content "Guilded Groom & Groom"
   end
+
+  scenario "associating a location with a procurement area" do
+    set_data_api_to FakeDataApis::FakeLocationsApi
+
+    locations_set_by_fake_api = [
+      "Brighton Custody Suite",
+      "Brighton Magistrates Court"
+    ]
+    admin_user = create :admin_user
+    create :procurement_area, name: "Brighton"
+
+    login_with admin_user
+    click_link "Procurement areas"
+    click_link "View"
+    click_link "Add procurement area location"
+    click_button "Add", match: :first
+
+    expect(page).to have_content "Brighton Custody Suite"
+  end
 end
