@@ -13,7 +13,7 @@
 
     <ul>
     <% @procurement_area.memberships.each do |membership| %>
-      <li><%= membership.name %></li>
+      <li><%= membership.name %> - <%= link_to "Delete member", procurement_area_membership_path(procurement_area_id: @procurement_area.id, membership_uid: membership.uid), method: :delete, data: { confirm: "Are you sure?" } %> </li>
     <% end %>
     </ul>
   </section>

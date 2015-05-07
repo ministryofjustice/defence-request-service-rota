@@ -20,6 +20,18 @@ class ProcurementAreaMembershipsController < ApplicationController
     end
   end
 
+  def destroy
+    @procurement_area_membership = ProcurementAreaMembership.new(
+      procurement_area,
+      [],
+      { uid: params[:membership_uid] }
+    )
+
+    @procurement_area_membership.destroy
+
+    redirect_to procurement_area_path(procurement_area)
+  end
+
   private
 
   def procurement_area

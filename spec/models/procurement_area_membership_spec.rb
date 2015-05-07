@@ -50,6 +50,18 @@ RSpec.describe ProcurementAreaMembership, "#save" do
   end
 end
 
+RSpec.describe ProcurementAreaMembership, "#destroy" do
+  it "removes the provided member from the procurement area memberships" do
+    procurement_area = spy(:procurement_area)
+    organisations = []
+    membership_params = { uid: "abc123" }
+
+    ProcurementAreaMembership.new(procurement_area, organisations, membership_params).destroy
+
+    expect(procurement_area).to have_received(:destroy_membership!).with("abc123")
+  end
+end
+
 RSpec.describe ProcurementAreaMembership, "#eligible_organisations" do
   it "returns only organisations eligible to add as members" do
     existing_membership = { uid: "123", type: "existing example" }

@@ -18,3 +18,18 @@ RSpec.describe ProcurementArea, ".ordered_by_name" do
       to eq ["Ankh-Morpork", "Be-Morpork", "Ce-Morpork"]
   end
 end
+
+RSpec.describe ProcurementArea, "#destroy_membership!" do
+  it "removes the membership with the given member uid" do
+    area = create(:procurement_area, memberships: [
+      {
+        uid: "abc123",
+        type: "law_firm"
+      }
+    ])
+
+    area.destroy_membership!("abc123")
+
+    expect(area.memberships).to be_blank
+  end
+end

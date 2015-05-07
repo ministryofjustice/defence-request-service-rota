@@ -69,6 +69,27 @@ RSpec.feature "User manages procurement areas" do
     expect(page).to have_content "Guilded Groom & Groom"
   end
 
+  scenario "removing a law firm membership from a procurement area" do
+    membership = {
+      name: "Guilded Groom & Groom",
+      uid: "1234567890abcdef"
+    }
+    admin_user = create :admin_user
+    create :procurement_area, :with_members, name: "The Dig", memberships: [
+      {
+        uid: membership[:uid],
+        type: "law_firm"
+      }
+    ]
+
+    login_with admin_user
+    click_link "Procurement areas"
+    click_link "View"
+    click_link "Delete member"
+
+    expect(page).not_to have_content "Guilded Groom & Groom"
+  end
+
   scenario "associating a location with a procurement area" do
     set_data_api_to FakeDataApis::FakeLocationsApi
 
