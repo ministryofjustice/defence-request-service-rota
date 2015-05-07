@@ -20,6 +20,18 @@ class ProcurementAreaLocationsController < ApplicationController
     end
   end
 
+  def destroy
+    @procurement_area_location = ProcurementAreaLocation.new(
+      procurement_area,
+      [],
+      { uid: params[:location_uid] }
+    )
+
+    @procurement_area_location.destroy
+
+    redirect_to procurement_area_path(procurement_area)
+  end
+
   private
 
   def procurement_area

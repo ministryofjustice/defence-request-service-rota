@@ -50,6 +50,18 @@ RSpec.describe ProcurementAreaLocation, "#save" do
   end
 end
 
+RSpec.describe ProcurementAreaMembership, "#destroy" do
+  it "removes the provided member from the procurement area locations" do
+    procurement_area = spy(:procurement_area)
+    organisations = []
+    location_params = { uid: "bcd234" }
+
+    ProcurementAreaLocation.new(procurement_area, organisations, location_params).destroy
+
+    expect(procurement_area).to have_received(:destroy_location!).with("bcd234")
+  end
+end
+
 RSpec.describe ProcurementAreaLocation, "#eligible_organisations" do
   it "returns only organisations eligible to add as locations" do
     existing_location = { uid: "123", type: "existing example" }

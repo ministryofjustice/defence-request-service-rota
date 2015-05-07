@@ -12,4 +12,12 @@ class ProcurementArea < ActiveRecord::Base
 
     save!
   end
+
+  def destroy_location!(location_uid)
+    locations.reject! do |location|
+      location["uid"] == location_uid
+    end
+
+    save!
+  end
 end
