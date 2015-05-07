@@ -9,11 +9,16 @@ def generate_shifts!(no_shifts)
       f.write("shift(s#{i}).\n")
     end
   end
+end
 
+def generate_per_days!(no_shifts, no_days)
   File.open("per_day.lp", "w+") do |f|
-    (1..no_shifts).each do |i|
-      %w{mon tue wed thu fri sat sun}.each do |day|
-        f.write("slots_per_shift_day(s#{i}, #{day}, 1).\n")
+    (1..no_shifts).each do |s|
+      days = %w{fri sat sun mon tue wed thu}
+      day = days.cycle
+
+      (1..no_days).each do |i|
+        f.write("slots_per_shift_date(s#{s}, #{day.next}, #{i}, 1).\n")
       end
 
       f.write("\n")
@@ -92,6 +97,7 @@ if options[:debug]
 end
 
 generate_shifts!(options[:shifts])
+generate_per_days!(options[:shifts], options[:days])
 generate_firms!(options[:firms])
 generate_days!(options[:days])
 generate_constants!(options)
