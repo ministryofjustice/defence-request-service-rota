@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :procurement_areas
   resources :procurement_area_locations, only: [:new, :create]
-  resources :procurement_area_memberships, only: [:new, :create]
+  resources :procurement_area_memberships, only: [:new, :create, :destroy]
 
   get "/dashboard", to: "dashboards#show", as: :dashboard
   get "/auth/:provider/callback", to: "sessions#create"

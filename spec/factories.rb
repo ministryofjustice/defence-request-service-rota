@@ -17,5 +17,9 @@ FactoryGirl.define do
 
   factory :procurement_area do
     name "Outlands"
+
+    trait :with_members do
+      memberships { [] }
+    end
   end
 end

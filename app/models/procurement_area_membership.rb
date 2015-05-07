@@ -20,10 +20,14 @@ class ProcurementAreaMembership
   def save
     if valid?
       add_membership_to_procurement_area
-      save_procurement_area
+      save_procurement_area!
     else
       false
     end
+  end
+
+  def destroy
+    procurement_area.destroy_membership!(membership_params[:uid])
   end
 
   private
@@ -61,7 +65,7 @@ class ProcurementAreaMembership
     )
   end
 
-  def save_procurement_area
+  def save_procurement_area!
     procurement_area.save!
   end
 end
