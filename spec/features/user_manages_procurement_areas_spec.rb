@@ -108,4 +108,27 @@ RSpec.feature "User manages procurement areas" do
 
     expect(page).to have_content "Brighton Custody Suite"
   end
+
+  scenario "removing a location from a procurement area" do
+    set_data_api_to FakeDataApis::FakeLocationsApi
+
+    location = {
+      name: "Brighton Custody Suite",
+      uid: "2345678901bcdefa"
+    }
+    admin_user = create :admin_user
+    create :procurement_area, :with_locations, name: "The Dig", locations: [
+      {
+        uid: location[:uid],
+        type: "custody_suite"
+      }
+    ]
+
+    login_with admin_user
+    click_link "Procurement areas"
+    click_link "View"
+    click_link "Delete location"
+
+    expect(page).not_to have_content "Brighton Custody Suite"
+  end
 end

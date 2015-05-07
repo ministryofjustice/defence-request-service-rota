@@ -33,3 +33,18 @@ RSpec.describe ProcurementArea, "#destroy_membership!" do
     expect(area.memberships).to be_blank
   end
 end
+
+RSpec.describe ProcurementArea, "#destroy_location!" do
+  it "removes the location with the given location uid" do
+    area = create(:procurement_area, locations: [
+      {
+        uid: "bcd234",
+        type: "custody_suite"
+      }
+    ])
+
+    area.destroy_location!("bcd234")
+
+    expect(area.locations).to be_blank
+  end
+end

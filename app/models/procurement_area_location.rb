@@ -26,6 +26,10 @@ class ProcurementAreaLocation
     end
   end
 
+  def destroy
+    procurement_area.destroy_location!(location_params[:uid])
+  end
+
   private
 
   attr_reader :location_params, :procurement_area, :organisations

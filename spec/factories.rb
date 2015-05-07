@@ -21,5 +21,9 @@ FactoryGirl.define do
     trait :with_members do
       memberships { [] }
     end
+
+    trait :with_locations do
+      locations { [] }
+    end
   end
 end
