@@ -13,7 +13,7 @@ unless ENV["NO_COVERAGE"]
   end
 
   SimpleCov.start "rails" do
-    add_group "Services", "app/services/auth_service"
+    add_group "Forms", "app/forms"
 
     if defined?(CodeClimate)
       formatter SimpleCov::Formatter::MultiFormatter[

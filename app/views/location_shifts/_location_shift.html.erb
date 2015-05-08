@@ -1,0 +1,5 @@
+<div>
+  <p><%= location_shift.info %></p>
+  <%= link_to "Edit shift", edit_location_shift_path(location_shift.id) %>
+  <%= link_to "Delete shift", location_shift_path(location_shift.id), method: :delete  %>
+</div>

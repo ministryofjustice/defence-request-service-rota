@@ -8,6 +8,10 @@ class OrganisationFinder
     api_client.organisations(options)
   end
 
+  def find
+    api_client.organisation(options.fetch(:uid))
+  end
+
   private
 
   attr_reader :api_client, :options

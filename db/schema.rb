@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505143151) do
+ActiveRecord::Schema.define(version: 20150506155028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,14 +27,15 @@ ActiveRecord::Schema.define(version: 20150505143151) do
   add_index "procurement_areas", ["locations"], name: "index_procurement_areas_on_locations", using: :gin
   add_index "procurement_areas", ["memberships"], name: "index_procurement_areas_on_memberships", using: :gin
 
-  create_table "users", force: :cascade do |t|
-    t.integer  "defence_request_uid"
-    t.integer  "defence_request_access_token"
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "shifts", force: :cascade do |t|
+    t.string   "name"
+    t.string   "location_uid",  null: false
+    t.time     "starting_time"
+    t.time     "ending_time"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
-  add_index "users", ["defence_request_uid", "defence_request_access_token", "email"], name: "user_unique_index", unique: true, using: :btree
+  add_index "shifts", ["location_uid"], name: "index_shifts_on_location_uid", using: :btree
 
 end

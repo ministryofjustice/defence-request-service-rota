@@ -26,4 +26,9 @@ FactoryGirl.define do
       locations { [] }
     end
   end
+
+  factory :shift do
+    location_uid { SecureRandom.uuid }
+    starting_time { Time.parse("09:00") }
+  end
 end
