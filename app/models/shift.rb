@@ -1,4 +1,6 @@
 class Shift < ActiveRecord::Base
+  store_accessor :allocation_requirements_per_weekday, Date::DAYS_INTO_WEEK.keys
+
   validates :location_uid, presence: true
   validates :starting_time, presence: true
 

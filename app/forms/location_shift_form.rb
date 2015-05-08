@@ -22,7 +22,15 @@ class LocationShiftForm
       name: name,
       location_uid: location_uid,
       ending_time: ending_time,
-      starting_time: starting_time
+      starting_time: starting_time,
+      allocation_requirements_per_weekday: generate_default_requirements
     )
+  end
+
+  def generate_default_requirements
+    Date::DAYS_INTO_WEEK.keys.inject({}) do |result, key|
+      result[key] = 0
+      result
+    end
   end
 end

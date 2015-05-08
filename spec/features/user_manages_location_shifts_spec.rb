@@ -92,4 +92,52 @@ RSpec.feature "User manages location shifts" do
 
     expect(page).not_to have_content "The Grind"
   end
+
+  scenario "managing day requirements for a shift" do
+    create(
+      :procurement_area,
+      name: "Tatooine",
+      locations: [
+        {
+          uid: "2345678901bcdefa",
+          type: "custody_suite"
+        }
+      ]
+    )
+    shift = create(
+      :shift,
+      name: "Late shift",
+      location_uid: "2345678901bcdefa",
+      starting_time: "08:00",
+      ending_time: "16:00"
+    )
+    admin_user = create :admin_user
+
+    login_with admin_user
+    visit location_shift_path(shift, location_id: "2345678901bcdefa")
+    click_link "Manage daily requirements for shift"
+    fill_in "shift_monday", with: 1
+    fill_in "shift_thursday", with: 3
+    fill_in "shift_saturday", with: 2
+    click_button "Update requirements"
+
+    expect(
+      page_displays_allocation_per_day_of_the_week(monday: 1, thursday: 3, saturday: 2, sunday: 0)
+    ).to eq true
+  end
+
+  def page_displays_allocation_per_day_of_the_week(allocation_hash)
+    allocation_hash.inject(true) do |result, (weekday, allocation)|
+      weekday_index = all("th").map(&:text).find_index weekday.capitalize.to_s
+      result = all("td")[weekday_index].text == allocation.to_s
+
+      unless result
+        raise RSpec::Expectations::ExpectationNotMetError.new(
+          "Expected to find an allocation of #{allocation} for #{weekday.capitalize}"
+        )
+      end
+
+      result
+    end
+  end
 end

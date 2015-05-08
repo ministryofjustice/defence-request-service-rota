@@ -1,3 +1,5 @@
+<h2>Edit a shift</h2>
+
 <%= form_for @location_shift, url: location_shift_path, method: :patch do |form| %>
   <%= form.hidden_field :location_uid, value: @location_shift.location_uid %>
 
@@ -11,4 +13,4 @@
   <%= form.time_select :ending_time, include_blank: true, minute_step: 15 %>
 
   <%= form.submit "Update shift" %>
-<% end %>>
+<% end %>

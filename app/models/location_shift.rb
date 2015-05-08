@@ -1,10 +1,8 @@
 class LocationShift
+  delegate :id, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, to: :shift
+
   def initialize(shift)
     @shift = shift
-  end
-
-  def id
-    shift.id
   end
 
   def to_partial_path
