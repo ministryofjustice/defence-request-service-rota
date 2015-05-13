@@ -31,6 +31,10 @@ module FakeDataApis
       @token = token
     end
 
+    def organisation(uid)
+      organisations.detect { |org| org.uid == uid }
+    end
+
     def organisations(options = {})
       [
         OpenStruct.new(

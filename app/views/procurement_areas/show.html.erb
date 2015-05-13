@@ -23,7 +23,11 @@
 
     <ul>
     <% @procurement_area.locations.each do |location| %>
-      <li><%= location.name %> - <%= link_to "Delete location", procurement_area_location_path(procurement_area_id: @procurement_area.id, location_uid: location.uid), method: :delete, data: { confirm: "Are you sure?" } %></li>
+      <li>
+        <%= location.name %>
+        <%= link_to "Manage shifts", location_shift_path(location_id: location.uid) %>
+        <%= link_to "Delete location", procurement_area_location_path(procurement_area_id: @procurement_area.id, location_uid: location.uid), method: :delete, data: { confirm: "Are you sure?" } %>
+      </li>
     <% end %>
     </ul>
   </section>

@@ -1,0 +1,5 @@
+<h2>Manage shifts for <%= @location.name %></h2>
+
+<%= link_to "Add shift", new_location_shift_path(location_id: @location.uid) %>
+
+<%= render @location_shifts %>
