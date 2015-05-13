@@ -4,6 +4,18 @@ class Shift < ActiveRecord::Base
   validates :location_uid, presence: true
   validates :starting_time, presence: true
 
+  validates_numericality_of(
+    :monday,
+    :tuesday,
+    :wednesday,
+    :thursday,
+    :friday,
+    :saturday,
+    :sunday,
+    only_integer: true,
+    greater_than_or_equal_to: 0
+  )
+
   def self.for(location)
     where(location_uid: location.uid).order(:name)
   end
