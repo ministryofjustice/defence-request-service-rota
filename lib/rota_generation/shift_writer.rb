@@ -1,5 +1,5 @@
 module RotaGeneration
-  class ShiftsWriter
+  class ShiftWriter
     def initialize(slots, container_path)
       @slots = slots
       @container_path = container_path
