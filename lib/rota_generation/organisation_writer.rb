@@ -8,7 +8,7 @@ module RotaGeneration
     def write!
       File.open(File.join(container_path, "firms.lp"), "w+") do |f|
         organisations.each do |o|
-          f.write("firm(\"#{o.name}\").\n")
+          f.write("firm(\"#{o.uid}\").\n")
         end
       end
     end
