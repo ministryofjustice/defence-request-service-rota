@@ -16,6 +16,8 @@ class Shift < ActiveRecord::Base
     greater_than_or_equal_to: 0
   )
 
+  has_many :rota_slots
+
   def self.for(location)
     where(location_uid: location.uid).order(:name)
   end

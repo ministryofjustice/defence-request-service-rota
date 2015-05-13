@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508101320) do
+ActiveRecord::Schema.define(version: 20150512143730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,12 @@ ActiveRecord::Schema.define(version: 20150508101320) do
 
   add_index "procurement_areas", ["locations"], name: "index_procurement_areas_on_locations", using: :gin
   add_index "procurement_areas", ["memberships"], name: "index_procurement_areas_on_memberships", using: :gin
+
+  create_table "rota_slots", force: :cascade do |t|
+    t.date    "date",             null: false
+    t.integer "shift_id",         null: false
+    t.uuid    "organisation_uid", null: false
+  end
 
   create_table "shifts", force: :cascade do |t|
     t.string   "name"
