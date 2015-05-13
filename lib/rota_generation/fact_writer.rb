@@ -16,6 +16,7 @@ module RotaGeneration
     def write!
       organisation_writer.write!
       dates_writer.write!
+      shifts_writer.write!
       raise NotImplementedError.new("--- FactWriter#write!: Not yet implemented ---")
     end
 
@@ -29,6 +30,10 @@ module RotaGeneration
 
     def dates_writer
       @_dates_writer ||= RotaGeneration::DatesWriter.new(slots, container_path)
+    end
+
+    def shifts_writer
+      @_shifts_writer ||= RotaGeneration::ShiftsWriter.new(slots, container_path)
     end
   end
 end
