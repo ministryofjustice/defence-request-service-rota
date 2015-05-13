@@ -11,5 +11,9 @@
  * file per style scope.
  *
  *= require govuk_elements_extensions
- *
+ *= require_self
  */
+
+.inline-time-selects select {
+  display: inline;
+}

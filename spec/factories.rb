@@ -30,5 +30,11 @@ FactoryGirl.define do
   factory :shift do
     location_uid { SecureRandom.uuid }
     starting_time { Time.parse("09:00") }
+    allocation_requirements_per_weekday {
+      Date::DAYS_INTO_WEEK.keys.inject({}) do |result, key|
+        result[key] = 0
+        result
+      end
+    }
   end
 end

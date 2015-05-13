@@ -1,6 +1,6 @@
 <h2>Add a new shift</h2>
 
-<%= form_for @location_shift_form, url: location_shifts_path do |form| %>
+<%= form_for @location_shift_form, url: location_shifts_path, html: { class: "inline-time-selects" } do |form| %>
   <%= form.hidden_field :location_uid, value: @location_shift_form.location_uid %>
 
   <%= form.label :name %>

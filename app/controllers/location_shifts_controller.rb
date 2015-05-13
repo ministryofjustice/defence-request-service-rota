@@ -1,6 +1,7 @@
 class LocationShiftsController < ApplicationController
   def show
     @location = location
+
     @location_shifts = Shift.for(location).map do |shift|
       LocationShift.new(shift)
     end
