@@ -8,7 +8,7 @@ module RotaGeneration
     def write!
       shift_ids = identify_shift_ids
 
-      File.open(File.join(container_path, "shifts.lp"), "w+") do |f|
+      File.open(filename, "w+") do |f|
         shift_ids.each do |s_id|
           f.write("shift(#{s_id}).\n")
         end
@@ -18,6 +18,10 @@ module RotaGeneration
     private
 
     attr_reader :slots, :container_path
+
+    def filename
+      File.join(container_path, "shifts.lp")
+    end
 
     def identify_shift_ids
       slots.pluck(:shift_id).uniq

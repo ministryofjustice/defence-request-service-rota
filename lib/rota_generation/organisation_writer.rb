@@ -6,7 +6,7 @@ module RotaGeneration
     end
 
     def write!
-      File.open(File.join(container_path, "firms.lp"), "w+") do |f|
+      File.open(filename, "w+") do |f|
         organisations.each do |o|
           f.write("firm(\"#{o.uid}\").\n")
         end
@@ -16,5 +16,9 @@ module RotaGeneration
     private
 
     attr_reader :organisations, :container_path
+
+    def filename
+      File.join(container_path, "firms.lp")
+    end
   end
 end
