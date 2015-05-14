@@ -124,23 +124,34 @@ allocated_on_consecutive_dates(F) :-
 % CONSTRAINTS %
 %%%%%%%%%%%%%%%
 
-% Calculate the average number of slots each firm should have
-% and round up. Ensure that all firms have within 1 of the average
-% number of slots each.
+% Ensure that the total number of slots allocated to each firm
+% is within a fairness window.
+% This window is the range
+%   floor(X/F)..ceil(X/F)
+% where X = total number of slots
+%       F = total number of firms
 :- total_slots_for_firm(_, N), total_slots(X),
   N > @max_total_slots_allowed(X, num_firms).
 :- total_slots_for_firm(_, N), total_slots(X),
   N < @min_total_slots_allowed(X, num_firms).
 
-% Make sure that no firm has more than one slot
-% on any given date.
+% Ensure that the total number of slots allocated to each firm
+% on any specific date is within a fairness window.
+% This window is the range
+%   floor(R/F)..ceil(K/F)
+% where R = total number of slots required for that day
+%       F = total number of firms
 :- firm_slots_for_date(_, D, N), total_slots_required_on_date(D, R),
   N > @max_slots_for_date(R, num_firms).
 :- firm_slots_for_date(_, D, N), total_slots_required_on_date(D, R),
   N < @min_slots_for_date(R, num_firms).
 
-% Make sure that no firm appears on one shift vastly more
-% than any other.
+% Ensure that the total number of slots allocated to each firm
+% on any specific shift is within a fairness window.
+% This window is the range
+%   floor(K/F)..ceil(K/F)
+% where K = total number of slots required for that shift
+%       F = total number of firms
 :- slots_for_shift_for_firm(_, S, N), total_slots_for_shift(S, K),
   N > @max_slots_per_shift_firm(K, num_firms).
 :- slots_for_shift_for_firm(_, S, N), total_slots_for_shift(S, K),
@@ -151,7 +162,9 @@ allocated_on_consecutive_dates(F) :-
 %%%%%%%%%%%%%%%%%
 
 % Minimize (don't completely disallow) the same shift on
-% consecutive days.
+% consecutive days. This is a soft constraint to ensure that
+% in small scenarios (for example when num_firms < num_shifts)
+% there is a still a valid solution.
 #minimize { allocated_on_consecutive_dates(_) }.
 
 %%%%%%%%%%%%%%%%
