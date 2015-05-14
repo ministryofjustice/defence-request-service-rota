@@ -8,7 +8,7 @@ module RotaGeneration
     def write!
       date_range = identify_date_range
 
-      File.open(File.join(container_path, "dates.lp"), "w+") do |f|
+      File.open(filename, "w+") do |f|
         date_range.each do |date|
           f.write(date.strftime("date(%a, %-d).\n").downcase)
         end
@@ -18,6 +18,10 @@ module RotaGeneration
     private
 
     attr_reader :slots, :container_path
+
+    def filename
+      File.join(container_path, "dates.lp")
+    end
 
     def identify_date_range
       unique_dates = slots.pluck(:date).uniq

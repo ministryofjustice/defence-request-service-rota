@@ -6,7 +6,7 @@ module RotaGeneration
     end
 
     def write!
-      File.open(File.join(container_path, "per_day.lp"), "w+") do |f|
+      File.open(filename, "w+") do |f|
         shifts.each do |shift|
           date_range.each do |date|
             firms_required = shift.
@@ -29,6 +29,10 @@ module RotaGeneration
 
     def shift_ids
       slots.pluck(:shift_id).uniq
+    end
+
+    def filename
+      File.join(container_path, "per_day.lp")
     end
 
     def date_range
