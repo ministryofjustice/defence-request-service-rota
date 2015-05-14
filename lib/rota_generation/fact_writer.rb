@@ -5,15 +5,9 @@ module RotaGeneration
       @organisations = organisations
     end
 
-    def create_container!
-      @container_path = Dir.mktmpdir(nil, "tmp/rota_generation")
-    end
+    def write!(container_path)
+      @container_path = container_path
 
-    def destroy_container!
-      FileUtils.rm_rf(@container_path)
-    end
-
-    def write!
       organisation_writer.write!
       date_writer.write!
       shift_writer.write!
