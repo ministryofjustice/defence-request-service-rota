@@ -6,7 +6,7 @@ module RotaGeneration
     end
 
     def run!
-      Dir.mktmpdir("rota_generation", "tmp") do |container_path|
+      Dir.mktmpdir("rota_generation_", "tmp") do |container_path|
         fact_writer.write!(container_path)
         raise NotImplementedError.new("--- Generator#run!: Not yet implemented ---")
       end

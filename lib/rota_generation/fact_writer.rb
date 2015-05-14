@@ -12,11 +12,16 @@ module RotaGeneration
       date_writer.write!
       shift_writer.write!
       requirement_writer.write!
+      constant_writer.write!
     end
 
     private
 
     attr_reader :slots, :organisations, :container_path
+
+    def constant_writer
+      @_constant_writer ||= RotaGeneration::ConstantWriter.new(slots, organisations, container_path)
+    end
 
     def date_writer
       @_date_writer ||= RotaGeneration::DateWriter.new(slots, container_path)
