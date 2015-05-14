@@ -9,8 +9,13 @@ module RotaGeneration
       Dir.mktmpdir("rota_generation_", "tmp") do |container_path|
         fact_writer.write!(container_path)
         response = runner.run!(container_path)
-        raise response
-        allocator.mutate_slots!(slots, parser.parse(response))
+        solution = parser.parse!(response)
+        if solution.satisfiable?
+          raise solution.inspect
+          allocator.mutate_slots!(slots, solution)
+        else
+          raise SolutionNotFound
+        end
       end
     end
 
@@ -24,6 +29,10 @@ module RotaGeneration
 
     def runner
       @_runner ||= RotaGeneration::Runner.new
+    end
+
+    def parser
+      @_parser ||= RotaGeneration::Parser.new
     end
   end
 end
