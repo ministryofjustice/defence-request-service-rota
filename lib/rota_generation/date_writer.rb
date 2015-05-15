@@ -1,27 +1,21 @@
 module RotaGeneration
   class DateWriter
-    def initialize(slots, container_path)
+    def initialize(slots, fact_file)
       @slots = slots
-      @container_path = container_path
+      @fact_file = fact_file
     end
 
     def write!
       date_range = identify_date_range
 
-      File.open(filename, "w+") do |f|
-        date_range.each do |date|
-          f.write(date.strftime("date(%a, %-d, %-m, %Y).\n").downcase)
-        end
+      date_range.each do |date|
+        fact_file.write(date.strftime("date(%a, %-d, %-m, %Y).\n").downcase)
       end
     end
 
     private
 
-    attr_reader :slots, :container_path
-
-    def filename
-      File.join(container_path, "dates.lp")
-    end
+    attr_reader :slots, :fact_file
 
     def identify_date_range
       unique_dates = slots.map(&:date).uniq

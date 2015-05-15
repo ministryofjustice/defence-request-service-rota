@@ -1,27 +1,25 @@
 module RotaGeneration
   class RequirementWriter
-    def initialize(slots, container_path)
+    def initialize(slots, fact_file)
       @slots = slots
-      @container_path = container_path
+      @fact_file = fact_file
     end
 
     def write!
-      File.open(filename, "w+") do |f|
-        shifts.each do |shift|
-          date_range.each do |date|
-            firms_required = shift.
-                             allocation_requirements_per_weekday[date.strftime("%A").downcase]
-            f.write(
-              "slots_per_shift_date(#{shift.id},#{date.strftime("%a,%-d,%-m,%Y").downcase},#{firms_required}).\n"
-            )
-          end
+      shifts.each do |shift|
+        date_range.each do |date|
+          firms_required = shift.
+            allocation_requirements_per_weekday[date.strftime("%A").downcase]
+          fact_file.write(
+            "slots_per_shift_date(#{shift.id},#{date.strftime("%a,%-d,%-m,%Y").downcase},#{firms_required}).\n"
+          )
         end
       end
     end
 
     private
 
-    attr_reader :slots, :container_path
+    attr_reader :slots, :fact_file
 
     def shifts
       Shift.where(id: shift_ids)
@@ -29,10 +27,6 @@ module RotaGeneration
 
     def shift_ids
       slots.map(&:shift_id).uniq
-    end
-
-    def filename
-      File.join(container_path, "per_day.lp")
     end
 
     def date_range

@@ -1,27 +1,21 @@
 module RotaGeneration
   class ConstantWriter
-    def initialize(slots, organisations, container_path)
+    def initialize(slots, organisations, fact_file)
       @slots = slots
       @organisations = organisations
-      @container_path = container_path
+      @fact_file = fact_file
     end
 
     def write!
-      File.open(filename, "w+") do |f|
-        f.write("#const num_firms = #{num_firms}.\n")
-        f.write("#const num_shifts = #{num_shifts}.\n")
-        f.write("#const num_days = #{num_days}.\n")
-        f.write("#const num_slots = #{num_slots}.\n")
-      end
+      fact_file.write("#const num_firms = #{num_firms}.\n")
+      fact_file.write("#const num_shifts = #{num_shifts}.\n")
+      fact_file.write("#const num_days = #{num_days}.\n")
+      fact_file.write("#const num_slots = #{num_slots}.\n")
     end
 
     private
 
-    attr_reader :slots, :organisations, :container_path
-
-    def filename
-      File.join(container_path, "constants.lp")
-    end
+    attr_reader :slots, :organisations, :fact_file
 
     def num_firms
       organisations.length
