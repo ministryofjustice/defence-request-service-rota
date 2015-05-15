@@ -173,6 +173,6 @@ allocated_on_consecutive_dates(F) :-
 
 #hide.
 #show allocated/4.
-#show total_slots_for_firm/2.
-#show slots_for_shift_for_firm/3.
-#show slots_for_firm_on_day/3.
+% #show total_slots_for_firm/2.
+% #show slots_for_shift_for_firm/3.
+% #show slots_for_firm_on_day/3.
