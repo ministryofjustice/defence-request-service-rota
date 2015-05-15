@@ -12,7 +12,7 @@ module RotaGeneration
             firms_required = shift.
                              allocation_requirements_per_weekday[date.strftime("%A").downcase]
             f.write(
-              "slots_per_shift_date(#{shift.id},#{date.strftime("%a,%-d").downcase},#{firms_required}).\n"
+              "slots_per_shift_date(#{shift.id},#{date.strftime("%a,%-d,%-m,%Y").downcase},#{firms_required}).\n"
             )
           end
         end

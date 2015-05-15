@@ -10,7 +10,7 @@ module RotaGeneration
 
       File.open(filename, "w+") do |f|
         date_range.each do |date|
-          f.write(date.strftime("date(%a, %-d).\n").downcase)
+          f.write(date.strftime("date(%a, %-d, %-m, %Y).\n").downcase)
         end
       end
     end
