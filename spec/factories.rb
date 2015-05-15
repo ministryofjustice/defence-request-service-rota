@@ -31,7 +31,7 @@ FactoryGirl.define do
     location_uid { SecureRandom.uuid }
     starting_time { Time.parse("09:00") }
     allocation_requirements_per_weekday {
-      Date::DAYS_INTO_WEEK.keys.inject({}) do |result, key|
+      Shift::WEEKDAYS.inject({}) do |result, key|
         result[key] = 0
         result
       end

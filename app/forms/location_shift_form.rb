@@ -28,7 +28,7 @@ class LocationShiftForm
   end
 
   def generate_default_requirements
-    Date::DAYS_INTO_WEEK.keys.inject({}) do |result, key|
+    Shift::WEEKDAYS.inject({}) do |result, key|
       result[key] = 0
       result
     end

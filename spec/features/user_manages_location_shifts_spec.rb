@@ -119,21 +119,28 @@ RSpec.feature "User manages location shifts" do
     fill_in "shift_monday", with: 1
     fill_in "shift_thursday", with: 3
     fill_in "shift_saturday", with: 2
+    fill_in "shift_bank_holiday", with: 5
     click_button "Update requirements"
 
     expect(
-      page_displays_allocation_per_day_of_the_week(monday: 1, thursday: 3, saturday: 2, sunday: 0)
+      page_displays_allocation_per_day_of_the_week(
+        monday: 1,
+        thursday: 3,
+        saturday: 2,
+        sunday: 0,
+        bank_holiday: 5
+      )
     ).to eq true
   end
 
   def page_displays_allocation_per_day_of_the_week(allocation_hash)
     allocation_hash.inject(true) do |result, (weekday, allocation)|
-      weekday_index = all("th").map(&:text).find_index weekday.capitalize.to_s
+      weekday_index = all("th").map(&:text).find_index weekday.to_s.humanize
       result = all("td")[weekday_index].text == allocation.to_s
 
       unless result
         raise RSpec::Expectations::ExpectationNotMetError.new(
-          "Expected to find an allocation of #{allocation} for #{weekday.capitalize}"
+          "Expected an allocation of #{allocation} for #{weekday.capitalize}"
         )
       end
 

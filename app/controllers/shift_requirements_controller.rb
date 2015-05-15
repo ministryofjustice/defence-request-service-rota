@@ -20,6 +20,15 @@ class ShiftRequirementsController < ApplicationController
   end
 
   def shift_requirements_params
-    params.require(:shift).permit(Date::DAYS_INTO_WEEK.keys)
+    params.require(:shift).permit(
+      :monday,
+      :tuesday,
+      :wednesday,
+      :thursday,
+      :friday,
+      :saturday,
+      :sunday,
+      :bank_holiday
+    )
   end
 end
