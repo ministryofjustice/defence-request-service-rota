@@ -1,15 +1,20 @@
 <h3>Add members to <%= @procurement_area_membership.area_name %></h3>
 
 <% @procurement_area_membership.eligible_organisations.each do |org| %>
-  <div>
-    <h4><%= org.name %></h4>
+  <%= form_tag procurement_area_memberships_path do |f| %>
+    <%= hidden_field_tag :procurement_area_id, @procurement_area_membership.area_id %>
+    <%= hidden_field_tag :membership_type, org.type %>
+    <%= hidden_field_tag :membership_uid, org.uid %>
 
-    <%= button_to "Add",
+    <%= org.name %>&nbsp;&nbsp;&nbsp;
+    <%= text_field_tag :supplier_number, org.supplier_number, placeholder: "Enter Supplier number" %>
+    <%#= button_to "Add",
       procurement_area_memberships_path(
         procurement_area_id: @procurement_area_membership.area_id,
         membership_uid: org.uid,
         membership_type: org.type
       )
      %>
-  </div>
+     <%= submit_tag "Add" %>
+  <%- end %>
 <% end %>

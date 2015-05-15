@@ -20,6 +20,7 @@ class ProcurementAreaMembership
   def save
     if valid?
       add_membership_to_procurement_area
+      add_supplier_number
       save_procurement_area!
     else
       false
@@ -33,6 +34,10 @@ class ProcurementAreaMembership
   private
 
   attr_reader :membership_params, :procurement_area, :organisations
+
+  def supplier_number
+    membership_params[:supplier_number]
+  end
 
   def filter_organisations
     organisations.reject do |org|
@@ -63,6 +68,12 @@ class ProcurementAreaMembership
       uid: membership_params.fetch(:uid),
       type: membership_params.fetch(:type)
     )
+  end
+
+  def add_supplier_number
+    if supplier_number
+      OrganisationDetail.create_with(supplier_number: supplier_number).find_or_create_by(organisation_uid: membership_params[:uid])
+    end
   end
 
   def save_procurement_area!

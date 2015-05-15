@@ -15,6 +15,10 @@ class OrganisationPresenter
     data_api_model.type
   end
 
+  def supplier_number
+    OrganisationDetail.where(organisation_uid: uid).first.try(:supplier_number)
+  end
+
   private
 
   attr_reader :data_api_model

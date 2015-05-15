@@ -25,7 +25,7 @@ class ProcurementAreaPresenter
   attr_reader :procurement_area, :api_client
 
   def member_organisations_for_procurement_area
-    organisations.select { |org| membership_uids.include? org.uid }
+    organisations.select { |org| membership_uids.include? org.uid }.map { |org| OrganisationPresenter.new org }
   end
 
   def membership_uids

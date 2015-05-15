@@ -1,4 +1,8 @@
-FactoryGirl.define do
+FactoryGirl.define do  factory :organisation_detail do
+    organisation_uid "MyString"
+data ""
+  end
+
   factory :admin_user, class: Omniauth::Dsds::User do
     roles ["admin"]
 

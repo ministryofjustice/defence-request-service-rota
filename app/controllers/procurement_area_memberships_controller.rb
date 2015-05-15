@@ -53,7 +53,8 @@ class ProcurementAreaMembershipsController < ApplicationController
   def membership_params
     {
       uid: params.delete(:membership_uid),
-      type: params.delete(:membership_type)
+      type: params.delete(:membership_type),
+      supplier_number: params.delete(:supplier_number)
     }
   end
 end
