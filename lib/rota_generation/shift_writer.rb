@@ -24,7 +24,7 @@ module RotaGeneration
     end
 
     def identify_shift_ids
-      slots.pluck(:shift_id).uniq
+      slots.map(&:shift_id).uniq
     end
   end
 end

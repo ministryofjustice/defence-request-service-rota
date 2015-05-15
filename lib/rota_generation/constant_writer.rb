@@ -28,11 +28,11 @@ module RotaGeneration
     end
 
     def num_shifts
-      slots.pluck(:shift_id).uniq.count
+      slots.map(&:shift_id).uniq.count
     end
 
     def num_days
-      dates = slots.pluck(:date).uniq
+      dates = slots.map(&:date).uniq
       (dates.min..dates.max).count
     end
 
