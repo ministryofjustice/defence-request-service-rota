@@ -12,6 +12,8 @@ module RotaGeneration
         matching_slot.organisation_uid = firm_uid
         matching_slot.save!
       end
+
+      slots
     end
 
     private

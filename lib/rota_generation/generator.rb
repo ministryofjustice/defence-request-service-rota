@@ -11,11 +11,12 @@ module RotaGeneration
         response = runner.run!(container_path)
         solution = parser.parse!(response)
         if solution.satisfiable?
-          allocator.mutate_slots!(solution.clauses)
+          slots = allocator.mutate_slots!(solution.clauses)
         else
           raise SolutionNotFound
         end
       end
+      slots
     end
 
     private
