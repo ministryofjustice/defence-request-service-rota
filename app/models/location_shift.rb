@@ -1,5 +1,17 @@
 class LocationShift
-  delegate :id, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, to: :shift
+  delegate(
+    :id,
+    :allocation_requirements_per_weekday,
+    :monday,
+    :tuesday,
+    :wednesday,
+    :thursday,
+    :friday,
+    :saturday,
+    :sunday,
+    :bank_holiday,
+    to: :shift
+  )
 
   def initialize(shift)
     @shift = shift

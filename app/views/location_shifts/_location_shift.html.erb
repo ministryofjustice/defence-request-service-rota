@@ -14,8 +14,8 @@
     <table>
       <thead>
         <tr>
-        <% Date::DAYNAMES.rotate.each do |weekday| %>
-          <th><%= weekday %></th>
+        <% Shift::WEEKDAYS.each do |weekday| %>
+          <th><%= weekday.to_s.humanize %></th>
         <% end %>
         </tr>
       </thead>
@@ -28,6 +28,7 @@
           <td><%= location_shift.friday %></td>
           <td><%= location_shift.saturday %></td>
           <td><%= location_shift.sunday %></td>
+          <td><%= location_shift.bank_holiday %></td>
         </tr>
       </tbody>
     </table>

@@ -23,6 +23,9 @@
   <%= form.label :sunday %>
   <%= form.number_field :sunday, step: 1, min: 0, value: @shift.sunday %>
 
+  <%= form.label :bank_holiday %>
+  <%= form.number_field :bank_holiday, step: 1, min: 0, value: @shift.bank_holiday %>
+
   <div>
     <%= form.submit "Update requirements" %>
   </div>
