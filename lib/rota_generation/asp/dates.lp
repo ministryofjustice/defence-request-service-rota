@@ -1,20 +1,7 @@
-date(fri, 1).
-date(sat, 2).
-date(sun, 3).
-date(mon, 4).
-date(tue, 5).
-date(wed, 6).
-date(thu, 7).
-date(fri, 8).
-date(sat, 9).
-date(sun, 10).
-date(mon, 11).
-date(tue, 12).
-date(wed, 13).
-date(thu, 14).
-date(fri, 15).
-date(sat, 16).
-date(sun, 17).
-date(mon, 18).
-date(tue, 19).
-date(wed, 20).
+date(fri, 1, 5, 2015).
+date(sat, 2, 5, 2015).
+date(sun, 3, 5, 2015).
+date(mon, 4, 5, 2015).
+date(tue, 5, 5, 2015).
+date(wed, 6, 5, 2015).
+date(thu, 7, 5, 2015).
