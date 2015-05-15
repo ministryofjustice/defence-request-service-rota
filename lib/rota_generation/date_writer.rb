@@ -24,7 +24,7 @@ module RotaGeneration
     end
 
     def identify_date_range
-      unique_dates = slots.pluck(:date).uniq
+      unique_dates = slots.map(&:date).uniq
       (unique_dates.min..unique_dates.max)
     end
   end

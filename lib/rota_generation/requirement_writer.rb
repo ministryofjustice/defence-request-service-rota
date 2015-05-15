@@ -28,7 +28,7 @@ module RotaGeneration
     end
 
     def shift_ids
-      slots.pluck(:shift_id).uniq
+      slots.map(&:shift_id).uniq
     end
 
     def filename
@@ -36,7 +36,7 @@ module RotaGeneration
     end
 
     def date_range
-      unique_dates = slots.pluck(:date).uniq
+      unique_dates = slots.map(&:date).uniq
       (unique_dates.min..unique_dates.max)
     end
   end

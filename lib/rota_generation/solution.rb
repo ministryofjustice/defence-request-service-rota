@@ -2,11 +2,10 @@ module RotaGeneration
   class Solution
     def initialize(solution_string)
       @solution_string = solution_string
-      @clauses = sanitize!
     end
 
-    def sanitize!
-      solution_string.split(/\s/)
+    def clauses
+      sanitize!
     end
 
     def satisfiable?
@@ -15,6 +14,10 @@ module RotaGeneration
 
     private
 
-    attr_reader :solution_string, :clauses
+    def sanitize!
+      solution_string.split(/\s/)
+    end
+
+    attr_reader :solution_string
   end
 end

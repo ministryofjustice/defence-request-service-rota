@@ -5,9 +5,7 @@ module RotaGeneration
 
       unsatisfiable = lines.find { |l| l =~ /UNSATISFIABLE/ }
 
-      if unsatisfiable
-        return Unsatisfiable.new
-      end
+      return Unsatisfiable.new if unsatisfiable
 
       optimal_solution = lines.reverse.find do |l|
         l =~ /^allocated/

@@ -11,8 +11,7 @@ module RotaGeneration
         response = runner.run!(container_path)
         solution = parser.parse!(response)
         if solution.satisfiable?
-          raise solution.inspect
-          allocator.mutate_slots!(slots, solution)
+          allocator.mutate_slots!(solution.clauses)
         else
           raise SolutionNotFound
         end
@@ -23,16 +22,20 @@ module RotaGeneration
 
     attr_reader :slots, :organisations
 
+    def allocator
+      @_allocator ||= RotaGeneration::Allocator.new(slots)
+    end
+
     def fact_writer
       @_fact_writer ||= RotaGeneration::FactWriter.new(slots, organisations)
     end
 
-    def runner
-      @_runner ||= RotaGeneration::Runner.new
-    end
-
     def parser
       @_parser ||= RotaGeneration::Parser.new
+    end
+
+    def runner
+      @_runner ||= RotaGeneration::Runner.new
     end
   end
 end
