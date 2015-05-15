@@ -6,7 +6,7 @@ RSpec.feature "User manages location shifts" do
   scenario "creating a shift" do
     locations = [
       {
-        uid: "2345678901bcdefa",
+        uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
         type: "custody_suite"
       }
     ]
@@ -34,7 +34,7 @@ RSpec.feature "User manages location shifts" do
   scenario "editing a shift" do
     locations = [
       {
-        uid: "2345678901bcdefa",
+        uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
         type: "custody_suite"
       }
     ]
@@ -68,7 +68,7 @@ RSpec.feature "User manages location shifts" do
   scenario "deleting a shift" do
     locations = [
       {
-        uid: "2345678901bcdefa",
+        uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
         type: "custody_suite"
       }
     ]
@@ -99,7 +99,7 @@ RSpec.feature "User manages location shifts" do
       name: "Tatooine",
       locations: [
         {
-          uid: "2345678901bcdefa",
+          uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
           type: "custody_suite"
         }
       ]
@@ -107,14 +107,14 @@ RSpec.feature "User manages location shifts" do
     shift = create(
       :shift,
       name: "Late shift",
-      location_uid: "2345678901bcdefa",
+      location_uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
       starting_time: "08:00",
       ending_time: "16:00"
     )
     admin_user = create :admin_user
 
     login_with admin_user
-    visit location_shift_path(shift, location_id: "2345678901bcdefa")
+    visit location_shift_path(shift, location_id: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1")
     click_link "Manage daily requirements for shift"
     fill_in "shift_monday", with: 1
     fill_in "shift_thursday", with: 3

@@ -72,7 +72,7 @@ RSpec.feature "User manages procurement areas" do
   scenario "removing a law firm membership from a procurement area" do
     membership = {
       name: "Guilded Groom & Groom",
-      uid: "1234567890abcdef"
+      uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231"
     }
     admin_user = create :admin_user
     create :procurement_area, :with_members, name: "The Dig", memberships: [
@@ -114,7 +114,7 @@ RSpec.feature "User manages procurement areas" do
 
     location = {
       name: "Brighton Custody Suite",
-      uid: "2345678901bcdefa"
+      uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1"
     }
     admin_user = create :admin_user
     create :procurement_area, :with_locations, name: "The Dig", locations: [
