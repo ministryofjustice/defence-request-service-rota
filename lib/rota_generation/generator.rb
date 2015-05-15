@@ -6,22 +6,30 @@ module RotaGeneration
     end
 
     def run!
-      Dir.mktmpdir("rota_generation_", "tmp") do |container_path|
-        fact_writer.write!(container_path)
-        response = runner.run!(container_path)
-        solution = parser.parse!(response)
-        if solution.satisfiable?
-          slots = allocator.mutate_slots!(solution.clauses)
-        else
-          raise SolutionNotFound
-        end
+      fact_file = Tempfile.create(['rota_generation_', '.lp'], 'tmp')
+
+      fact_writer.write!(fact_file)
+
+      fact_file.close
+
+      response = runner.run!(fact_file)
+
+      File.delete(fact_file)
+
+      solution = parser.parse!(response)
+      if solution.satisfiable?
+        @slots = allocator.mutate_slots!(solution.clauses)
+      else
+        raise SolutionNotFound
       end
+
       slots
     end
 
     private
 
-    attr_reader :slots, :organisations
+    attr_accessor :slots
+    attr_reader :organisations
 
     def allocator
       @_allocator ||= RotaGeneration::Allocator.new(slots)

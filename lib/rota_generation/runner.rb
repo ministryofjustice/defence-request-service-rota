@@ -1,22 +1,17 @@
 module RotaGeneration
   class Runner
-    def run!(container_path)
-      @container_path = container_path
+    def run!(fact_file)
+      @fact_file = fact_file
 
-      copy_rota_file
       solve!
     end
 
     private
 
-    attr_reader :container_path
-
-    def copy_rota_file
-      FileUtils.cp(File.join("lib", "rota_generation", "asp", "rota.lp"), container_path)
-    end
+    attr_reader :fact_file
 
     def solve!
-      `clingo #{File.join(container_path, "*.lp")}`
+      `clingo #{fact_file.path} #{File.join("lib", "rota_generation", "asp", "rota.lp")}`
     end
   end
 end

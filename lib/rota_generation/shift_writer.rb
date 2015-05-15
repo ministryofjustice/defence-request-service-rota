@@ -1,27 +1,21 @@
 module RotaGeneration
   class ShiftWriter
-    def initialize(slots, container_path)
+    def initialize(slots, fact_file)
       @slots = slots
-      @container_path = container_path
+      @fact_file = fact_file
     end
 
     def write!
       shift_ids = identify_shift_ids
 
-      File.open(filename, "w+") do |f|
-        shift_ids.each do |s_id|
-          f.write("shift(#{s_id}).\n")
-        end
+      shift_ids.each do |s_id|
+        fact_file.write("shift(#{s_id}).\n")
       end
     end
 
     private
 
-    attr_reader :slots, :container_path
-
-    def filename
-      File.join(container_path, "shifts.lp")
-    end
+    attr_reader :slots, :fact_file
 
     def identify_shift_ids
       slots.map(&:shift_id).uniq
