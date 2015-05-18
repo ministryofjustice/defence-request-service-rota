@@ -1,13 +1,12 @@
 module RotaGeneration
   class FactWriter
-    def initialize(slots, organisations)
+    def initialize(slots, organisations, fact_file)
       @slots = slots
       @organisations = organisations
+      @fact_file = fact_file
     end
 
-    def write!(fact_file)
-      @fact_file = fact_file
-
+    def write!
       organisation_writer.write!
       date_writer.write!
       shift_writer.write!
