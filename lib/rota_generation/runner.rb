@@ -1,8 +1,10 @@
 module RotaGeneration
   class Runner
-    def run!(fact_file)
+    def initialize(fact_file)
       @fact_file = fact_file
+    end
 
+    def run!
       solve!
     end
 
