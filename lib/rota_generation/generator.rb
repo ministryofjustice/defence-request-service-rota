@@ -1,7 +1,8 @@
 module RotaGeneration
   class Generator
-    def initialize(slots, organisations)
+    def initialize(slots, shifts, organisations)
       @slots = slots
+      @shifts = shifts
       @organisations = organisations
       @fact_file = Tempfile.new(['rota_generation_', '.lp'], 'tmp')
     end
@@ -29,14 +30,14 @@ module RotaGeneration
     private
 
     attr_accessor :slots
-    attr_reader :organisations, :fact_file
+    attr_reader :organisations, :shifts, :fact_file
 
     def allocator
       @_allocator ||= RotaGeneration::Allocator.new(slots)
     end
 
     def fact_writer
-      @_fact_writer ||= RotaGeneration::FactWriter.new(slots, organisations, fact_file)
+      @_fact_writer ||= RotaGeneration::FactWriter.new(slots, shifts, organisations, fact_file)
     end
 
     def parser

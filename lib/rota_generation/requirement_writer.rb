@@ -1,7 +1,8 @@
 module RotaGeneration
   class RequirementWriter
-    def initialize(slots, fact_file)
+    def initialize(slots, shifts, fact_file)
       @slots = slots
+      @shifts = shifts
       @fact_file = fact_file
     end
 
@@ -19,15 +20,7 @@ module RotaGeneration
 
     private
 
-    attr_reader :slots, :fact_file
-
-    def shifts
-      Shift.where(id: shift_ids)
-    end
-
-    def shift_ids
-      slots.map(&:shift_id).uniq
-    end
+    attr_reader :slots, :shifts, :fact_file
 
     def date_range
       unique_dates = slots.map(&:date).uniq
