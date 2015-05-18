@@ -6,15 +6,13 @@ module RotaGeneration
     end
 
     def run!
-      fact_file = Tempfile.create(['rota_generation_', '.lp'], 'tmp')
+      fact_file = Tempfile.new(['rota_generation_', '.lp'], 'tmp')
 
       fact_writer.write!(fact_file)
-
-      fact_file.close
-
+      fact_file.flush
       response = runner.run!(fact_file)
 
-      File.delete(fact_file)
+      fact_file.close!
 
       solution = parser.parse!(response)
       if solution.satisfiable?
