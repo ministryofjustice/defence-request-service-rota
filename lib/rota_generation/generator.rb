@@ -13,8 +13,7 @@ module RotaGeneration
     end
 
     def write!
-      fact_writer.write!
-      binding.pry
+      write_facts
       fact_file.flush
     end
 
@@ -39,8 +38,12 @@ module RotaGeneration
 
     attr_reader :organisations, :fact_file, :slots, :response
 
-    def fact_writer
-      @_fact_writer ||= RotaGeneration::FactWriter.new(slots, organisations, fact_file)
+    def write_facts
+      RotaGeneration::DateWriter.new(slots, fact_file).write!
+      RotaGeneration::OrganisationWriter.new(organisations, fact_file).write!
+      RotaGeneration::ShiftWriter.new(slots, fact_file).write!
+      RotaGeneration::RequirementWriter.new(slots, fact_file).write!
+      RotaGeneration::ConstantWriter.new(slots, organisations, fact_file).write!
     end
 
     def parser
