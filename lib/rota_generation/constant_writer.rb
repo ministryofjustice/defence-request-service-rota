@@ -1,8 +1,8 @@
 module RotaGeneration
   class ConstantWriter
-    def initialize(slots, organisations, fact_file)
+    def initialize(slots, organisation_uids, fact_file)
       @slots = slots
-      @organisations = organisations
+      @organisation_uids = organisation_uids
       @fact_file = fact_file
     end
 
@@ -15,10 +15,10 @@ module RotaGeneration
 
     private
 
-    attr_reader :slots, :organisations, :fact_file
+    attr_reader :slots, :organisation_uids, :fact_file
 
     def num_firms
-      organisations.length
+      organisation_uids.length
     end
 
     def num_shifts

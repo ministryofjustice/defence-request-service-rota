@@ -1,8 +1,8 @@
 module RotaGeneration
   class Generator
-    def initialize(slots, organisations)
+    def initialize(slots, organisation_uids)
       @slots = slots
-      @organisations = organisations
+      @organisation_uids = organisation_uids
       @fact_file = Tempfile.new(['rota_generation_', '.lp'], 'tmp')
     end
 
@@ -36,14 +36,14 @@ module RotaGeneration
 
     private
 
-    attr_reader :organisations, :fact_file, :slots, :response
+    attr_reader :organisation_uids, :fact_file, :slots, :response
 
     def write_facts
       RotaGeneration::DateWriter.new(slots, fact_file).write!
-      RotaGeneration::OrganisationWriter.new(organisations, fact_file).write!
+      RotaGeneration::OrganisationWriter.new(organisation_uids, fact_file).write!
       RotaGeneration::ShiftWriter.new(slots, fact_file).write!
       RotaGeneration::RequirementWriter.new(slots, fact_file).write!
-      RotaGeneration::ConstantWriter.new(slots, organisations, fact_file).write!
+      RotaGeneration::ConstantWriter.new(slots, organisation_uids, fact_file).write!
     end
 
     def parser
