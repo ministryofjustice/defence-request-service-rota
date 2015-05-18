@@ -14,7 +14,7 @@
 /tmp/sockets/*
 /tmp/pids/*
 /tmp/sessions/*
-/tmp/rota_generation/*
+/tmp/**/*.lp
 
 *.DS_Store
 *.swo
