@@ -1,8 +1,7 @@
 module RotaGeneration
   class FactWriter
-    def initialize(slots, shifts, organisations, fact_file)
+    def initialize(slots, organisations, fact_file)
       @slots = slots
-      @shifts = shifts
       @organisations = organisations
       @fact_file = fact_file
     end
@@ -17,7 +16,7 @@ module RotaGeneration
 
     private
 
-    attr_reader :slots, :shifts, :organisations, :fact_file
+    attr_reader :slots, :organisations, :fact_file
 
     def constant_writer
       @_constant_writer ||= RotaGeneration::ConstantWriter.new(slots, organisations, fact_file)
@@ -32,7 +31,7 @@ module RotaGeneration
     end
 
     def requirement_writer
-      @_requirement_writer ||= RotaGeneration::RequirementWriter.new(slots, shifts, fact_file)
+      @_requirement_writer ||= RotaGeneration::RequirementWriter.new(slots, fact_file)
     end
 
     def shift_writer

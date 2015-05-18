@@ -1,18 +1,16 @@
 module RotaGeneration
   class RequirementWriter
-    def initialize(slots, shifts, fact_file)
+    def initialize(slots, fact_file)
       @slots = slots
-      @shifts = shifts
       @fact_file = fact_file
     end
 
     def write!
-      shifts.each do |shift|
+      shift_ids.each do |shift_id|
         date_range.each do |date|
-          firms_required = shift.
-            allocation_requirements_per_weekday[date.strftime("%A").downcase]
+          firms_required = slots.select { |s| s.shift_id == shift_id && s.date == date }.count
           fact_file.write(
-            "slots_per_shift_date(#{shift.id},#{date.strftime("%a,%-d,%-m,%Y").downcase},#{firms_required}).\n"
+            "slots_per_shift_date(#{shift_id},#{date.strftime("%a,%-d,%-m,%Y").downcase},#{firms_required}).\n"
           )
         end
       end
@@ -20,7 +18,11 @@ module RotaGeneration
 
     private
 
-    attr_reader :slots, :shifts, :fact_file
+    attr_reader :slots, :fact_file
+
+    def shift_ids
+      slots.map(&:shift_id).uniq
+    end
 
     def date_range
       unique_dates = slots.map(&:date).uniq
