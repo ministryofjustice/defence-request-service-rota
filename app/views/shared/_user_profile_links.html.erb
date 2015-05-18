@@ -1,0 +1,3 @@
+<% if current_user %>
+  <%= link_to t("sign_out"), Settings.authentication.site_url+"/users/sign_out", method: 'delete', class: 'user-links' %>
+<% end %>
