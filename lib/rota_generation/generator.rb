@@ -6,19 +6,28 @@ module RotaGeneration
       @fact_file = Tempfile.new(['rota_generation_', '.lp'], 'tmp')
     end
 
-    def run!
+    def generate_rota
+      write!
+      run!
+      parse!
+    end
+
+    def write!
       fact_writer.write!
-
+      binding.pry
       fact_file.flush
+    end
 
-      response = runner.run!
-
+    def run!
+      @response = runner.run!
       fact_file.close!
+    end
 
-      solution = parser.parse!(response)
+    def parse!
+      solution = parser.parse!
 
       if solution.satisfiable?
-        @slots = allocator.mutate_slots!(solution.clauses)
+        @slots = parser.mutate_slots!(slots, solution.clauses)
       else
         raise SolutionNotFound
       end
@@ -28,19 +37,14 @@ module RotaGeneration
 
     private
 
-    attr_accessor :slots
-    attr_reader :organisations, :fact_file
-
-    def allocator
-      @_allocator ||= RotaGeneration::Allocator.new(slots)
-    end
+    attr_reader :organisations, :fact_file, :slots, :response
 
     def fact_writer
       @_fact_writer ||= RotaGeneration::FactWriter.new(slots, organisations, fact_file)
     end
 
     def parser
-      @_parser ||= RotaGeneration::Parser.new
+      @_parser ||= RotaGeneration::Parser.new(response)
     end
 
     def runner
