@@ -24,7 +24,6 @@ module RotaGeneration
         date = Date.new(year.to_i, month.to_i, date_of_month.to_i)
         matching_slot = slots.detect { |s| s.date == date && s.shift_id == shift_id.to_i }
         matching_slot.organisation_uid = firm_uid
-        matching_slot.save!
       end
 
       slots
