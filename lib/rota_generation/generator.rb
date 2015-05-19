@@ -26,12 +26,10 @@ module RotaGeneration
       solution = parser.parse!
 
       if solution.satisfiable?
-        @slots = parser.mutate_slots!(slots, solution.clauses)
+        parser.mutate_slots!(slots, solution.clauses)
       else
-        raise SolutionNotFound
+        []
       end
-
-      slots
     end
 
     private
