@@ -1,0 +1,13 @@
+<h2>Generate a new rota</h2>
+
+<%= form_for @rota_generation_form, url: procurement_area_rotas_path do |form| %>
+  <%= hidden_field_tag :procurement_area_id, @rota_generation_form.procurement_area_id %>
+
+  <%= form.label :starting_date %>
+  <%= form.date_select :starting_date, start_year: Date.today.year, end_year: Date.today.year %>
+
+  <%= form.label :ending_date %>
+  <%= form.date_select :ending_date, start_year: Date.today.year, end_year: Date.today.year %>
+
+  <%= form.submit "Generate rota" %>
+<% end %>
