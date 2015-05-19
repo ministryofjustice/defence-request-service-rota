@@ -117,7 +117,11 @@ RSpec.describe RotaGeneration::Generator do
 
     context "with a satisfiable solution" do
       before :each do
-        @parser = double(:parser, parse!: double(:solution, satisfiable?: true, clauses: []), mutate_slots!: true)
+        @parser = double(:parser,
+                         parse!: double(:solution,
+                                        satisfiable?: true,
+                                        clauses: []),
+                         mutate_slots!: true)
         allow(RotaGeneration::Parser).to receive(:new).and_return(@parser)
       end
 

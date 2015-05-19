@@ -27,10 +27,10 @@ module RotaGeneration
 
     def num_days
       dates = slots.map(&:date).uniq
-      unless dates.empty?
-        (dates.min..dates.max).count
-      else
+      if dates.empty?
         0
+      else
+        (dates.min..dates.max).count
       end
     end
 
