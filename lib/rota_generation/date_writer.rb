@@ -19,10 +19,10 @@ module RotaGeneration
 
     def identify_date_range
       unique_dates = slots.map(&:date).uniq
-      unless unique_dates.empty?
-        (unique_dates.min..unique_dates.max)
-      else
+      if unique_dates.empty?
         []
+      else
+        (unique_dates.min..unique_dates.max)
       end
     end
   end

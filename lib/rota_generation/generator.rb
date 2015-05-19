@@ -3,7 +3,7 @@ module RotaGeneration
     def initialize(slots, organisation_uids)
       @slots = slots
       @organisation_uids = organisation_uids
-      @fact_file = Tempfile.new(['rota_generation_', '.lp'], 'tmp')
+      @fact_file = Tempfile.new(["rota_generation_", ".lp"], "tmp")
     end
 
     def generate_rota
