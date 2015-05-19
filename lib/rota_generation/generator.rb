@@ -26,7 +26,7 @@ module RotaGeneration
       solution = parser.parse!
 
       if solution.satisfiable?
-        parser.mutate_slots!(slots, solution.clauses)
+        allocator.mutate_slots!(slots, solution.clauses)
       else
         []
       end
@@ -42,6 +42,10 @@ module RotaGeneration
       RotaGeneration::ShiftWriter.new(slots, fact_file).write!
       RotaGeneration::RequirementWriter.new(slots, fact_file).write!
       RotaGeneration::ConstantWriter.new(slots, organisation_uids, fact_file).write!
+    end
+
+    def allocator
+      @_allocator ||= RotaGeneration::Allocator.new
     end
 
     def parser

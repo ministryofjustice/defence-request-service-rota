@@ -7,7 +7,7 @@ require_relative "../../../lib/rota_generation/requirement_writer"
 require_relative "../../../lib/rota_generation/constant_writer"
 require_relative "../../../lib/rota_generation/runner"
 require_relative "../../../lib/rota_generation/parser"
-require_relative "../../../lib/rota_generation/errors"
+require_relative "../../../lib/rota_generation/allocator"
 
 RSpec.describe RotaGeneration::Generator do
   describe "#generate_rota" do
@@ -123,6 +123,9 @@ RSpec.describe RotaGeneration::Generator do
                                         clauses: []),
                          mutate_slots!: true)
         allow(RotaGeneration::Parser).to receive(:new).and_return(@parser)
+
+        @allocator = double(:allocator, mutate_slots!: [])
+        allow(RotaGeneration::Allocator).to receive(:new).and_return(@allocator)
       end
 
       it "calls parse!" do
@@ -132,7 +135,7 @@ RSpec.describe RotaGeneration::Generator do
       end
 
       it "mutates the provided slots" do
-        expect(@parser).to receive(:mutate_slots!).with([], [])
+        expect(@allocator).to receive(:mutate_slots!).with([], [])
 
         subject.parse!
       end
