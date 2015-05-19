@@ -4,14 +4,11 @@ require_relative "../../../lib/rota_generation/organisation_writer"
 RSpec.describe RotaGeneration::OrganisationWriter do
   describe "#write!" do
     it "writes the organisations out to the provided file" do
-      organisations = [
-        double(:organisation, uid: "12345"),
-        double(:organisation, uid: "98765")
-      ]
+      organisation_uids = ["12345", "98765"]
 
       fake_file = StringIO.new
 
-      RotaGeneration::OrganisationWriter.new(organisations, fake_file).write!
+      RotaGeneration::OrganisationWriter.new(organisation_uids, fake_file).write!
 
       expect(fake_file.string).to eq <<-FILE
 firm("12345").
