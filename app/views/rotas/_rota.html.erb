@@ -1,0 +1,21 @@
+<h3>Rota for <%= @rota.procurement_area.name %></h3>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Date<th>
+      <% @rota.rota_slots.map(&:shift).uniq.each do |shift| %>
+      <th>Shift <%= shift.id %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+  <% @rota.rota_slots.sort_by(&:shift_id).each do |slot| %>
+    <tr>
+      <td><%= slot.date %></td>
+      <td><%= slot.shift.id %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

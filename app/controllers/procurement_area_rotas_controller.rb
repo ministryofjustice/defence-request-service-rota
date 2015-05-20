@@ -1,6 +1,9 @@
+require_relative "../../lib/rota_generation"
+
 class ProcurementAreaRotasController < ApplicationController
   def index
     @procurement_area = procurement_area
+    @rota = Rota.new(RotaSlot.for(procurement_area), procurement_area)
   end
 
   def new
@@ -8,8 +11,14 @@ class ProcurementAreaRotasController < ApplicationController
   end
 
   def create
-    allocated_rota_slots
-    organisations
+    assigned_rota_slots = RotaGeneration::Generator.new(
+      allocated_rota_slots,
+      organisations
+    ).generate_rota
+
+    if assigned_rota_slots.map(&:save!)
+      redirect_to procurement_area_rotas_path(procurement_area_id: procurement_area.id)
+    end
   end
 
   private
@@ -19,7 +28,11 @@ class ProcurementAreaRotasController < ApplicationController
   end
 
   def allocated_rota_slots
-    RotaSlotAllocator.new(date_range: build_date_range, shifts: shifts_for_location).allocate
+    RotaSlotAllocator.new(
+      date_range: build_date_range,
+      shifts: shifts_for_location,
+      procurement_area: procurement_area
+    ).allocate
   end
 
   def build_date_range
