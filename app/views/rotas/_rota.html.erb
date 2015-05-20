@@ -4,17 +4,23 @@
 <table>
   <thead>
     <tr>
-      <th>Date<th>
-      <% @rota.rota_slots.map(&:shift).uniq.each do |shift| %>
-      <th>Shift <%= shift.id %></th>
+      <th>Date</th>
+      <% @rota.rota_slots.map(&:shift).uniq.sort_by(&:name).each do |shift| %>
+      <th>
+      <%= @rota.locations.detect { |o| o.uid == shift.location_uid }.name %>
+      </br>
+      <%= LocationShift.new(shift).info %>
+      </th>
       <% end %>
     </tr>
   </thead>
   <tbody>
-  <% @rota.rota_slots.sort_by(&:shift_id).each do |slot| %>
+  <% @rota.rota_slots.sort_by(&:date).group_by(&:date).each do |date, slots| %>
     <tr>
-      <td><%= slot.date %></td>
-      <td><%= slot.shift.id %></td>
+      <td><%= date.strftime("%A, %-d %b %Y") %></td>
+      <% @rota.rota_slots.map(&:shift).uniq.sort_by(&:name).each do |shift| %>
+      <td><%= slots.select { |s| s.shift_id == shift.id }.map(&:organisation_uid).map { |o| @rota.organisations.detect { |os| os.uid == o }}.map(&:name).join("</br></br>").html_safe %></td>
+      <% end %>
     </tr>
   <% end %>
   </tbody>
