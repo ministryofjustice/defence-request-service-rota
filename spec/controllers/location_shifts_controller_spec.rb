@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe LocationShiftsController do
   include FakeDataApis
 
+  it { should be_kind_of(ApiEnabledController) }
+
   describe "POST create" do
     it "renders new if the shift could not be added" do
       set_data_api_to FakeDataApis::FakeLocationsApi
