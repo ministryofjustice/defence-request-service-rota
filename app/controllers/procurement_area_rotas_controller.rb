@@ -3,7 +3,7 @@ require_relative "../../lib/rota_generation"
 class ProcurementAreaRotasController < ApplicationController
   def index
     @procurement_area = procurement_area
-    @rota = Rota.new(RotaSlot.for(procurement_area), procurement_area, locations, organisations_objs)
+    @rota = Rota.new(RotaSlot.for(procurement_area), procurement_area, api_client)
   end
 
   def new
@@ -49,13 +49,5 @@ class ProcurementAreaRotasController < ApplicationController
 
   def api_client
     DefenceRequestServiceRota.service(:auth_api).new(session[:user_token])
-  end
-
-  def locations
-    OrganisationFinder.new(api_client, uids: @procurement_area.locations.map { |l| l.fetch("uid") }).find_all
-  end
-
-  def organisations_objs
-    OrganisationFinder.new(api_client, uids: RotaSlot.for(@procurement_area).map(&:organisation_uid).uniq).find_all
   end
 end
