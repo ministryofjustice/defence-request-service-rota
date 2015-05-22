@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe ProcurementAreaLocationsController do
   include FakeDataApis
 
+  it { should be_kind_of(ApiEnabledController) }
+
   describe "POST create" do
     it "adds a location to a procurement area" do
       set_data_api_to FakeDataApis::FakeLocationsApi

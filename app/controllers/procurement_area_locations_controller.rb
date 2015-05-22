@@ -1,4 +1,4 @@
-class ProcurementAreaLocationsController < ApplicationController
+class ProcurementAreaLocationsController < ApiEnabledController
   def new
     @procurement_area_location = ProcurementAreaLocation.new(
       procurement_area,
@@ -34,26 +34,17 @@ class ProcurementAreaLocationsController < ApplicationController
 
   private
 
-  def procurement_area
-    ProcurementArea.find(params[:procurement_area_id])
+  def location_params
+    { uid: params.delete(:location_uid), type: params.delete(:location_type) }
   end
 
   def organisations
-    retrieve_organisations.map { |org| OrganisationPresenter.new(org) }
+    all_organisations_of_type(types: %w(court custody_suite)).map do |organisation|
+      OrganisationPresenter.new(organisation)
+    end
   end
 
-  def retrieve_organisations
-    OrganisationFinder.new(api_client, types: %w(court custody_suite)).find_all
-  end
-
-  def api_client
-    DefenceRequestServiceRota.service(:auth_api).new(session[:user_token])
-  end
-
-  def location_params
-    {
-      uid: params.delete(:location_uid),
-      type: params.delete(:location_type)
-    }
+  def procurement_area
+    @_procurement_area ||= ProcurementArea.find(params[:procurement_area_id])
   end
 end

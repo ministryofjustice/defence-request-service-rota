@@ -1,4 +1,4 @@
-class LocationShiftsController < ApplicationController
+class LocationShiftsController < ApiEnabledController
   def show
     @location = location
 
@@ -54,27 +54,19 @@ class LocationShiftsController < ApplicationController
   private
 
   def location
-    OrganisationFinder.new(api_client, uid: location_id).find
+    find_organisation_by_uid(uid: params[:location_id])
   end
 
   def location_shift
     Shift.find(params[:id])
   end
 
-  def api_client
-    DefenceRequestServiceRota.service(:auth_api).new(session[:user_token])
-  end
-
-  def location_id
-    params[:location_id]
-  end
-
-  def location_shift_params_from(action_params)
+  def location_shift_params_from(params_for_action)
     {
-      name: action_params.fetch(:name),
-      location_uid: action_params.fetch(:location_uid),
-      starting_time: StartingTime.new(action_params).build,
-      ending_time: EndingTime.new(action_params).build,
+      name: params_for_action.fetch(:name),
+      location_uid: params_for_action.fetch(:location_uid),
+      starting_time: StartingTime.new(params_for_action).build,
+      ending_time: EndingTime.new(params_for_action).build,
     }
   end
 end

@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe ProcurementAreasController do
+  it { should be_kind_of(ApiEnabledController) }
+
   describe "POST create" do
     it "saves the procurement area and redirects to index" do
       stub_signed_in_user
