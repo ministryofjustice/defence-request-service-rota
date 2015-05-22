@@ -1,7 +1,7 @@
-require_relative "../../app/models/location_shift"
+require_relative "../../app/models/shift_presenter"
 require "active_support/core_ext/time/conversions"
 
-RSpec.describe LocationShift, "#info" do
+RSpec.describe ShiftPresenter, "#info" do
   context "for a shift with starting and ending time" do
     it "returns a representation of the shift information" do
       shift = double(
@@ -11,7 +11,7 @@ RSpec.describe LocationShift, "#info" do
         ending_time: Time.parse("17:00")
       )
 
-      location_shift_info = LocationShift.new(shift).info
+      location_shift_info = ShiftPresenter.new(shift).info
 
       expect(location_shift_info).to eq "Example shift - 08:00 / 17:00"
     end
@@ -26,7 +26,7 @@ RSpec.describe LocationShift, "#info" do
         ending_time: nil
       )
 
-      location_shift_info = LocationShift.new(shift).info
+      location_shift_info = ShiftPresenter.new(shift).info
 
       expect(location_shift_info).to eq "Example shift - 08:00 / until release"
     end
@@ -41,7 +41,7 @@ RSpec.describe LocationShift, "#info" do
         ending_time: Time.parse("17:00")
       )
 
-      location_shift_info = LocationShift.new(shift).info
+      location_shift_info = ShiftPresenter.new(shift).info
 
       expect(location_shift_info).to eq "N/A - 08:00 / 17:00"
     end

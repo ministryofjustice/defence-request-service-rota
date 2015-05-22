@@ -3,7 +3,7 @@ class LocationShiftsController < ApiEnabledController
     @location = location
 
     @location_shifts = Shift.for(location).map do |shift|
-      LocationShift.new(shift)
+      ShiftPresenter.new(shift)
     end
   end
 
