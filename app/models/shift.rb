@@ -19,7 +19,7 @@ class Shift < ActiveRecord::Base
 
   has_many :rota_slots
 
-  def self.for(location_uids)
-    where(location_uid: location_uids).order(:name)
+  def self.for(location_uid)
+    where(location_uid: location_uid).order(:name)
   end
 end
