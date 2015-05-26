@@ -6,22 +6,26 @@ RSpec.feature "User manages rota" do
   scenario "for a procurement area" do
     locations = [
       {
-        name: "Custody Suite",
-        uid: "33432f6a-a6a5-4f52-8ede-58d6127ba232"
+        uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
+        name: "Brighton Custody Suite",
+        type: "custody_suite",
       },
       {
-        name: "Court",
-        uid: "34452f6a-a6a5-4f52-8ede-58d6127ba232"
+        uid: "93b8ef50-fe12-4d80-9e7e-05e98232ec13",
+        name: "Brighton Magistrates Court",
+        type: "court",
       },
     ]
     memberships = [
       {
+        uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231",
         name: "Guilded Groom & Groom",
-        uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231"
+        type: "law_firm",
       },
       {
+        uid: "e9001714-2cc0-4cc9-b8a4-e7e1d1368da9",
         name: "The Impecably Suited Co.",
-        uid: "32252f6a-a6a5-4f52-8ede-58d6127ba232"
+        type: "law_office",
       },
     ]
     procurement_area = create(
@@ -30,8 +34,8 @@ RSpec.feature "User manages rota" do
       locations: locations,
       memberships: memberships
     )
-    create :shift, location_uid: locations[0][:uid], monday: 1
-    create :shift, location_uid: locations[0][:uid], tuesday: 1, monday: 1
+    create :shift, name: "Morning Shift", location_uid: locations[0][:uid], monday: 1
+    create :shift, name: "Evening Shift", location_uid: locations[0][:uid], tuesday: 1, monday: 1
     admin_user = create :admin_user
 
     login_with admin_user
@@ -45,7 +49,6 @@ RSpec.feature "User manages rota" do
     select "January", from: "rota_generation_form[ending_date(2i)]"
     select "20", from: "rota_generation_form[ending_date(3i)]"
     click_button "Generate rota"
-    save_and_open_page
 
     expect(page).to have_text "Rota for Gotham"
   end
