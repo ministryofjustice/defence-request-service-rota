@@ -1,15 +1,9 @@
 class ProcurementAreaPresenter
-  def initialize(procurement_area, api_client)
+  delegate :id, :name, to: :procurement_area
+
+  def initialize(procurement_area, organisations)
     @procurement_area = procurement_area
-    @api_client = api_client
-  end
-
-  def id
-    procurement_area.id
-  end
-
-  def name
-    procurement_area.name
+    @organisations = organisations
   end
 
   def memberships
@@ -22,14 +16,14 @@ class ProcurementAreaPresenter
 
   private
 
-  attr_reader :procurement_area, :api_client
+  attr_reader :procurement_area, :organisations
 
   def member_organisations_for_procurement_area
     organisations.select { |org| membership_uids.include? org.uid }
   end
 
   def membership_uids
-    procurement_area.memberships.map { |membership| membership["uid"] }
+    procurement_area.members.map { |membership| membership["uid"] }
   end
 
   def location_organisations_for_procurement_area
@@ -38,9 +32,5 @@ class ProcurementAreaPresenter
 
   def location_uids
     procurement_area.locations.map { |location| location["uid"] }
-  end
-
-  def organisations
-    api_client.organisations
   end
 end

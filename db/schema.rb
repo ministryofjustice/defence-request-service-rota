@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512143730) do
+ActiveRecord::Schema.define(version: 20150528120346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,17 +21,18 @@ ActiveRecord::Schema.define(version: 20150512143730) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.jsonb    "memberships", default: []
-    t.jsonb    "locations",   default: []
   end
 
-  add_index "procurement_areas", ["locations"], name: "index_procurement_areas_on_locations", using: :gin
   add_index "procurement_areas", ["memberships"], name: "index_procurement_areas_on_memberships", using: :gin
 
   create_table "rota_slots", force: :cascade do |t|
-    t.date    "date",             null: false
-    t.integer "shift_id",         null: false
-    t.uuid    "organisation_uid", null: false
+    t.date    "date",                null: false
+    t.integer "shift_id",            null: false
+    t.uuid    "organisation_uid",    null: false
+    t.integer "procurement_area_id"
   end
+
+  add_index "rota_slots", ["procurement_area_id"], name: "index_rota_slots_on_procurement_area_id", using: :btree
 
   create_table "shifts", force: :cascade do |t|
     t.string   "name"
@@ -46,4 +47,5 @@ ActiveRecord::Schema.define(version: 20150512143730) do
   add_index "shifts", ["allocation_requirements_per_weekday"], name: "index_shifts_on_allocation_requirements_per_weekday", using: :gin
   add_index "shifts", ["location_uid"], name: "index_shifts_on_location_uid", using: :btree
 
+  add_foreign_key "rota_slots", "procurement_areas"
 end

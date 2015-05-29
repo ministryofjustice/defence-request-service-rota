@@ -1,28 +1,6 @@
 require_relative "../../app/models/procurement_area_membership"
 require "ostruct"
 
-RSpec.describe ProcurementAreaMembership, "#area_name" do
-  it "returns the name of the passed in procurement area" do
-    procurement_area = double(:procurement_area, name: "Example area")
-    organisations = double(:organisations)
-
-    membership = ProcurementAreaMembership.new(procurement_area, organisations)
-
-    expect(membership.area_name).to eq "Example area"
-  end
-end
-
-RSpec.describe ProcurementAreaMembership, "#area_id" do
-  it "returns the id of the passed in procurement area" do
-    procurement_area = double(:procurement_area, id: 1)
-    organisations = double(:organisations)
-
-    membership = ProcurementAreaMembership.new(procurement_area, organisations)
-
-    expect(membership.area_id).to eq 1
-  end
-end
-
 RSpec.describe ProcurementAreaMembership, "#save" do
   it "adds the membership details to the procurement area" do
     procurement_area = spy(:procurement_area)
@@ -67,15 +45,16 @@ RSpec.describe ProcurementAreaMembership, "#eligible_organisations" do
     existing_membership = { uid: "123", type: "existing example" }
     procurement_area = double(:procurement_area, memberships: [existing_membership])
     organisations = [
-      OpenStruct.new(uid: "345", type: "eligble member"),
+      OpenStruct.new(uid: "345", type: "custody_suite"),
       OpenStruct.new(uid: "123", type: "existing example"),
-      OpenStruct.new(uid: "678", type: "eliglble member")
+      OpenStruct.new(uid: "678", type: "law_firm"),
+      OpenStruct.new(uid: "678", type: "court")
     ]
 
     membership = ProcurementAreaMembership.new(procurement_area, organisations)
 
-    expect(membership.eligible_organisations).not_to include(organisations[1])
-    expect(membership.eligible_organisations).to include(organisations[0])
-    expect(membership.eligible_organisations).to include(organisations[2])
+    expect(membership.eligible_members).not_to include(organisations[1])
+    # expect(membership.eligible_organisations).to include(organisations[0])
+    # expect(membership.eligible_organisations).to include(organisations[2])
   end
 end

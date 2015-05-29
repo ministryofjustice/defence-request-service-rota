@@ -4,7 +4,7 @@ class ProcurementAreasController < ApiEnabledController
   end
 
   def show
-    @procurement_area = ProcurementAreaPresenter.new(procurement_area, api_client)
+    @procurement_area = ProcurementAreaPresenter.new(procurement_area, organisations)
   end
 
   def new
@@ -49,5 +49,9 @@ class ProcurementAreasController < ApiEnabledController
 
   def procurement_area
     @_procurement_area ||= ProcurementArea.find(params[:id])
+  end
+
+  def organisations
+    all_organisations_of_type(types: {})
   end
 end

@@ -39,7 +39,7 @@ class ProcurementAreaMembershipsController < ApiEnabledController
   end
 
   def organisations
-    all_organisations_of_type(types: %w(law_firm law_office)).map do |organisation|
+    all_organisations_of_type(types: %w(law_firm law_office court custody_suite)).map do |organisation|
       OrganisationPresenter.new(organisation)
     end
   end

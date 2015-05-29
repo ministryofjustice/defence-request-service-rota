@@ -1,20 +1,18 @@
 class ProcurementAreaMembership
+  delegate :id, :name, to: :procurement_area
+
   def initialize(procurement_area, organisations, membership_params = {})
     @procurement_area = procurement_area
     @organisations = organisations
     @membership_params = membership_params
   end
 
-  def area_name
-    procurement_area.name
+  def eligible_members
+    eligible_organisations[0]
   end
 
-  def area_id
-    procurement_area.id
-  end
-
-  def eligible_organisations
-    filter_organisations
+  def eligible_locations
+    eligible_organisations[1]
   end
 
   def save
@@ -33,6 +31,10 @@ class ProcurementAreaMembership
   private
 
   attr_reader :membership_params, :procurement_area, :organisations
+
+  def eligible_organisations
+    filter_organisations.partition { |org| ProcurementArea::MEMBER_TYPES.any? { |type| type == org.type } }
+  end
 
   def filter_organisations
     organisations.reject do |org|

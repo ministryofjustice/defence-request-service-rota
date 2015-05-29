@@ -13,7 +13,7 @@ RSpec.feature "User manages location shifts" do
     procurement_area = create(
       :procurement_area,
       name: "Tatooine",
-      locations: locations
+      memberships: locations
     )
     admin_user = create :admin_user
     login_with admin_user
@@ -41,7 +41,7 @@ RSpec.feature "User manages location shifts" do
     procurement_area = create(
       :procurement_area,
       name: "Tatooine",
-      locations: locations
+      memberships: locations
     )
     create(
       :shift,
@@ -75,7 +75,7 @@ RSpec.feature "User manages location shifts" do
     procurement_area = create(
       :procurement_area,
       name: "Tatooine",
-      locations: locations
+      memberships: locations
     )
     create(
       :shift,
@@ -97,7 +97,7 @@ RSpec.feature "User manages location shifts" do
     create(
       :procurement_area,
       name: "Tatooine",
-      locations: [
+      memberships: [
         {
           uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
           type: "custody_suite"

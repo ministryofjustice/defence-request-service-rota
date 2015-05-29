@@ -64,7 +64,9 @@ RSpec.feature "User manages procurement areas" do
     click_link "Procurement areas"
     click_link "View"
     click_link "Add procurement area member"
-    click_button "Add", match: :first
+    within ".members" do
+      click_button "Add", match: :first
+    end
 
     expect(page).to have_content "Guilded Groom & Groom"
   end
@@ -103,8 +105,10 @@ RSpec.feature "User manages procurement areas" do
     login_with admin_user
     click_link "Procurement areas"
     click_link "View"
-    click_link "Add procurement area location"
-    click_button "Add", match: :first
+    click_link "Add procurement area member"
+    within ".locations" do
+      click_button "Add", match: :first
+    end
 
     expect(page).to have_content "Brighton Custody Suite"
   end
@@ -117,7 +121,7 @@ RSpec.feature "User manages procurement areas" do
       uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1"
     }
     admin_user = create :admin_user
-    create :procurement_area, :with_locations, name: "The Dig", locations: [
+    create :procurement_area, name: "The Dig", memberships: [
       {
         uid: location[:uid],
         type: "custody_suite"

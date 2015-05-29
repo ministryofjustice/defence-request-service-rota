@@ -3,14 +3,12 @@
 
   <div>
     <%= link_to "Add procurement area member", new_procurement_area_membership_path(procurement_area_id: @procurement_area.id) %>
-    <%= link_to "Add procurement area location", new_procurement_area_location_path(procurement_area_id: @procurement_area.id) %>
     <%= link_to "Edit", edit_procurement_area_path(@procurement_area.id) %>
     <%= link_to "Delete", procurement_area_path(@procurement_area.id), method: :delete, data: { confirm: "Are you sure?" } %>
   </div>
 
   <section>
     <h3>Memberships</h3>
-
     <ul>
     <% @procurement_area.memberships.each do |membership| %>
       <li><%= membership.name %> - <%= link_to "Delete member", procurement_area_membership_path(procurement_area_id: @procurement_area.id, membership_uid: membership.uid), method: :delete, data: { confirm: "Are you sure?" } %> </li>
@@ -26,7 +24,7 @@
       <li>
         <%= location.name %>
         <%= link_to "Manage shifts", location_shift_path(location_id: location.uid) %>
-        <%= link_to "Delete location", procurement_area_location_path(procurement_area_id: @procurement_area.id, location_uid: location.uid), method: :delete, data: { confirm: "Are you sure?" } %>
+        <%= link_to "Delete location", procurement_area_membership_path(procurement_area_id: @procurement_area.id, membership_uid: location.uid), method: :delete, data: { confirm: "Are you sure?" } %>
       </li>
     <% end %>
     </ul>
