@@ -21,7 +21,7 @@ end
 
 RSpec.describe ProcurementArea, "#destroy_membership!" do
   it "removes the membership with the given member uid" do
-    area = create(:procurement_area, memberships: [
+    area = build_stubbed(:procurement_area, memberships: [
       {
         uid: "abc123",
         type: "law_firm"
@@ -34,17 +34,19 @@ RSpec.describe ProcurementArea, "#destroy_membership!" do
   end
 end
 
-RSpec.describe ProcurementArea, "#destroy_location!" do
-  it "removes the location with the given location uid" do
-    area = create(:procurement_area, locations: [
+RSpec.describe ProcurementArea, "#membership_uids" do
+  it "returns a list of uids for the area memberships" do
+    area = build_stubbed(:procurement_area, memberships: [
       {
-        uid: "bcd234",
-        type: "custody_suite"
+        uid: "abc123",
+        type: "law_firm"
+      },
+      {
+        uid: "def456",
+        type: "court"
       }
     ])
 
-    area.destroy_location!("bcd234")
-
-    expect(area.locations).to be_blank
+    expect(area.membership_uids).to eq %w(abc123 def456)
   end
 end

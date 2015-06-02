@@ -14,7 +14,6 @@ class Shift < ActiveRecord::Base
 
   validates :location_uid, presence: true
   validates :starting_time, presence: true
-
   validates_numericality_of WEEKDAYS, only_integer: true,
     greater_than_or_equal_to: 0
 

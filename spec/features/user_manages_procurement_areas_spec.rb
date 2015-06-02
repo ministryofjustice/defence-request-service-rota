@@ -64,7 +64,9 @@ RSpec.feature "User manages procurement areas" do
     click_link "Procurement areas"
     click_link "View"
     click_link "Add procurement area member"
-    click_button "Add", match: :first
+    within ".members" do
+      click_button "Add", match: :first
+    end
 
     expect(page).to have_content "Guilded Groom & Groom"
   end
@@ -72,15 +74,15 @@ RSpec.feature "User manages procurement areas" do
   scenario "removing a law firm membership from a procurement area" do
     membership = {
       name: "Guilded Groom & Groom",
-      uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231"
+      uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231",
+      type: "law_firm"
     }
     admin_user = create :admin_user
-    create :procurement_area, :with_members, name: "The Dig", memberships: [
-      {
-        uid: membership[:uid],
-        type: "law_firm"
-      }
-    ]
+    create(
+      :procurement_area,
+      name: "The Dig",
+      memberships: [{ uid: membership[:uid], type: "law_firm" }]
+    )
 
     login_with admin_user
     click_link "Procurement areas"
@@ -103,8 +105,10 @@ RSpec.feature "User manages procurement areas" do
     login_with admin_user
     click_link "Procurement areas"
     click_link "View"
-    click_link "Add procurement area location"
-    click_button "Add", match: :first
+    click_link "Add procurement area member"
+    within ".locations" do
+      click_button "Add", match: :first
+    end
 
     expect(page).to have_content "Brighton Custody Suite"
   end
@@ -114,10 +118,11 @@ RSpec.feature "User manages procurement areas" do
 
     location = {
       name: "Brighton Custody Suite",
-      uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1"
+      uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
+      type: "custody_suite"
     }
     admin_user = create :admin_user
-    create :procurement_area, :with_locations, name: "The Dig", locations: [
+    create :procurement_area, name: "The Dig", memberships: [
       {
         uid: location[:uid],
         type: "custody_suite"
@@ -127,7 +132,9 @@ RSpec.feature "User manages procurement areas" do
     login_with admin_user
     click_link "Procurement areas"
     click_link "View"
-    click_link "Delete location"
+    within ".locations" do
+      click_link "Delete location", match: :first
+    end
 
     expect(page).not_to have_content "Brighton Custody Suite"
   end

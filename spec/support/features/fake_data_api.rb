@@ -9,6 +9,16 @@ module FakeDataApis
     end
 
     def organisations(options = {})
+      if options[:uids]
+        options[:uids].flat_map { |uid| law_firms.select { |law_firm| law_firm.uid == uid } }
+      else
+        law_firms
+      end
+    end
+
+    private
+
+    def law_firms
       [
         OpenStruct.new(
           uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231",
@@ -32,10 +42,20 @@ module FakeDataApis
     end
 
     def organisation(uid)
-      organisations.detect { |org| org.uid == uid }
+      locations.detect { |org| org.uid == uid }
     end
 
     def organisations(options = {})
+      if options[:uids]
+        options[:uids].flat_map { |uid| locations.select { |location| location.uid == uid } }
+      else
+        locations
+      end
+    end
+
+    private
+
+    def locations
       [
         OpenStruct.new(
           uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",

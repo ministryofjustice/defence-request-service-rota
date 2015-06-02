@@ -1,20 +1,18 @@
 class ProcurementAreaMembership
+  delegate :id, :name, to: :procurement_area
+
   def initialize(procurement_area, organisations, membership_params = {})
     @procurement_area = procurement_area
     @organisations = organisations
     @membership_params = membership_params
   end
 
-  def area_name
-    procurement_area.name
+  def eligible_members
+    organisations.reject { |org| procurement_area.members.any? { |member| member["uid"] == org.uid } }
   end
 
-  def area_id
-    procurement_area.id
-  end
-
-  def eligible_organisations
-    filter_organisations
+  def eligible_locations
+    organisations.reject { |org| procurement_area.locations.any? { |location| location["uid"] == org.uid } }
   end
 
   def save
@@ -33,12 +31,6 @@ class ProcurementAreaMembership
   private
 
   attr_reader :membership_params, :procurement_area, :organisations
-
-  def filter_organisations
-    organisations.reject do |org|
-      procurement_area.memberships.flat_map(&:values).include? org.uid
-    end
-  end
 
   def valid?
     membership_params_are_present? &&

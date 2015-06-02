@@ -3,10 +3,6 @@ class ShiftPresenter < SimpleDelegator
     super(shift)
   end
 
-  def to_partial_path
-    "location_shifts/location_shift"
-  end
-
   def info
     "#{shift_name} - #{shift_starting_time} / #{shift_ending_time}"
   end
