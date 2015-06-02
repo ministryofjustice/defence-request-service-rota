@@ -8,6 +8,10 @@ class ProcurementArea < ActiveRecord::Base
     order(name: :asc)
   end
 
+  def membership_uids
+    memberships.map { |membership| membership["uid"] }
+  end
+
   def members
     memberships.find_all do |membership|
       MEMBER_TYPES.any? { |member_type| member_type == membership["type"] }

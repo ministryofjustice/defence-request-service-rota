@@ -8,11 +8,11 @@ class ProcurementAreaMembership
   end
 
   def eligible_members
-    eligible_organisations[0]
+    organisations.reject { |org| procurement_area.members.any? { |member| member["uid"] == org.uid } }
   end
 
   def eligible_locations
-    eligible_organisations[1]
+    organisations.reject { |org| procurement_area.locations.any? { |location| location["uid"] == org.uid } }
   end
 
   def save
@@ -31,16 +31,6 @@ class ProcurementAreaMembership
   private
 
   attr_reader :membership_params, :procurement_area, :organisations
-
-  def eligible_organisations
-    filter_organisations.partition { |org| ProcurementArea::MEMBER_TYPES.any? { |type| type == org.type } }
-  end
-
-  def filter_organisations
-    organisations.reject do |org|
-      procurement_area.memberships.flat_map(&:values).include? org.uid
-    end
-  end
 
   def valid?
     membership_params_are_present? &&

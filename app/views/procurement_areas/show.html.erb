@@ -7,7 +7,7 @@
     <%= link_to "Delete", procurement_area_path(@procurement_area.id), method: :delete, data: { confirm: "Are you sure?" } %>
   </div>
 
-  <section>
+  <section class="members">
     <h3>Memberships</h3>
     <ul>
     <% @procurement_area.memberships.each do |membership| %>
@@ -16,7 +16,7 @@
     </ul>
   </section>
 
-  <section>
+  <section class="locations">
     <h3>Locations</h3>
 
     <ul>

@@ -5,8 +5,8 @@ class ApiEnabledController < ApplicationController
     DefenceRequestServiceRota.service(:auth_api).new(session[:user_token])
   end
 
-  def all_organisations_of_type(types:)
-    OrganisationFinder.new(api_client, types: types).find_all
+  def all_organisations_by(options = {})
+    OrganisationFinder.new(api_client, options).find_all
   end
 
   def find_organisation_by_uid(uid:)

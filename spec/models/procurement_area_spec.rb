@@ -33,3 +33,20 @@ RSpec.describe ProcurementArea, "#destroy_membership!" do
     expect(area.memberships).to be_blank
   end
 end
+
+RSpec.describe ProcurementArea, "#membership_uids" do
+  it "returns a list of uids for the area memberships" do
+    area = build_stubbed(:procurement_area, memberships: [
+      {
+        uid: "abc123",
+        type: "law_firm"
+      },
+      {
+        uid: "def456",
+        type: "court"
+      }
+    ])
+
+    expect(area.membership_uids).to eq %w(abc123 def456)
+  end
+end

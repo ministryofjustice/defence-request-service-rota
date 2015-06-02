@@ -52,6 +52,6 @@ class ProcurementAreasController < ApiEnabledController
   end
 
   def organisations
-    all_organisations_of_type(types: {})
+    all_organisations_by(uids: procurement_area.membership_uids)
   end
 end
