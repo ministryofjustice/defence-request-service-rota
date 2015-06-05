@@ -9,7 +9,11 @@ RSpec.describe RotaSlotAllocator, "#allocate" do
     ]
     procurement_area = build_stubbed :procurement_area
 
-    allocation = RotaSlotAllocator.new(date_range: date_range, shifts: shifts, procurement_area: procurement_area).allocate
+    allocation = RotaSlotAllocator.new(
+      date_range: date_range,
+      shifts: shifts,
+      procurement_area: procurement_area
+    ).allocate
 
     expect(allocation.map(&:class).uniq).to eq [RotaSlot]
     expect(allocation.length).to eq 2

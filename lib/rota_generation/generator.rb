@@ -13,7 +13,7 @@ module RotaGeneration
     end
 
     def write!
-      write_facts
+      writer.write!
       fact_file.flush
     end
 
@@ -24,9 +24,8 @@ module RotaGeneration
 
     def parse!
       solution = parser.parse!
-
       if solution.satisfiable?
-        allocator.mutate_slots!(slots, solution.clauses)
+        RotaGeneration::Allocator.new(slots, solution.clauses).mutate_slots!
       else
         []
       end
@@ -36,16 +35,8 @@ module RotaGeneration
 
     attr_reader :organisation_uids, :fact_file, :slots, :response
 
-    def write_facts
-      RotaGeneration::DateWriter.new(slots, fact_file).write!
-      RotaGeneration::OrganisationWriter.new(organisation_uids, fact_file).write!
-      RotaGeneration::ShiftWriter.new(slots, fact_file).write!
-      RotaGeneration::RequirementWriter.new(slots, fact_file).write!
-      RotaGeneration::ConstantWriter.new(slots, organisation_uids, fact_file).write!
-    end
-
-    def allocator
-      @_allocator ||= RotaGeneration::Allocator.new
+    def writer
+      RotaGeneration::FactFileWriter.new(slots, organisation_uids, fact_file)
     end
 
     def parser

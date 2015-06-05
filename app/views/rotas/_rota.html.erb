@@ -1,5 +1,4 @@
-<h3>Rota for <%= @rota.procurement_area.name %></h3>
-
+<h3>Rota for <%= @rota.procurement_area_name %></h3>
 
 <table>
   <thead>
@@ -15,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-  <% @rota.grouped_slots_by_date.each do |date, slots| %>
+    <% @rota.grouped_slots_by_date.each do |date, slots| %>
     <tr>
       <td><%= date.strftime("%A, %-d %b %Y") %></td>
 

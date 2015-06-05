@@ -4,4 +4,4 @@
   <%= link_to "Generate new rota", new_procurement_area_rota_path(procurement_area_id: @procurement_area.id) %>
 </div>
 
-<%= render @rota %>
+<%= render @rota if @rota != nil %>

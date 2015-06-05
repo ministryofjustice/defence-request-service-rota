@@ -18,13 +18,10 @@ RSpec.describe RotaGeneration::Allocator do
         allocated(3,mon,5,1,2015,"abc123").
       }
 
-      mutated_slots = RotaGeneration::Allocator.new.mutate_slots!(slots, solution_clauses)
+      mutated_slots = RotaGeneration::Allocator.new(slots, solution_clauses).mutate_slots!
 
-      expect(mutated_slots.map(&:organisation_uid)).to match_array(%w{
-                                                                   abc123
-                                                                   jkl567
-                                                                   xyz789
-                                                                   })
+      expect(mutated_slots.map(&:organisation_uid)).
+        to match(%w{abc123 jkl567 xyz789})
     end
   end
 end

@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.feature "User manages rota" do
-  background { set_data_api_to FakeDataApis::FakeLawFirmsApi }
+  background { set_data_api_to FakeDataApis::FullDataStore }
 
   scenario "for a procurement area" do
-    locations = [
+    memberships = [
       {
         uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
         name: "Brighton Custody Suite",
@@ -15,8 +15,6 @@ RSpec.feature "User manages rota" do
         name: "Brighton Magistrates Court",
         type: "court",
       },
-    ]
-    memberships = [
       {
         uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231",
         name: "Guilded Groom & Groom",
@@ -31,11 +29,10 @@ RSpec.feature "User manages rota" do
     procurement_area = create(
       :procurement_area,
       name: "Gotham",
-      locations: locations,
       memberships: memberships
     )
-    create :shift, name: "Morning Shift", location_uid: locations[0][:uid], monday: 1
-    create :shift, name: "Evening Shift", location_uid: locations[0][:uid], tuesday: 1, monday: 1
+    create :shift, name: "Morning Shift", location_uid: memberships[0][:uid], monday: 1
+    create :shift, name: "Evening Shift", location_uid: memberships[1][:uid], tuesday: 1, monday: 1
     admin_user = create :admin_user
 
     login_with admin_user

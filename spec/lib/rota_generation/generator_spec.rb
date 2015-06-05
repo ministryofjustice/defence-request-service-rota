@@ -1,13 +1,9 @@
 require "spec_helper"
 require_relative "../../../lib/rota_generation/generator"
-require_relative "../../../lib/rota_generation/date_writer"
-require_relative "../../../lib/rota_generation/organisation_writer"
-require_relative "../../../lib/rota_generation/shift_writer"
-require_relative "../../../lib/rota_generation/requirement_writer"
-require_relative "../../../lib/rota_generation/constant_writer"
 require_relative "../../../lib/rota_generation/runner"
 require_relative "../../../lib/rota_generation/parser"
 require_relative "../../../lib/rota_generation/allocator"
+require_relative "../../../lib/rota_generation/fact_file_writer"
 
 RSpec.describe RotaGeneration::Generator do
   describe "#generate_rota" do
@@ -29,51 +25,6 @@ RSpec.describe RotaGeneration::Generator do
     end
 
     subject { RotaGeneration::Generator.new([], []) }
-
-    it "writes out dates" do
-      writer = double(:date_writer)
-      allow(RotaGeneration::DateWriter).to receive(:new).and_return(writer)
-
-      expect(writer).to receive(:write!)
-
-      subject.write!
-    end
-
-    it "writes out firms" do
-      writer = double(:organisation_writer)
-      allow(RotaGeneration::OrganisationWriter).to receive(:new).and_return(writer)
-
-      expect(writer).to receive(:write!)
-
-      subject.write!
-    end
-
-    it "writes out shifts" do
-      writer = double(:shift_writer)
-      allow(RotaGeneration::ShiftWriter).to receive(:new).and_return(writer)
-
-      expect(writer).to receive(:write!)
-
-      subject.write!
-    end
-
-    it "writes out requirements" do
-      writer = double(:requirement_writer)
-      allow(RotaGeneration::RequirementWriter).to receive(:new).and_return(writer)
-
-      expect(writer).to receive(:write!)
-
-      subject.write!
-    end
-
-    it "writes out constants" do
-      writer = double(:constant_writer)
-      allow(RotaGeneration::ConstantWriter).to receive(:new).and_return(writer)
-
-      expect(writer).to receive(:write!)
-
-      subject.write!
-    end
 
     it "flushes the buffer" do
       expect(@buffer).to receive(:flush)
@@ -135,7 +86,7 @@ RSpec.describe RotaGeneration::Generator do
       end
 
       it "mutates the provided slots" do
-        expect(@allocator).to receive(:mutate_slots!).with([], [])
+        expect(@allocator).to receive(:mutate_slots!)
 
         subject.parse!
       end

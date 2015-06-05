@@ -1,9 +1,9 @@
 require_relative "../../lib/rota_generation"
 
-class ProcurementAreaRotasController < ApplicationController
+class ProcurementAreaRotasController < ApiEnabledController
   def index
     @procurement_area = procurement_area
-    @rota = Rota.new(RotaSlot.for(procurement_area), procurement_area, api_client)
+    @rota = Rota.new(rota_slots, organisations, locations)
   end
 
   def new
@@ -13,7 +13,7 @@ class ProcurementAreaRotasController < ApplicationController
   def create
     assigned_rota_slots = RotaGeneration::Generator.new(
       allocated_rota_slots,
-      organisations
+      organisation_uids
     ).generate_rota
 
     if assigned_rota_slots.map(&:save!)
@@ -40,14 +40,22 @@ class ProcurementAreaRotasController < ApplicationController
   end
 
   def shifts_for_location
-    Shift.for procurement_area.locations.flat_map { |location| location["uid"] }
+    procurement_area.locations.flat_map { |location| Shift.for(location["uid"]) }
+  end
+
+  def organisation_uids
+    procurement_area.membership_uids
+  end
+
+  def locations
+    all_organisations_by(uid: procurement_area.locations.flat_map { |location| location["uid"] })
   end
 
   def organisations
-    procurement_area.memberships.flat_map { |membership| membership["uid"] }
+    all_organisations_by(uid: rota_slots.map(&:organisation_uid).uniq)
   end
 
-  def api_client
-    DefenceRequestServiceRota.service(:auth_api).new(session[:user_token])
+  def rota_slots
+    RotaSlot.for(procurement_area)
   end
 end
