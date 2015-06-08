@@ -13,7 +13,7 @@ class ProcurementAreaRotasController < ApiEnabledController
   def create
     assigned_rota_slots = RotaGeneration::Generator.new(
       allocated_rota_slots,
-      organisation_uids
+      member_uids
     ).generate_rota
 
     if assigned_rota_slots.map(&:save!)
@@ -43,8 +43,8 @@ class ProcurementAreaRotasController < ApiEnabledController
     procurement_area.locations.flat_map { |location| Shift.for(location["uid"]) }
   end
 
-  def organisation_uids
-    procurement_area.membership_uids
+  def member_uids
+    procurement_area.members.flat_map { |member| member["uid"] }
   end
 
   def locations
