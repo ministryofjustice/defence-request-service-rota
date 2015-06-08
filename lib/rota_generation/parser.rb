@@ -15,6 +15,8 @@ module RotaGeneration
         l =~ /^allocated/
       end
 
+      return Unsatisfiable.new if optimal_solution.nil?
+
       Solution.new(optimal_solution)
     end
 
