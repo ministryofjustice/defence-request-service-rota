@@ -19,6 +19,7 @@ module RotaGeneration
 
     def run!
       @response = runner.run!
+      debug_write(@response) if ENV.fetch("CLINGO_DEBUG", false)
       fact_file.close!
     end
 
@@ -45,6 +46,10 @@ module RotaGeneration
 
     def runner
       @_runner ||= RotaGeneration::Runner.new(fact_file)
+    end
+
+    def debug_write(str)
+      Rails.logger.info(str)
     end
   end
 end

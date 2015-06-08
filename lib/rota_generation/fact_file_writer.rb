@@ -18,28 +18,33 @@ module RotaGeneration
 
     attr_reader :slots, :organisation_uids, :fact_file
 
+    def write(str)
+      fact_file.write(str)
+      Rails.logger.info(str) if ENV.fetch("CLINGO_DEBUG", false)
+    end
+
     def write_formatted_dates
       date_range.each do |date|
-        fact_file.write(date.strftime("date(%a, %-d, %-m, %Y).\n").downcase)
+        write(date.strftime("date(%a, %-d, %-m, %Y).\n").downcase)
       end
     end
 
     def write_organisation_uids
       organisation_uids.each do |o_uid|
-        fact_file.write("firm(\"#{o_uid}\").\n")
+        write("firm(\"#{o_uid}\").\n")
       end
     end
 
     def write_shift_ids
       shift_ids.each do |s_id|
-        fact_file.write("shift(#{s_id}).\n")
+        write("shift(#{s_id}).\n")
       end
     end
 
     def write_requirements
       shift_ids.each do |shift_id|
         date_range.each do |date|
-          fact_file.write(
+          write(
             "slots_per_shift_date(#{shift_id},#{format_date(date)},#{firm_count(shift_id, date)}).\n"
           )
         end
@@ -47,10 +52,10 @@ module RotaGeneration
     end
 
     def write_constants
-      fact_file.write("#const num_firms = #{number_of_firms}.\n")
-      fact_file.write("#const num_shifts = #{number_of_shifts}.\n")
-      fact_file.write("#const num_days = #{number_of_days}.\n")
-      fact_file.write("#const num_slots = #{number_of_slots}.\n")
+      write("#const num_firms = #{number_of_firms}.\n")
+      write("#const num_shifts = #{number_of_shifts}.\n")
+      write("#const num_days = #{number_of_days}.\n")
+      write("#const num_slots = #{number_of_slots}.\n")
     end
 
     def format_date(date)
