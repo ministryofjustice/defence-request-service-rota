@@ -9,7 +9,7 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
     - 'db/schema.rb'
-    - 'asp/**/*.rb'
+    - 'lib/rota_generation/asp/**/*.rb'
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes

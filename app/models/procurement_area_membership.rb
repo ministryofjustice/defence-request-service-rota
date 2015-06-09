@@ -8,11 +8,15 @@ class ProcurementAreaMembership
   end
 
   def eligible_members
-    organisations.reject { |org| procurement_area.members.any? { |member| member["uid"] == org.uid } }
+    organisations.
+      select { |org| ProcurementArea::MEMBER_TYPES.include?(org.type) }.
+      reject { |org| procurement_area.members.any? { |member| member["uid"] == org.uid } }
   end
 
   def eligible_locations
-    organisations.reject { |org| procurement_area.locations.any? { |location| location["uid"] == org.uid } }
+    organisations.
+      select { |org| ProcurementArea::LOCATION_TYPES.include?(org.type) }.
+      reject { |org| procurement_area.locations.any? { |location| location["uid"] == org.uid } }
   end
 
   def save

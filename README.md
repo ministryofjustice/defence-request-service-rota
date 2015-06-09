@@ -31,6 +31,11 @@ To get the application running locally, you need to:
 
  * ### Install postgres
  	http://www.postgresql.org/
+ 	
+ * ### Install clingo
+ 	This can be downloaded from [here](http://sourceforge.net/projects/potassco/files/clingo/).
+ 	
+  	**Note**: Ensure to download version `3.0.5` and **not** version `4.x`.
 
  * ### Bundle the gems
        cd defence-request-service
@@ -58,5 +63,11 @@ To get the application running locally, you need to:
 ### Test setup
 
 To run the tests, you will need to install [PhantomJS](http://phantomjs.org/), the test suite is known to be working with version `1.9.7`, it may or may not work with other versions. To run the tests, use the command: ```bundle exec rake```
+
+### Rota generation
+
+In order for the rotas to be generated, ```clingo``` will need to be installed (as instructed above). In order to
+view what facts are being written, and what response ```clingo``` returns, simply set the environment variable
+```ENV[CLINGO_DEBUG]```. Once set, these will be written out to the log file.
 
 

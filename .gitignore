@@ -14,6 +14,10 @@
 /tmp/sockets/*
 /tmp/pids/*
 /tmp/sessions/*
+/tmp/**/*.lp
+
+# Ignore tags file.
+/tags
 
 *.DS_Store
 *.swo

@@ -7,12 +7,12 @@ end
 
 RSpec.describe Shift, ".for" do
   it "returns the shifts for a given location" do
-    location = double(:location, uid: "1")
-    create :shift, name: "Shift for location 1", location_uid: location.uid
+    location_uid = "1"
+    create :shift, name: "Shift for location 1", location_uid: "1"
     create :shift, name: "Other shift"
-    create :shift, name: "Late Shift for location 1", location_uid: location.uid
+    create :shift, name: "Late Shift for location 1", location_uid: "1"
 
-    location_shifts = Shift.for(location)
+    location_shifts = Shift.for([location_uid])
 
     expect(location_shifts.map(&:name)).to eq(
       ["Late Shift for location 1", "Shift for location 1"]

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :location_shifts
   resources :procurement_areas
   resources :procurement_area_memberships, only: [:new, :create, :destroy]
+  resources :procurement_area_rotas, only: [:index, :new, :create]
   resources :shift_requirements, only: [:edit, :update]
 
   get "/dashboard", to: "dashboards#show", as: :dashboard
