@@ -27,6 +27,13 @@ FactoryGirl.define do
     end
   end
 
+  factory :rota_slot do
+    date { Date.today }
+    shift
+    organisation_uid { SecureRandom.uuid }
+    procurement_area
+  end
+
   factory :shift do
     location_uid { SecureRandom.uuid }
     starting_time { Time.parse("09:00") }

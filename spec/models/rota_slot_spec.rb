@@ -8,4 +8,5 @@ end
 
 RSpec.describe RotaSlot, "relationships" do
   it { should belong_to(:shift) }
+  it { should belong_to(:procurement_area) }
 end
