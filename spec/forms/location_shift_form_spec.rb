@@ -14,6 +14,17 @@ RSpec.describe LocationShiftForm, "#submit" do
       form.submit
 
       expect(form.location_shift).to be_an_instance_of(Shift)
+
+      expect(form.location_shift.allocation_requirements_per_weekday).to eq ({
+        "monday" => 1,
+        "tuesday" => 1,
+        "wednesday" => 1,
+        "thursday" => 1,
+        "friday" => 1,
+        "saturday" => 1,
+        "sunday" => 1,
+        "bank_holiday" => 0
+      })
     end
   end
 
