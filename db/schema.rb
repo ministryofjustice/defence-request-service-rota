@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528120346) do
+ActiveRecord::Schema.define(version: 20150609085241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,5 +47,5 @@ ActiveRecord::Schema.define(version: 20150528120346) do
   add_index "shifts", ["allocation_requirements_per_weekday"], name: "index_shifts_on_allocation_requirements_per_weekday", using: :gin
   add_index "shifts", ["location_uid"], name: "index_shifts_on_location_uid", using: :btree
 
-  add_foreign_key "rota_slots", "procurement_areas"
+  add_foreign_key "rota_slots", "procurement_areas", on_delete: :cascade
 end
