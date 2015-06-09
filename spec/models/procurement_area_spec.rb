@@ -4,6 +4,10 @@ RSpec.describe ProcurementArea, "validations" do
   it { should validate_presence_of(:name) }
 end
 
+RSpec.describe ProcurementArea, "relationships" do
+  it { should have_many(:rota_slots).dependent(:destroy) }
+end
+
 RSpec.describe ProcurementArea, ".ordered_by_name" do
   it "returns all procurement areas ordered by name" do
     [
