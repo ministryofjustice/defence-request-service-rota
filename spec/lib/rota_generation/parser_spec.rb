@@ -37,5 +37,18 @@ RSpec.describe RotaGeneration::Parser do
         parser.parse!
       end
     end
+
+    context "with an empty satisfiable response" do
+      it "returns an Unsatisfiable object" do
+        example_response = <<-RESPONSE.strip_heredoc
+          Answer: 1
+
+        RESPONSE
+
+        parser = RotaGeneration::Parser.new(example_response)
+
+        expect(parser.parse!).to be_an(RotaGeneration::Unsatisfiable)
+      end
+    end
   end
 end
