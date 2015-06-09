@@ -29,7 +29,11 @@ class LocationShiftForm
 
   def generate_default_requirements
     Shift::WEEKDAYS.inject({}) do |result, key|
-      result[key] = 0
+      if key == :bank_holiday
+        result[key] = 0
+      else
+        result[key] = 1
+      end
       result
     end
   end
