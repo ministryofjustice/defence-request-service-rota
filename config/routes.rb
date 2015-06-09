@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboards#show", as: :dashboard
   get "/auth/:provider/callback", to: "sessions#create"
   get "/auth/failure", to: "sessions#failure"
+
+  get "/status" => "status#index"
+  get "/ping" => "status#ping"
 end
