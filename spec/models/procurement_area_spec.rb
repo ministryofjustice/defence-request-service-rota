@@ -5,7 +5,17 @@ RSpec.describe ProcurementArea, "validations" do
 end
 
 RSpec.describe ProcurementArea, "relationships" do
-  it { should have_many(:rota_slots).dependent(:destroy) }
+  it { should have_many(:rota_slots) }
+
+  it "removes any rota slots associated with it upon destroying" do
+    p = create(:procurement_area)
+
+    create_list(:rota_slot, 3, procurement_area: p)
+
+    p.destroy
+
+    expect(RotaSlot.count).to eq 0
+  end
 end
 
 RSpec.describe ProcurementArea, ".ordered_by_name" do
