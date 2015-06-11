@@ -23,6 +23,10 @@ class Rota
     locations.detect { |l| l.uid == shift.location_uid }
   end
 
+  def organisations_with_uids(uids)
+    uids.map { |uid| organisations.detect { |o| o.uid == uid } }
+  end
+
   def grouped_slots_by_date
     sorted_slots.group_by(&:date)
   end
