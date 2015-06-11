@@ -20,7 +20,7 @@
 
       <% @rota.shifts.each do |shift| %>
       <td>
-      <%= select_allocated_organisations(@rota, shift, @rota.slots_for_date(date)) %>
+        <%= present_organisations(@rota.organisations_for(date, shift)) %>
       </td>
       <% end %>
     </tr>

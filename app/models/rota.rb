@@ -19,8 +19,10 @@ class Rota
     end
   end
 
-  def slots_for_date(date)
-    rota_slots.where(date: date)
+  def organisations_for(date, shift)
+    organisation_uids = rota_slots.where(date: date, shift_id: shift.id).map(&:organisation_uid)
+
+    organisations_with_uids(organisation_uids)
   end
 
   def procurement_area_name
