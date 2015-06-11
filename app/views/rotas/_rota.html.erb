@@ -14,19 +14,14 @@
     </tr>
   </thead>
   <tbody>
-    <% @rota.grouped_slots_by_date.each do |date, slots| %>
+    <% @rota.date_range.each do |date| %>
     <tr>
       <td><%= date.strftime("%A, %-d %b %Y") %></td>
 
       <% @rota.shifts.each do |shift| %>
-        <td>
-        <%= slots.select { |s| s.shift_id == shift.id }.
-          map(&:organisation_uid).
-          map { |o| @rota.organisations.detect { |os| os.uid == o }}.
-          map(&:name).
-          join("</br></br>").
-          html_safe %>
-        </td>
+      <td>
+        <%= present_organisations(@rota.on_duty(date, shift)) %>
+      </td>
       <% end %>
     </tr>
   <% end %>

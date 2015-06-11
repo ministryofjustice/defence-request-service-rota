@@ -11,6 +11,18 @@ class Rota
     "rotas/rota"
   end
 
+  def date_range
+    if !rota_slots.empty?
+      (sorted_slots.first.date..sorted_slots.last.date)
+    else
+      []
+    end
+  end
+
+  def on_duty(date, shift)
+    organisations_with_uids(organisations_on_duty(date, shift))
+  end
+
   def procurement_area_name
     rota_slots.first.procurement_area.name if !rota_slots.empty?
   end
@@ -23,10 +35,6 @@ class Rota
     locations.detect { |l| l.uid == shift.location_uid }
   end
 
-  def grouped_slots_by_date
-    sorted_slots.group_by(&:date)
-  end
-
   def sorted_slots
     rota_slots.sort_by(&:date)
   end
@@ -34,4 +42,16 @@ class Rota
   def sorted_shifts
     rota_slots.map(&:shift).uniq.sort_by(&:name)
   end
+
+  private
+
+  def organisations_on_duty(date, shift)
+    rota_slots.where(date: date, shift_id: shift.id)
+      .map(&:organisation_uid)
+  end
+
+  def organisations_with_uids(uids)
+    uids.map { |uid| organisations.detect { |o| o.uid == uid } }
+  end
+
 end
