@@ -20,7 +20,7 @@
 
       <% @rota.shifts.each do |shift| %>
       <td>
-        <%= present_organisations(@rota.organisations_for(date, shift)) %>
+        <%= present_organisations(@rota.on_duty(date, shift)) %>
       </td>
       <% end %>
     </tr>
