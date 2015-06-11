@@ -11,6 +11,18 @@ class Rota
     "rotas/rota"
   end
 
+  def date_range
+    if !rota_slots.empty?
+      (sorted_slots.first.date..sorted_slots.last.date)
+    else
+      []
+    end
+  end
+
+  def slots_for_date(date)
+    rota_slots.where(date: date)
+  end
+
   def procurement_area_name
     rota_slots.first.procurement_area.name if !rota_slots.empty?
   end
@@ -25,10 +37,6 @@ class Rota
 
   def organisations_with_uids(uids)
     uids.map { |uid| organisations.detect { |o| o.uid == uid } }
-  end
-
-  def grouped_slots_by_date
-    sorted_slots.group_by(&:date)
   end
 
   def sorted_slots

@@ -14,13 +14,13 @@
     </tr>
   </thead>
   <tbody>
-    <% @rota.grouped_slots_by_date.each do |date, slots| %>
+    <% @rota.date_range.each do |date| %>
     <tr>
       <td><%= date.strftime("%A, %-d %b %Y") %></td>
 
       <% @rota.shifts.each do |shift| %>
       <td>
-      <%= select_allocated_organisations(@rota, shift, slots) %>
+      <%= select_allocated_organisations(@rota, shift, @rota.slots_for_date(date)) %>
       </td>
       <% end %>
     </tr>
