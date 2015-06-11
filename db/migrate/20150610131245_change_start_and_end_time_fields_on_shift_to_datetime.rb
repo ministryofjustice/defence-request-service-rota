@@ -7,7 +7,7 @@ class ChangeStartAndEndTimeFieldsOnShiftToDatetime < ActiveRecord::Migration
   end
 
   def down
-    remove_column :shifts, :starting_tame, :datetime
+    remove_column :shifts, :starting_time, :datetime
     remove_column :shifts, :ending_time, :datetime
     add_column :shifts, :starting_time, :time
     add_column :shifts, :ending_time, :time
