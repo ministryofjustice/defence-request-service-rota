@@ -4,11 +4,15 @@ module RotaHelper
 
     organisations = @rota.organisations_with_uids(organisation_uids)
 
-    organisations.map do |org|
+    tags = organisations.map do |org|
       org_colour = organisation_colour(org)
 
-      content_tag(:span, org.name, class: "rota-slot-organisation", style: "background-color: ##{org_colour}; color: #{organisation_text_colour(org_colour)};")
-    end.join("</br>").html_safe
+      content_tag(:span, org.name,
+                  class: "rota-slot-organisation",
+                  style: "background-color: ##{org_colour}; color: #{organisation_text_colour(org_colour)};")
+    end
+
+    tags.join("</br>").html_safe
   end
 
   def organisation_colour(org)
@@ -23,6 +27,10 @@ module RotaHelper
     end
   end
 
+  # Calculates the luminance of the provided colour
+  # in order to work out whether to put white or
+  # black text over it. Calculation from
+  # http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
   def luminance(colour)
     red = component(colour[0..1].to_i(16))
     blue = component(colour[2..3].to_i(16))
@@ -33,6 +41,11 @@ module RotaHelper
 
   def component(colour)
     colour /= 255.0
-    return colour < 0.03928 ? colour / 12.92 : (((colour + 0.055)/1.055) ** 2.4);
+
+    if colour < 0.03928
+      colour / 12.92
+    else
+      (((colour + 0.055) / 1.055)**2.4)
+    end
   end
 end
