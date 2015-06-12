@@ -8,9 +8,6 @@ class Api::V1::OnDutyFirmsController < Api::V1::ApiController
     render json: { "organisation_uids" => organisations_on_duty }
   end
 
-  def some_method
-
-  end
   private
 
   def rota_slots_for_location
