@@ -28,7 +28,7 @@ FactoryGirl.define do
   end
 
   factory :rota_slot do
-    date { Date.today }
+    starting_time { DateTime.now }
     shift
     organisation_uid { SecureRandom.uuid }
     procurement_area

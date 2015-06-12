@@ -13,7 +13,7 @@ class Rota
 
   def date_range
     if !rota_slots.empty?
-      (sorted_slots.first.date..sorted_slots.last.date)
+      (sorted_slots.first.starting_time.to_date..sorted_slots.last.starting_time.to_date)
     else
       []
     end
@@ -36,7 +36,7 @@ class Rota
   end
 
   def sorted_slots
-    rota_slots.sort_by(&:date)
+    rota_slots.sort_by(&:starting_time)
   end
 
   def sorted_shifts
@@ -46,7 +46,7 @@ class Rota
   private
 
   def organisations_on_duty(date, shift)
-    rota_slots.where(date: date, shift_id: shift.id)
+    rota_slots.select { |s| s.starting_time.to_date == date && s.shift_id == shift.id }
       .map(&:organisation_uid)
   end
 

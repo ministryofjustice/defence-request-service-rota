@@ -71,7 +71,7 @@ module RotaGeneration
     end
 
     def unique_dates
-      slots.map(&:date).uniq
+      slots.map(&:starting_time).map(&:to_date).uniq
     end
 
     def shift_ids
@@ -79,7 +79,7 @@ module RotaGeneration
     end
 
     def firm_count(shift_id, date)
-      slots.select { |slot| slot.shift_id == shift_id && slot.date == date }.count
+      slots.select { |slot| slot.shift_id == shift_id && slot.starting_time.to_date == date }.count
     end
 
     def number_of_firms
@@ -92,10 +92,6 @@ module RotaGeneration
 
     def number_of_days
       date_range.count
-    end
-
-    def dates
-      slots.map(&:date).uniq
     end
 
     def number_of_slots

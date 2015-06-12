@@ -13,8 +13,9 @@ RSpec.describe "GET /v1/on_duty_firm/:location_uid/:time" do
     )
     create(
       :rota_slot,
-      date: Date.parse("01/01/2014"),
-      shift: create(:shift),
+      starting_time: DateTime.parse("01/01/2014 09:00"),
+      ending_time: DateTime.parse("01/01/2014 21:00"),
+      shift: create(:shift, location_uid: "93b8ef50-fe12-4d80-9e7e-05e98232ec13"),
       organisation_uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231",
       procurement_area_id: procurement_area.id
     )

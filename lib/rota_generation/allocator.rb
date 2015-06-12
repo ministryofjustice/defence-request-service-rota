@@ -31,7 +31,7 @@ module RotaGeneration
 
     def detect_matching_slot(date, shift_id)
       slots.detect do |slot|
-        slot.date == date &&
+        slot.starting_time.to_date == date &&
           slot.shift_id == shift_id.to_i &&
           slot.organisation_uid == nil
       end
