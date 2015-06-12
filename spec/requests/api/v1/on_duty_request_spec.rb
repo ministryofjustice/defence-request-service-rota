@@ -26,6 +26,6 @@ RSpec.describe "GET /v1/on_duty_firm/:location_uid/:time" do
       token: "611151277c992292868f772d573da4eea4ade37e303582b328c674e8ce69b512",
     }
 
-    expect(response_json).to eq({ "organisation_uids" => [ on_duty_firm[:uid] ] })
+    expect(response_json).to eq({ "organisation_uids" => [on_duty_firm[:uid]] })
   end
 end
