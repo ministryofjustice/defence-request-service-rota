@@ -17,16 +17,27 @@ class OnDutyLocator
   end
 
   def slots_with_on_duty_shift
-    applicable_slot = find_latest_slot
+    slot = find_latest_slot
 
-    if applicable_slot.nil? || (applicable_slot.ending_time.present? && applicable_slot.ending_time < time)
-      []
+    if slot_on_duty_now?(slot)
+      rota_slots.select do |s|
+        s.starting_time == slot.starting_time && s.shift_id == slot.shift_id
+      end
     else
-      rota_slots.where(starting_time: applicable_slot.starting_time, shift_id: applicable_slot.shift_id)
+      []
     end
   end
 
   def find_latest_slot
     rota_slots.order(starting_time: :desc).detect { |slot| slot.starting_time <= time }
+  end
+
+  def slot_on_duty_now?(slot)
+    if slot.nil?
+      return false
+    elsif slot.ending_time.present? && slot.ending_time < time
+      return false
+    end
+    true
   end
 end
