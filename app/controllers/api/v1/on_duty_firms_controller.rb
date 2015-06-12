@@ -15,7 +15,7 @@ class Api::V1::OnDutyFirmsController < Api::V1::ApiController
       .where(
         shifts: { location_uid: requested_location },
         starting_time: surrounding_time_window
-      )
+      ).order(starting_time: :desc)
   end
 
   def requested_location

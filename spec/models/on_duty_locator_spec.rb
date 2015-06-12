@@ -27,7 +27,7 @@ RSpec.describe OnDutyLocator, "#locate" do
            starting_time: DateTime.parse("01/01/2014 21:00"),
            shift: last_shift)
 
-    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.all).locate
+    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 
     expect(on_duty_organisation_uids).to eq [firm_1]
   end
@@ -50,7 +50,7 @@ RSpec.describe OnDutyLocator, "#locate" do
            starting_time: DateTime.parse("01/01/2014 21:00"),
            shift: last_shift)
 
-    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.all).locate
+    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 
     expect(on_duty_organisation_uids).to match_array([firm_1, firm_2])
   end
@@ -73,7 +73,7 @@ RSpec.describe OnDutyLocator, "#locate" do
            starting_time: DateTime.parse("01/01/2014 21:00"),
            shift: last_shift)
 
-    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.all).locate
+    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 
     expect(on_duty_organisation_uids).to match_array([firm_3])
   end
@@ -91,7 +91,7 @@ RSpec.describe OnDutyLocator, "#locate" do
            starting_time: DateTime.parse("02/01/2014 08:00"),
            ending_time: DateTime.parse("02/01/2014 16:00"))
 
-    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.all).locate
+    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 
     expect(on_duty_organisation_uids).to match_array([])
   end
@@ -104,7 +104,7 @@ RSpec.describe OnDutyLocator, "#locate" do
            starting_time: DateTime.parse("01/01/2014 08:00"),
            ending_time: DateTime.parse("01/01/2014 16:00"))
 
-    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.all).locate
+    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 
     expect(on_duty_organisation_uids).to match_array([])
   end

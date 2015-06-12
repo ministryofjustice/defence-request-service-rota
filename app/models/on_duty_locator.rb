@@ -29,7 +29,7 @@ class OnDutyLocator
   end
 
   def find_latest_slot
-    rota_slots.order(starting_time: :desc).detect { |slot| slot.starting_time <= time }
+    rota_slots.detect { |slot| slot.starting_time <= time }
   end
 
   def slot_on_duty_now?(slot)
