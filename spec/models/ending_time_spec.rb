@@ -13,7 +13,7 @@ RSpec.describe EndingTime, "#build" do
 
       ending_time = EndingTime.new(ending_time_information).build
 
-      expect(ending_time).to eq Time.parse("08:00").to_s
+      expect(ending_time).to eq DateTime.parse("08:00").to_s
     end
   end
 

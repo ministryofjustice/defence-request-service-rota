@@ -13,7 +13,7 @@ RSpec.describe StartingTime, "#build" do
 
       starting_time = StartingTime.new(starting_time_information).build
 
-      expect(starting_time).to eq Time.parse("08:00").to_s
+      expect(starting_time).to eq DateTime.parse("08:00").to_s
     end
   end
 

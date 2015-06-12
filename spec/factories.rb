@@ -28,7 +28,7 @@ FactoryGirl.define do
   end
 
   factory :rota_slot do
-    date { Date.today }
+    starting_time { DateTime.now }
     shift
     organisation_uid { SecureRandom.uuid }
     procurement_area
@@ -36,7 +36,7 @@ FactoryGirl.define do
 
   factory :shift do
     location_uid { SecureRandom.uuid }
-    starting_time { Time.parse("09:00") }
+    starting_time { DateTime.parse("2014-01-01 00:00") }
     allocation_requirements_per_weekday {
       Shift::WEEKDAYS.inject({}) do |result, key|
         result[key] = 0

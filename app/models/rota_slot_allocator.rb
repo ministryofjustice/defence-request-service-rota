@@ -19,13 +19,28 @@ class RotaSlotAllocator
         slot_count = shift.public_send(date.strftime("%A").downcase.to_sym).to_i
         slot_count.times do |_|
           result << RotaSlot.new(
-            shift_id: shift.id,
-            date: date,
-            procurement_area: procurement_area
+            new_slot_attributes(date, shift)
           )
         end
       end
       result
     end
+  end
+
+  def compose_date_and_shift_time(date, time)
+    if time.nil?
+      nil
+    else
+      DateTime.new(date.year, date.month, date.day, time.hour, time.min, time.sec, time.zone)
+    end
+  end
+
+  def new_slot_attributes(date, shift)
+    {
+      shift_id: shift.id,
+      starting_time: compose_date_and_shift_time(date, shift.starting_time),
+      ending_time: compose_date_and_shift_time(date, shift.ending_time),
+      procurement_area: procurement_area
+    }
   end
 end
