@@ -13,10 +13,12 @@ class OnDutyLocator
   attr_reader :time, :rota_slots
 
   def on_duty_organisation_uid
-    slot_with_on_duty_shift.organisation_uid
+    slots_with_on_duty_shift.map(&:organisation_uid)
   end
 
-  def slot_with_on_duty_shift
-    rota_slots.order(starting_time: :desc).detect { |slot| slot.starting_time < time }
+  def slots_with_on_duty_shift
+    applicable_slot = rota_slots.order(starting_time: :desc).detect { |slot| slot.starting_time < time }
+
+    rota_slots.where(starting_time: applicable_slot.starting_time, shift_id: applicable_slot.shift_id)
   end
 end
