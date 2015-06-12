@@ -17,6 +17,6 @@ class OnDutyLocator
   end
 
   def slot_with_on_duty_shift
-    rota_slots.order(starting_time: :desc).detect { |slot| slot.shift.starting_time < time }
+    rota_slots.order(starting_time: :desc).detect { |slot| slot.starting_time < time }
   end
 end
