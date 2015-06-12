@@ -14,7 +14,8 @@ class Api::V1::OnDutyFirmsController < Api::V1::ApiController
   private
 
   def rota_slots_for_location
-    RotaSlot.joins(:shift).where(shifts: { location_uid: requested_location })
+    RotaSlot.joins(:shift).where(shifts: { location_uid: requested_location },
+                                 starting_time: (Time.parse(requested_time) - 2.days)..(Time.parse(requested_time) + 2.days))
   end
 
   def requested_location
