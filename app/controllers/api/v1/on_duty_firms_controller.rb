@@ -14,7 +14,7 @@ class Api::V1::OnDutyFirmsController < Api::V1::ApiController
     RotaSlot.joins(:shift)
       .where(
         shifts: { location_uid: requested_location },
-        starting_time: (Time.parse(requested_time) - 2.days)..(Time.parse(requested_time) + 2.days)
+        starting_time: surrounding_time_window
       )
   end
 
@@ -24,5 +24,9 @@ class Api::V1::OnDutyFirmsController < Api::V1::ApiController
 
   def requested_time
     params.fetch(:time)
+  end
+
+  def surrounding_time_window
+    (Time.parse(requested_time) - 2.days)..(Time.parse(requested_time) + 2.days)
   end
 end
