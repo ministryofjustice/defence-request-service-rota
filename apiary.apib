@@ -1,14 +1,10 @@
 FORMAT: 1A
 
-# Defence Request Rota Internal API
-Defence Request Rota App Internal API's
+# Defence Request App Internal API
+Defence Request Rota App Internal APIs
 
 ## Authorization
-Access tokens are obtained from the Auth app using OAuth
-
-Access tokens must be passed for each request in an Authorization header.
-
-A missing Authorization Header or invalid Authorization Token value for a protected endpoint will result in a 401 response
+Currently, endpoints on the Rota App are not behind authorization. This will be changed in future using [Client Credentials Flow](https://github.com/doorkeeper-gem/doorkeeper/wiki/Client-Credentials-flow).
 
 # Group API Root [/]
 
@@ -21,86 +17,40 @@ It is recommended to follow the “url” link values, [Link](https://tools.ietf
 + Response 200 (application/json)
 
         {
-            "schemes_url": "/api/v1/schemes"
+            "on_duty_url": "/api/v1/on_duty_firm"
         }
 
-# Group Schemes
-Schemes contain a List of Solicitors that are on Duty
+# Group On Duty Firm
 
-## Schemes Collection [/api/v1/schemes]
-### List Schemes [GET]
+## On Duty [/api/v1/on_duty_firm?location_uid=xxx&time=2015-01-01T00:00:00+00:00]
+
+This endpoint returns the Organisation UIDs for the firms which are on duty at the location and time provided.
+
+Currently this endpoint returns all firms which are on duty. Future work will amend this endpoint to rotate the firm returned as 'on duty' if there are many to ensure fair request allocation.
+
+### Get firms on duty [GET]
 + Request
 
     + Headers
-        
+
             Accept: application/json
-            Authorization: Bearer <TOKEN>
-
-+ Response 200 (application/json)
-
-        {
-            "schemes": [
-                {
-                    "id": 123,
-                    "name": "Brighton West",
-                    "links": {
-                        "duty": "/api/v1/schemes/123/duty"
-                    }
-                },
-                {
-                    "id": 128,
-                    "name": "Brighton East",
-                    "links": {
-                        "duty": "/api/v1/schemes/128/duty"
-                    }
-                },
-            ]
-        }
-
-+ Response 401 (application/json)
-
-        {
-            "errors": [
-                "You must provide a valid Authorization Token"
-            ]
-        }
-
-## Duty Solicitor [/api/v1/schemes/{id}/duty?at_time=1994-11-05T13%3A15%3A30Z]
-Returns the Profile of the Solicitor that is on Duty for the given scheme at the current time
 
 + Parameters
-    + at_time (ISO 8061 timestamp)
-        Specify the date + time that we want to find the Duty Solicitor for
-        
-        Will default to the current date+time
+    + location_uid (uuid, required) - Location UID to query
+    + time (string, required) - Time to query, in ISO8601 format
 
-### Find Duty Solicitor [GET]
-+ Request
-
-    + Headers
-        
-            Accept: application/json
-            Authorization: Bearer <TOKEN>
 
 + Response 200 (application/json)
 
         {
-            "profile": {
-                "name": "Bob Smith",
-                "email": "bob.smith@world.com",
-                "telephone": "0123456789",
-                "mobile": "071234567",
-                "address": "17A Frosts Road"
-                "postcode": "AB1 2CD"
-                "PIN": "1234"
-            }
-        }
-
-+ Response 401 (application/json)
-
-        {
-            "errors": [
-                "You must provide a valid Authorization Token"
+            "organisations_uids:" [
+                "b90f3c53-f511-4658-ad89-50ab9978d418",
+                "a4be1e14-f0cd-4213-924b-1597fb94e7f4"
             ]
         }
 
++ Response 200 (application/json)
+
+        {
+            "organisations_uids:" []
+        }
