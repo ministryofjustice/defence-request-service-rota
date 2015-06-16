@@ -26,7 +26,7 @@ gem "govuk_elements_rails", "~> 0.1.1"
 
 gem "omniauth-oauth2"
 gem "omniauth-dsds", github: "ministryofjustice/defence-request-service-omniauth-dsds", tag: "v0.8.1"
-gem "drs-auth_client", github: "ministryofjustice/defence-request-service-auth"
+gem "drs-auth_client", github: "ministryofjustice/defence-request-service-auth", tag: "v0.2.2"
 
 group :development do
   gem "web-console", "~> 2.0"
