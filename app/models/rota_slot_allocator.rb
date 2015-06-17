@@ -27,20 +27,35 @@ class RotaSlotAllocator
     end
   end
 
-  def compose_date_and_shift_time(date, time)
-    if time.nil?
-      nil
-    else
-      Time.new(date.year, date.month, date.day, time.hour, time.min, time.sec)
-    end
-  end
-
   def new_slot_attributes(date, shift)
     {
       shift_id: shift.id,
-      starting_time: compose_date_and_shift_time(date, shift.starting_time),
-      ending_time: compose_date_and_shift_time(date, shift.ending_time),
+      starting_time: rota_slot_start_time(date, shift),
+      ending_time: rota_slot_end_time(date, shift),
       procurement_area: procurement_area
     }
+  end
+
+  def rota_slot_start_time(date, shift)
+    shift_start_time = shift.starting_time
+
+    compose_date_and_time(date, shift_start_time)
+  end
+
+  def rota_slot_end_time(date, shift)
+    return nil if shift.ending_time.nil?
+
+    slot_end_time = compose_date_and_time(date, shift.ending_time)
+
+    shift.spans_two_days? ? slot_end_time.advance(days: 1) : slot_end_time
+  end
+
+  def compose_date_and_time(date, time)
+    Time.new(date.year,
+             date.month,
+             date.day,
+             time.hour,
+             time.min,
+             time.sec)
   end
 end
