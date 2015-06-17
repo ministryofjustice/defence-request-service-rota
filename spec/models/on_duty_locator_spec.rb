@@ -15,16 +15,16 @@ RSpec.describe OnDutyLocator, "#locate" do
   }
 
   it "returns the single uid for the organisation on duty" do
-    time = DateTime.parse("01/01/2014 20:00").iso8601
+    time = Time.parse("01/01/2014 20:00").iso8601
 
     create(:rota_slot,
            organisation_uid: firm_1,
-           starting_time: DateTime.parse("01/01/2014 12:00"),
+           starting_time: Time.parse("01/01/2014 12:00"),
            shift: first_shift)
 
     create(:rota_slot,
            organisation_uid: firm_2,
-           starting_time: DateTime.parse("01/01/2014 21:00"),
+           starting_time: Time.parse("01/01/2014 21:00"),
            shift: last_shift)
 
     on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
@@ -33,21 +33,21 @@ RSpec.describe OnDutyLocator, "#locate" do
   end
 
   it "returns multiple uids for the organisations on duty" do
-    time = DateTime.parse("01/01/2014 20:00").iso8601
+    time = Time.parse("01/01/2014 20:00").iso8601
 
     create(:rota_slot,
            organisation_uid: firm_1,
-           starting_time: DateTime.parse("01/01/2014 12:00"),
+           starting_time: Time.parse("01/01/2014 12:00"),
            shift: first_shift)
 
     create(:rota_slot,
            organisation_uid: firm_2,
-           starting_time: DateTime.parse("01/01/2014 12:00"),
+           starting_time: Time.parse("01/01/2014 12:00"),
            shift: first_shift)
 
     create(:rota_slot,
            organisation_uid: firm_3,
-           starting_time: DateTime.parse("01/01/2014 21:00"),
+           starting_time: Time.parse("01/01/2014 21:00"),
            shift: last_shift)
 
     on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
@@ -56,21 +56,21 @@ RSpec.describe OnDutyLocator, "#locate" do
   end
 
   it "returns the correct uid even if it not the first slot in time" do
-    time = DateTime.parse("01/01/2014 22:00").iso8601
+    time = Time.parse("01/01/2014 22:00").iso8601
 
     create(:rota_slot,
            organisation_uid: firm_1,
-           starting_time: DateTime.parse("01/01/2014 12:00"),
+           starting_time: Time.parse("01/01/2014 12:00"),
            shift: first_shift)
 
     create(:rota_slot,
            organisation_uid: firm_2,
-           starting_time: DateTime.parse("01/01/2014 12:00"),
+           starting_time: Time.parse("01/01/2014 12:00"),
            shift: first_shift)
 
     create(:rota_slot,
            organisation_uid: firm_3,
-           starting_time: DateTime.parse("01/01/2014 21:00"),
+           starting_time: Time.parse("01/01/2014 21:00"),
            shift: last_shift)
 
     on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
@@ -79,17 +79,17 @@ RSpec.describe OnDutyLocator, "#locate" do
   end
 
   it "returns no organisation uids if in a defined gap between shifts" do
-    time = DateTime.parse("01/01/2014 17:00")
+    time = Time.parse("01/01/2014 17:00")
 
     create(:rota_slot,
            organisation_uid: firm_1,
-           starting_time: DateTime.parse("01/01/2014 08:00"),
-           ending_time: DateTime.parse("01/01/2014 16:00"))
+           starting_time: Time.parse("01/01/2014 08:00"),
+           ending_time: Time.parse("01/01/2014 16:00"))
 
     create(:rota_slot,
            organisation_uid: firm_1,
-           starting_time: DateTime.parse("02/01/2014 08:00"),
-           ending_time: DateTime.parse("02/01/2014 16:00"))
+           starting_time: Time.parse("02/01/2014 08:00"),
+           ending_time: Time.parse("02/01/2014 16:00"))
 
     on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 
@@ -97,12 +97,12 @@ RSpec.describe OnDutyLocator, "#locate" do
   end
 
   it "returns no organisation uids if before all slots" do
-    time = DateTime.parse("01/01/2014 06:00")
+    time = Time.parse("01/01/2014 06:00")
 
     create(:rota_slot,
            organisation_uid: firm_1,
-           starting_time: DateTime.parse("01/01/2014 08:00"),
-           ending_time: DateTime.parse("01/01/2014 16:00"))
+           starting_time: Time.parse("01/01/2014 08:00"),
+           ending_time: Time.parse("01/01/2014 16:00"))
 
     on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 

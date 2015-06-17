@@ -31,7 +31,7 @@ class RotaSlotAllocator
     if time.nil?
       nil
     else
-      DateTime.new(date.year, date.month, date.day, time.hour, time.min, time.sec, time.zone)
+      Time.new(date.year, date.month, date.day, time.hour, time.min, time.sec)
     end
   end
 
