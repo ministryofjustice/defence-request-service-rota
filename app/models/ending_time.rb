@@ -7,7 +7,7 @@ class EndingTime
     if ending_time.empty? || ending_time == ":"
       nil
     else
-      DateTime.parse(ending_time).to_s
+      Time.parse(ending_time).to_s
     end
   end
 

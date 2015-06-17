@@ -7,7 +7,7 @@ class StartingTime
     if starting_time.empty? || starting_time == ":"
       ""
     else
-      DateTime.parse(starting_time).to_s
+      Time.parse(starting_time).to_s
     end
   end
 
