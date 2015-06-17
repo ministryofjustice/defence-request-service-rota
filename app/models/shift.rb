@@ -22,4 +22,9 @@ class Shift < ActiveRecord::Base
   def self.for(location_uid)
     where(location_uid: location_uid).order(:name)
   end
+
+  def spans_two_days?
+    ending_time.present? &&
+      ending_time <= starting_time
+  end
 end
