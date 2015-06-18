@@ -10,3 +10,7 @@ authentication:
   redirect_uri: <%= ENV.fetch('AUTHENTICATION_REDIRECT_URI') %>
   application_id: <%= ENV.fetch('AUTHENTICATION_APPLICATION_ID') %>
   application_secret: <%= ENV.fetch('AUTHENTICATION_APPLICATION_SECRET') %>
+
+aws:
+  region: eu-west-1
+  s3_asset_bucket_name: <%= ENV.fetch("AWS_S3_ASSET_BUCKET_NAME") %>

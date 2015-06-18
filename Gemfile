@@ -28,6 +28,9 @@ gem "omniauth-oauth2"
 gem "omniauth-dsds", github: "ministryofjustice/defence-request-service-omniauth-dsds", tag: "v0.8.1"
 gem "drs-auth_client", github: "ministryofjustice/defence-request-service-auth", tag: "v0.2.2"
 
+# Asset sync - for uploading assets to S3
+gem "asset_sync"
+
 group :development do
   gem "web-console", "~> 2.0"
 end
