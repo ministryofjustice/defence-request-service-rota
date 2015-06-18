@@ -61,9 +61,6 @@ class RotasController < ApiEnabledController
 
   def rota_slots
     slots = RotaSlot.for(procurement_area)
-    if params[:rota_filter].present?
-      slots = slots.where(starting_time: filter_date_range)
-    end
-    slots
+    params[:rota_filter].present? ? slots.where(starting_time: filter_date_range) : slots
   end
 end
