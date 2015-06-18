@@ -1,6 +1,6 @@
 require_relative "../../lib/rota_generation"
 
-class ProcurementAreaRotasController < ApiEnabledController
+class RotasController < ApiEnabledController
   def index
     @procurement_area = procurement_area
     @rota = Rota.new(rota_slots, organisations, locations)
@@ -17,7 +17,7 @@ class ProcurementAreaRotasController < ApiEnabledController
     ).generate_rota
 
     if assigned_rota_slots.map(&:save!)
-      redirect_to procurement_area_rotas_path(procurement_area_id: procurement_area.id)
+      redirect_to procurement_area_rotas_path(procurement_area)
     end
   end
 
