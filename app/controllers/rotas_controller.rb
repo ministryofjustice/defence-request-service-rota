@@ -39,6 +39,10 @@ class RotasController < ApiEnabledController
     DateRange.new(params[:rota_generation_form]).build
   end
 
+  def filter_date_range
+    FilterRange.new(params[:rota_filter]).build
+  end
+
   def shifts_for_location
     procurement_area.locations.flat_map { |location| Shift.for(location["uid"]) }
   end
@@ -56,6 +60,10 @@ class RotasController < ApiEnabledController
   end
 
   def rota_slots
-    RotaSlot.for(procurement_area)
+    slots = RotaSlot.for(procurement_area)
+    if params[:rota_filter].present?
+      slots = slots.where(starting_time: filter_date_range)
+    end
+    slots
   end
 end
