@@ -1,7 +1,5 @@
 FactoryGirl.define do
   factory :admin_user, class: Omniauth::Dsds::User do
-    roles ["admin"]
-
     to_create { |instance| instance }
 
     initialize_with {
@@ -9,8 +7,14 @@ FactoryGirl.define do
         uid: SecureRandom.uuid,
         name: "Example User",
         email: "user@example.com",
-        roles: roles,
-        organisation_uids: []
+        organisations: [
+          {
+            "uid" => SecureRandom.uuid,
+            "name" => "LAA Rota Team",
+            "type" => "laa_rota_team",
+            "roles" => ["rotaTeam"]
+          }
+        ]
       )
     }
   end

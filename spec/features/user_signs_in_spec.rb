@@ -9,7 +9,7 @@ RSpec.feature "User signs in" do
   end
 
   scenario "with no roles for Rota app gets redirected to auth failure page" do
-    admin_user = create :admin_user, roles: []
+    admin_user = create :admin_user
     unauthorized_login_with admin_user
 
     expect(current_path).to eq "/auth/failure"
