@@ -43,6 +43,6 @@ RSpec.feature "User manages rota" do
     select_date Date.parse("20/01/2015"), from: "rota_generation_form_ending_date"
     click_button "Generate rota"
 
-    expect(page).to have_text "Rota for Gotham"
+    expect(page).to have_text "Rotas for Gotham"
   end
 end
