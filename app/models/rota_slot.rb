@@ -9,4 +9,8 @@ class RotaSlot < ActiveRecord::Base
   def self.for(procurement_area)
     where(procurement_area: procurement_area)
   end
+
+  def update_request_count!
+    increment!(:request_count)
+  end
 end
