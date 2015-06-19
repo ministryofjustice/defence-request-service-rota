@@ -11,6 +11,7 @@ module Features
   # Extend this module in spec/support/features/*.rb
   include SessionHelpers
   include FakeDataApis
+  include DateSelectHelpers
 end
 
 module Requests
