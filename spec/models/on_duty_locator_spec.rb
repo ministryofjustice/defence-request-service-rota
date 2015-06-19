@@ -27,12 +27,12 @@ RSpec.describe OnDutyLocator, "#locate" do
            starting_time: Time.parse("01/01/2014 21:00"),
            shift: last_shift)
 
-    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
+    on_duty_organisation_uid = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 
-    expect(on_duty_organisation_uids).to eq [firm_1]
+    expect(on_duty_organisation_uid).to eq firm_1
   end
 
-  it "returns multiple uids for the organisations on duty" do
+  it "returns the first uid if multiple organisations are on duty" do
     time = Time.parse("01/01/2014 20:00").iso8601
 
     create(:rota_slot,
@@ -50,9 +50,9 @@ RSpec.describe OnDutyLocator, "#locate" do
            starting_time: Time.parse("01/01/2014 21:00"),
            shift: last_shift)
 
-    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
+    on_duty_organisation_uid = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 
-    expect(on_duty_organisation_uids).to match_array([firm_1, firm_2])
+    expect(on_duty_organisation_uid).to eq firm_1
   end
 
   it "returns the correct uid even if it not the first slot in time" do
@@ -73,9 +73,9 @@ RSpec.describe OnDutyLocator, "#locate" do
            starting_time: Time.parse("01/01/2014 21:00"),
            shift: last_shift)
 
-    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
+    on_duty_organisation_uid = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 
-    expect(on_duty_organisation_uids).to match_array([firm_3])
+    expect(on_duty_organisation_uid).to eq firm_3
   end
 
   it "returns no organisation uids if in a defined gap between shifts" do
@@ -91,9 +91,9 @@ RSpec.describe OnDutyLocator, "#locate" do
            starting_time: Time.parse("02/01/2014 08:00"),
            ending_time: Time.parse("02/01/2014 16:00"))
 
-    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
+    on_duty_organisation_uid = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 
-    expect(on_duty_organisation_uids).to match_array([])
+    expect(on_duty_organisation_uid).to be_nil
   end
 
   it "returns no organisation uids if before all slots" do
@@ -104,8 +104,8 @@ RSpec.describe OnDutyLocator, "#locate" do
            starting_time: Time.parse("01/01/2014 08:00"),
            ending_time: Time.parse("01/01/2014 16:00"))
 
-    on_duty_organisation_uids = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
+    on_duty_organisation_uid = OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
 
-    expect(on_duty_organisation_uids).to match_array([])
+    expect(on_duty_organisation_uid).to be_nil
   end
 end

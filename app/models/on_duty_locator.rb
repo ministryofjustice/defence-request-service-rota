@@ -13,7 +13,7 @@ class OnDutyLocator
   attr_reader :time, :rota_slots
 
   def on_duty_organisation_uid
-    slots_with_on_duty_shift.map(&:organisation_uid)
+    slots_with_on_duty_shift.first.try(:organisation_uid)
   end
 
   def slots_with_on_duty_shift

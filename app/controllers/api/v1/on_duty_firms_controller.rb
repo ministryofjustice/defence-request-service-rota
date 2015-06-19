@@ -1,11 +1,11 @@
 class Api::V1::OnDutyFirmsController < Api::V1::ApiController
   def show
-    organisations_on_duty = OnDutyLocator.new(
+    organisation_on_duty = OnDutyLocator.new(
       requested_time,
       rota_slots_for_location
     ).locate
 
-    render json: { "organisation_uids" => organisations_on_duty }
+    render json: { "organisation_uid" => organisation_on_duty }
   end
 
   private

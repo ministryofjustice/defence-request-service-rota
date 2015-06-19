@@ -25,6 +25,6 @@ RSpec.describe "GET /v1/on_duty_firm/:location_uid/:time" do
       time: Time.parse("01/01/2014 20:00").iso8601
     }
 
-    expect(response_json).to eq({ "organisation_uids" => [on_duty_firm[:uid]] })
+    expect(response_json).to eq({ "organisation_uid" => on_duty_firm[:uid] })
   end
 end
