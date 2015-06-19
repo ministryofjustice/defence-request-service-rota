@@ -58,30 +58,22 @@ RSpec.feature "User views rota" do
     expect(page).to have_content("Thursday, 1 Jan 2015")
     expect(page).to have_content("Sunday, 1 Feb 2015")
 
-    select "2015", from: "rota_filter[starting_date(1i)]"
-    select "January", from: "rota_filter[starting_date(2i)]"
-    select "1", from: "rota_filter[starting_date(3i)]"
-    select "2015", from: "rota_filter[ending_date(1i)]"
-    select "January", from: "rota_filter[ending_date(2i)]"
-    select "31", from: "rota_filter[ending_date(3i)]"
+    select_date Date.parse("01/01/2015"), from: "rota_filter_starting_date"
+    select_date Date.parse("31/01/2015"), from: "rota_filter_ending_date"
     click_button "Filter"
 
     expect(page).not_to have_content("Monday, 1 Dec 2014")
     expect(page).to     have_content("Thursday, 1 Jan 2015")
     expect(page).not_to have_content("Sunday, 1 Feb 2015")
 
-    select "2015", from: "rota_filter[ending_date(1i)]"
-    select "February", from: "rota_filter[ending_date(2i)]"
-    select "1", from: "rota_filter[ending_date(3i)]"
+    select_date Date.parse("01/02/2015"), from: "rota_filter_ending_date"
     click_button "Filter"
 
     expect(page).not_to have_content("Monday, 1 Dec 2014")
     expect(page).to     have_content("Thursday, 1 Jan 2015")
     expect(page).to     have_content("Sunday, 1 Feb 2015")
 
-    select "2014", from: "rota_filter[starting_date(1i)]"
-    select "December", from: "rota_filter[starting_date(2i)]"
-    select "1", from: "rota_filter[starting_date(3i)]"
+    select_date Date.parse("01/12/2014"), from: "rota_filter_starting_date"
     click_button "Filter"
 
     expect(page).to have_content("Monday, 1 Dec 2014")

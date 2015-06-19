@@ -39,12 +39,8 @@ RSpec.feature "User manages rota" do
     visit procurement_area_path procurement_area
     click_link "Manage rotas"
     click_link "Generate new rota"
-    select "2015", from: "rota_generation_form[starting_date(1i)]"
-    select "January", from: "rota_generation_form[starting_date(2i)]"
-    select "1", from: "rota_generation_form[starting_date(3i)]"
-    select "2015", from: "rota_generation_form[ending_date(1i)]"
-    select "January", from: "rota_generation_form[ending_date(2i)]"
-    select "20", from: "rota_generation_form[ending_date(3i)]"
+    select_date Date.parse("01/01/2015"), from: "rota_generation_form_starting_date"
+    select_date Date.parse("20/01/2015"), from: "rota_generation_form_ending_date"
     click_button "Generate rota"
 
     expect(page).to have_text "Rota for Gotham"
