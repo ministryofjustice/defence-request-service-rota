@@ -1,9 +1,10 @@
 require "rails_helper"
+require "timecop"
 
 RSpec.feature "User views rota" do
   background { set_data_api_to FakeDataApis::FullDataStore }
 
-  scenario "filtering the rota by date" do
+  scenario "filtering the rota by date, with the current month as a default" do
     procurement_area = create(
       :procurement_area,
       name: "Gotham",
@@ -48,36 +49,31 @@ RSpec.feature "User views rota" do
 
     admin_user = create :admin_user
 
-    login_with admin_user
-    visit procurement_area_path procurement_area
-    click_link "Manage rotas"
+    Timecop.freeze(2015, 1, 1) do
+      login_with admin_user
+      visit procurement_area_path procurement_area
+      click_link "Manage rotas"
 
-    expect(page).to have_content("Rotas for Gotham")
+      expect(page).to have_content("Rotas for Gotham")
 
-    expect(page).to have_content("Monday, 1 Dec 2014")
-    expect(page).to have_content("Thursday, 1 Jan 2015")
-    expect(page).to have_content("Sunday, 1 Feb 2015")
+      expect(page).not_to have_content("Monday, 1 Dec 2014")
+      expect(page).to     have_content("Thursday, 1 Jan 2015")
+      expect(page).not_to have_content("Sunday, 1 Feb 2015")
 
-    select_date Date.parse("01/01/2015"), from: "rota_filter_starting_date"
-    select_date Date.parse("31/01/2015"), from: "rota_filter_ending_date"
-    click_button "Filter"
+      select_date Date.parse("01/02/2015"), from: "rota_filter_ending_date"
+      click_button "Filter"
 
-    expect(page).not_to have_content("Monday, 1 Dec 2014")
-    expect(page).to     have_content("Thursday, 1 Jan 2015")
-    expect(page).not_to have_content("Sunday, 1 Feb 2015")
+      expect(page).not_to have_content("Monday, 1 Dec 2014")
+      expect(page).to     have_content("Thursday, 1 Jan 2015")
+      expect(page).to     have_content("Sunday, 1 Feb 2015")
 
-    select_date Date.parse("01/02/2015"), from: "rota_filter_ending_date"
-    click_button "Filter"
+      select_date Date.parse("01/12/2014"), from: "rota_filter_starting_date"
+      select_date Date.parse("01/02/2015"), from: "rota_filter_ending_date"
+      click_button "Filter"
 
-    expect(page).not_to have_content("Monday, 1 Dec 2014")
-    expect(page).to     have_content("Thursday, 1 Jan 2015")
-    expect(page).to     have_content("Sunday, 1 Feb 2015")
-
-    select_date Date.parse("01/12/2014"), from: "rota_filter_starting_date"
-    click_button "Filter"
-
-    expect(page).to have_content("Monday, 1 Dec 2014")
-    expect(page).to have_content("Thursday, 1 Jan 2015")
-    expect(page).to have_content("Sunday, 1 Feb 2015")
+      expect(page).to have_content("Monday, 1 Dec 2014")
+      expect(page).to have_content("Thursday, 1 Jan 2015")
+      expect(page).to have_content("Sunday, 1 Feb 2015")
+    end
   end
 end

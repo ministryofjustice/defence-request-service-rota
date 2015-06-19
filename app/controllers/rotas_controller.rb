@@ -40,7 +40,11 @@ class RotasController < ApiEnabledController
   end
 
   def filter_date_range
-    FilterRange.new(params[:rota_filter]).build
+    if params[:rota_filter].present?
+      FilterRange.new(params[:rota_filter]).build
+    else
+      Range.new Time.now.beginning_of_month, Time.now.end_of_month
+    end
   end
 
   def shifts_for_location
@@ -60,7 +64,6 @@ class RotasController < ApiEnabledController
   end
 
   def rota_slots
-    slots = RotaSlot.for(procurement_area)
-    params[:rota_filter].present? ? slots.where(starting_time: filter_date_range) : slots
+    RotaSlot.for(procurement_area).where(starting_time: filter_date_range)
   end
 end
