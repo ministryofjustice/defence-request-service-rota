@@ -2,9 +2,9 @@
 
 <%= form_tag(procurement_area_rotas_path(@procurement_area), method: :get) do %>
   <h3>Filter</h3>
-  <%= date_select("rota_filter", "starting_date", default: @rota.date_range.first, start_year: 2014, end_year: Date.today.year + 3) %>
+  <%= date_select("rota_filter", "starting_date", { default: @rota.date_range.first, start_year: 2014, end_year: Date.today.year + 3, order: [:day, :month, :year] }, { class: "date-picker" }) %>
   to
-  <%= date_select("rota_filter", "ending_date",   default: @rota.date_range.last, start_year: 2014, end_year: Date.today.year + 3) %>
+  <%= date_select("rota_filter", "ending_date", { default: @rota.date_range.last, start_year: 2014, end_year: Date.today.year + 3, order: [:day, :month, :year] }, { class: "date-picker" }) %>
   <%= submit_tag "Filter" %>
 <% end %>
 
