@@ -23,6 +23,12 @@ module RotaHelper
     end
   end
 
+  def format_date(date)
+    str = date.strftime("%A, %-d %b %Y")
+    str << " (Bank Holiday)" if date.is_bank_holiday?
+    str
+  end
+
   # Calculates the luminance of the provided colour
   # in order to work out whether to put white or
   # black text over it. Calculation from

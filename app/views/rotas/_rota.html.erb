@@ -24,7 +24,7 @@
   <tbody>
     <% @rota.date_range.each do |date| %>
     <tr>
-      <td><%= date.strftime("%A, %-d %b %Y") %></td>
+      <td><%= format_date(date) %></td>
 
       <% @rota.shifts.each do |shift| %>
       <td>
