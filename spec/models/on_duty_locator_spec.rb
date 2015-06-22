@@ -46,7 +46,7 @@ RSpec.describe OnDutyLocator, "#locate" do
         OnDutyLocator.new(time, RotaSlot.order(starting_time: :desc)).locate
       }.to change {
         rota_slot.reload.request_count
-      }.by(1)
+      }.from(6).to(7)
     end
 
     it "returns the correct uid even if it not the first slot in time" do
