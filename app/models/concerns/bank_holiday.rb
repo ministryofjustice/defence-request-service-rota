@@ -8,10 +8,11 @@ module BankHoliday
   private
 
   def read_bank_holidays
+    return [] unless File.exists?(bank_holidays_file)
     Icalendar.parse(File.open(bank_holidays_file)).first.events.map(&:dtstart)
   end
 
   def bank_holidays_file
-    Rails.root.join("public", "england-and-wales.ics")
+    Rails.root.join("data", "bank_holidays.ics")
   end
 end

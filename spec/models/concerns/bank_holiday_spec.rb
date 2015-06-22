@@ -1,10 +1,8 @@
 require "rails_helper"
 
-RSpec.describe BankHoliday do
+RSpec.describe BankHoliday, type: :bank_holidays do
   before :each do
-    Date.include(BankHoliday)
-
-    expect(File).to receive(:open).with(anything).and_return(bank_holidays_file)
+    stub_bank_holidays!(bank_holidays_file)
   end
 
   describe "#is_bank_holiday" do

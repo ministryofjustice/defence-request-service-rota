@@ -5,6 +5,7 @@ ruby "2.2.2"
 gem "dotenv-rails", "~> 2.0.0", require: "dotenv/rails-now"
 
 gem "coffee-rails", "~> 4.1.0"
+gem "httparty"
 gem "icalendar"
 gem "jbuilder", "~> 2.0"
 gem "jquery-rails"

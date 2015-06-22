@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe RotaSlotAllocator, "#allocate" do
+RSpec.describe RotaSlotAllocator, "#allocate", type: :bank_holidays do
   before :each do
-    stub_bank_holidays!
+    stub_bank_holidays!(bank_holidays_file)
   end
 
   it "instantiates the necessary number of rota slots per shift weekday requirement" do
@@ -62,8 +62,8 @@ RSpec.describe RotaSlotAllocator, "#allocate" do
     expect(allocation[3].ending_time).to   eq nil
   end
 
-  def stub_bank_holidays!
-    fake_bank_holidays = <<-FILE.strip_heredoc
+  def bank_holidays_file
+    <<-FILE.strip_heredoc
       BEGIN:VCALENDAR
       VERSION:2.0
       METHOD:PUBLISH
@@ -79,9 +79,5 @@ RSpec.describe RotaSlotAllocator, "#allocate" do
       END:VEVENT
       END:VCALENDAR
     FILE
-
-    allow(File).to receive(:open).
-      with(Rails.root.join("public", "england-and-wales.ics")).
-      and_return(fake_bank_holidays)
   end
 end

@@ -15,6 +15,7 @@
 /tmp/pids/*
 /tmp/sessions/*
 /tmp/**/*.lp
+/data/bank_holidays.ics
 
 # Ignore tags file.
 /tags
