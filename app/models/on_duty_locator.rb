@@ -13,7 +13,12 @@ class OnDutyLocator
   attr_reader :time, :rota_slots
 
   def on_duty_organisation_uid
-    slots_with_on_duty_shift.map(&:organisation_uid)
+    slots = slots_with_on_duty_shift
+    return nil if slots.empty?
+
+    slot = slot_with_least_requests(slots)
+    slot.update_request_count!
+    slot.organisation_uid
   end
 
   def slots_with_on_duty_shift
@@ -30,6 +35,10 @@ class OnDutyLocator
 
   def find_latest_slot
     rota_slots.detect { |slot| slot.starting_time <= time }
+  end
+
+  def slot_with_least_requests(slots)
+    slots.sort_by(&:request_count).first
   end
 
   def slot_on_duty_now?(slot)

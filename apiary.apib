@@ -24,9 +24,12 @@ It is recommended to follow the “url” link values, [Link](https://tools.ietf
 
 ## On Duty [/api/v1/on_duty_firm?location_uid=xxx&time=2015-01-01T00:00:00+00:00]
 
-This endpoint returns the Organisation UIDs for the firms which are on duty at the location and time provided.
+This endpoint returns the Organisation UID for the firm which is on duty at the location and time provided.
 
-Currently this endpoint returns all firms which are on duty. Future work will amend this endpoint to rotate the firm returned as 'on duty' if there are many to ensure fair request allocation.
+When multiple consecutive calls are made to this endpoint, a different `organisation_uid` may be returned each time.
+This is to ensure that requests are allocated fairly between each law firm if multiple firms are on duty at the same place at the same time.
+
+The endpoint returns `nil` if there is no-one on duty at that time and location.
 
 ### Get firms on duty [GET]
 + Request
@@ -43,14 +46,11 @@ Currently this endpoint returns all firms which are on duty. Future work will am
 + Response 200 (application/json)
 
         {
-            "organisations_uids:" [
-                "b90f3c53-f511-4658-ad89-50ab9978d418",
-                "a4be1e14-f0cd-4213-924b-1597fb94e7f4"
-            ]
+            "organisation_uid:" "b90f3c53-f511-4658-ad89-50ab9978d418"
         }
 
 + Response 200 (application/json)
 
         {
-            "organisations_uids:" []
+            "organisation_uid:" nil
         }

@@ -1,31 +1,65 @@
 require "rails_helper"
 
 RSpec.describe "GET /v1/on_duty_firm/:location_uid/:time" do
+  let(:court_uid) { SecureRandom.uuid }
+  let(:procurement_area) {
+    create(:procurement_area,
+           memberships: [{ uid: court_uid, type: "court" }]
+          )
+  }
+
   it "returns the organisation_uid of the law firm on duty" do
-    on_duty_firm = {
-      uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231",
-      name: "Guilded Groom & Groom",
-      type: "law_firm"
-    }
-    procurement_area = create(
-      :procurement_area,
-      memberships: [{ uid: "93b8ef50-fe12-4d80-9e7e-05e98232ec13", type: "court" }]
-    )
+    on_duty_firm_uid = SecureRandom.uuid
+
     create(
       :rota_slot,
       starting_time: Time.parse("01/01/2014 09:00"),
       ending_time: Time.parse("01/01/2014 21:00"),
-      shift: create(:shift, location_uid: "93b8ef50-fe12-4d80-9e7e-05e98232ec13"),
-      organisation_uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231",
+      shift: create(:shift, location_uid: court_uid),
+      organisation_uid: on_duty_firm_uid,
       procurement_area_id: procurement_area.id
     )
 
     get "/v1/on_duty_firm/", {
-      location_uid: "93b8ef50-fe12-4d80-9e7e-05e98232ec13",
-      time: Time.parse("01/01/2014 20:00").iso8601,
-      token: "611151277c992292868f772d573da4eea4ade37e303582b328c674e8ce69b512",
+      location_uid: court_uid,
+      time: Time.parse("01/01/2014 20:00").iso8601
     }
 
-    expect(response_json).to eq({ "organisation_uids" => [on_duty_firm[:uid]] })
+    expect(response_json).to eq({ "organisation_uid" => on_duty_firm_uid })
+  end
+
+  it "rotates between several organisation_uids if there are several on duty" do
+    firm_1 = SecureRandom.uuid
+    firm_2 = SecureRandom.uuid
+
+    create(:rota_slot,
+           starting_time: Time.parse("01/01/2014 09:00"),
+           ending_time: Time.parse("01/01/2014 21:00"),
+           shift: create(:shift, location_uid: court_uid),
+           organisation_uid: firm_1,
+           procurement_area_id: procurement_area.id
+          )
+
+    create(:rota_slot,
+           starting_time: Time.parse("01/01/2014 09:00"),
+           ending_time: Time.parse("01/01/2014 21:00"),
+           shift: create(:shift, location_uid: court_uid),
+           organisation_uid: firm_2,
+           procurement_area_id: procurement_area.id
+          )
+
+    get "/v1/on_duty_firm/", {
+      location_uid: court_uid,
+      time: Time.parse("01/01/2014 10:00").iso8601
+    }
+
+    expect(response_json).to eq({ "organisation_uid" => firm_1 })
+
+    get "/v1/on_duty_firm/", {
+      location_uid: court_uid,
+      time: Time.parse("01/01/2014 11:00").iso8601
+    }
+
+    expect(response_json).to eq({ "organisation_uid" => firm_2 })
   end
 end
