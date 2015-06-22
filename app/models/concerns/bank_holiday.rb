@@ -13,6 +13,6 @@ module BankHoliday
   end
 
   def bank_holidays_file
-    Rails.root.join("data", "bank_holidays.ics")
+    Settings.bank_holidays.file_location
   end
 end

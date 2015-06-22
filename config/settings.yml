@@ -11,6 +11,9 @@ authentication:
   application_id: <%= ENV.fetch('AUTHENTICATION_APPLICATION_ID') %>
   application_secret: <%= ENV.fetch('AUTHENTICATION_APPLICATION_SECRET') %>
 
+bank_holidays:
+  file_location: <%= ENV.fetch('BANK_HOLIDAYS_FILE', Rails.root.join("data", "bank_holidays.ics")) %>
+
 aws:
   region: eu-west-1
   s3_asset_bucket_name: <%= ENV.fetch("AWS_S3_ASSET_BUCKET_NAME") %>
