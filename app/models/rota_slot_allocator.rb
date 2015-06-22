@@ -16,19 +16,25 @@ class RotaSlotAllocator
   def allocation_requirements_per_shift
     shifts.inject([]) do |result, shift|
       date_range.each do |date|
-        if date.is_bank_holiday?
-          slot_count = shift.bank_holiday.to_i
-        else
-          slot_count = shift.public_send(date.strftime("%A").downcase.to_sym).to_i
-        end
-        slot_count.times do |_|
-          result << RotaSlot.new(
-            new_slot_attributes(date, shift)
-          )
-        end
+        result.concat(allocations_for_shift_date(shift, date))
       end
       result
     end
+  end
+
+  def allocations_for_shift_date(shift, date)
+    if date.is_bank_holiday?
+      slot_count = shift.bank_holiday.to_i
+    else
+      slot_count = shift.public_send(date.strftime("%A").downcase.to_sym).to_i
+    end
+    slots = []
+    slot_count.times do |_|
+      slots << RotaSlot.new(
+        new_slot_attributes(date, shift)
+      )
+    end
+    slots
   end
 
   def new_slot_attributes(date, shift)
