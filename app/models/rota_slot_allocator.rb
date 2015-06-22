@@ -29,7 +29,7 @@ class RotaSlotAllocator
       slot_count = shift.public_send(date.strftime("%A").downcase.to_sym).to_i
     end
     slots = []
-    slot_count.times do |_|
+    slot_count.times do
       slots << RotaSlot.new(
         new_slot_attributes(date, shift)
       )
