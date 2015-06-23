@@ -9,13 +9,15 @@ class Api::V1::ApiController < ApplicationController
 
   private
   def access_token
-    request.headers["Authorization"]
+    if request.headers["Authorization"]
+      request.headers["Authorization"].scan(/^Bearer ([0-9a-f]+)/).first.try(:first)
+    end
   end
 
   def valid_access_token?
     (HTTParty.get(
       Settings.authentication.token_info_uri,
-      headers: { "Authorization" => access_token }
+      headers: { "Authorization" => "Bearer #{access_token}" }
     )).code == 200
   end
 

@@ -14,7 +14,21 @@ RSpec.shared_context "valid client token" do
 end
 
 RSpec.shared_examples "a protected endpoint" do |url|
-  it "returns a 401 response with an error message for unauthenticated requests" do
+  it "returns a 401 response with an error message for requests with no token" do
+    get url, nil,
+      {
+        "Content-Type": "application/json"
+      }
+
+    expect(response.status).to eq(401)
+    expect(response_json).to eq(
+      {
+        "errors" => ["Not authorized, please provide a valid client token"]
+      }
+    )
+  end
+
+  it "returns a 401 response with an error message for unauthenticated tokens" do
     invalid_token = "invalid-token"
 
     stub_request(:get, Settings.authentication.token_info_uri).
