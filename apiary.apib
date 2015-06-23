@@ -4,7 +4,11 @@ FORMAT: 1A
 Defence Request Rota App Internal APIs
 
 ## Authorization
-Currently, endpoints on the Rota App are not behind authorization. This will be changed in future using [Client Credentials Flow](https://github.com/doorkeeper-gem/doorkeeper/wiki/Client-Credentials-flow).
+Access tokens are obtained by calling the `/oauth/token` endpoint provided by the Auth app.
+
+Access tokens must be passed for each request in an Authorization header.
+
+A missing Authorization Header or invalid Authorization Token value for a protected endpoint will result in a 401 response.
 
 # Group API Root [/]
 
@@ -37,6 +41,7 @@ The endpoint returns `nil` if there is no-one on duty at that time and location.
     + Headers
 
             Accept: application/json
+            Authorization: Bearer <TOKEN>
 
 + Parameters
     + location_uid (uuid, required) - Location UID to query
@@ -53,4 +58,12 @@ The endpoint returns `nil` if there is no-one on duty at that time and location.
 
         {
             "organisation_uid:" nil
+        }
+
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "Not authorized, please provide a valid client token"
+            ]
         }

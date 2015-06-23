@@ -8,6 +8,7 @@ dsds:
 authentication:
   site_url: <%= ENV.fetch('AUTHENTICATION_SITE_URL') %>
   redirect_uri: <%= ENV.fetch('AUTHENTICATION_REDIRECT_URI') %>
+  token_info_uri: <%= ENV.fetch('AUTHENTICATION_SITE_URL') %>/oauth/token/info
   application_id: <%= ENV.fetch('AUTHENTICATION_APPLICATION_ID') %>
   application_secret: <%= ENV.fetch('AUTHENTICATION_APPLICATION_SECRET') %>
 
