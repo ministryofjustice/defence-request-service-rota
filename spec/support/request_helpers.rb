@@ -2,7 +2,7 @@ RSpec.shared_context "valid client token" do
   let!(:valid_token) { "abc123" }
 
   def api_request_headers
-    stub_request(:get, "http://app.example.com/token_info").
+    stub_request(:get, Settings.authentication.token_info_uri).
       with(headers: {"Authorization" => "Bearer #{valid_token}"}).
       to_return(status: 200, body: "", headers: {})
 
@@ -17,7 +17,7 @@ RSpec.shared_examples "a protected endpoint" do |url|
   it "returns a 401 response with an error message for unauthenticated requests" do
     invalid_token = "invalid-token"
 
-    stub_request(:get, "http://app.example.com/token_info").
+    stub_request(:get, Settings.authentication.token_info_uri).
       with(headers: { "Authorization" => "Bearer #{invalid_token}" }).
       to_return(status: 401, body: "", headers: {})
 
