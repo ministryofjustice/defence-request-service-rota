@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150619122632) do
+ActiveRecord::Schema.define(version: 20150622154137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20150619122632) do
     t.datetime "starting_time"
     t.datetime "ending_time"
     t.integer  "request_count",       default: 0, null: false
+    t.string   "solicitor_name"
   end
 
   add_index "rota_slots", ["procurement_area_id"], name: "index_rota_slots_on_procurement_area_id", using: :btree
