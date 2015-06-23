@@ -8,7 +8,10 @@ module BankHoliday
   private
 
   def read_bank_holidays
-    return [] unless File.exists?(bank_holidays_file)
+    unless File.exists?(bank_holidays_file)
+      Rails.logger.error("--- ERROR: --- Tried to access Bank Holiday file which could not be found")
+      return []
+    end
     Icalendar.parse(File.open(bank_holidays_file)).first.events.map(&:dtstart)
   end
 
