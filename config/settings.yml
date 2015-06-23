@@ -17,3 +17,9 @@ bank_holidays:
 aws:
   region: eu-west-1
   s3_asset_bucket_name: <%= ENV.fetch("AWS_S3_ASSET_BUCKET_NAME") %>
+
+sentry:
+  # Note that this should only be set to false if you absolutely dont care
+  # about the security of your environment. This makes error logging vulnerable
+  # to man-in-the-middle attacks.
+  ssl_verification: <%= ENV.fetch("SENTRY_SSL_VERIFICATION", true) %>

@@ -356,6 +356,8 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    sentry-raven (0.13.3)
+      faraday (>= 0.7.6)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
     simplecov (0.9.2)
@@ -440,6 +442,7 @@ DEPENDENCIES
   rubocop (~> 0.30)
   sass-rails (~> 5.0.2)
   sdoc (~> 0.4.0)
+  sentry-raven
   shoulda-matchers
   simplecov
   timecop
