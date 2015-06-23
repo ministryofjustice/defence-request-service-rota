@@ -1,9 +1,9 @@
 module RotaHelper
-  def present_organisations(organisations)
-    tags = organisations.map do |org|
-      org_colour = organisation_colour(org)
+  def present_organisations(organisations_with_solicitors)
+    tags = organisations_with_solicitors.map do |org_hsh|
+      org_colour = organisation_colour(org_hsh[:organisation_uid])
 
-      content_tag(:span, org.name,
+      content_tag(:span, org_and_solicitor(org_hsh),
                   class: "rota-slot-organisation",
                   style: "background-color: ##{org_colour}; color: #{organisation_text_colour(org_colour)};")
     end
@@ -11,8 +11,16 @@ module RotaHelper
     tags.join("</br>").html_safe
   end
 
-  def organisation_colour(org)
-    org.uid.first(6)
+  def org_and_solicitor(org_hsh)
+    str = org_hsh[:organisation_name].dup
+
+    str << " - #{org_hsh[:solicitor_name]}" if org_hsh[:solicitor_name].present?
+
+    str
+  end
+
+  def organisation_colour(org_uid)
+    org_uid.first(6)
   end
 
   def organisation_text_colour(org_colour)

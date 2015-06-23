@@ -37,7 +37,8 @@ RSpec.feature "User views rota" do
            procurement_area: procurement_area,
            starting_time: Time.parse("01/02/2015 09:00"),
            shift: shift,
-           organisation_uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231"
+           organisation_uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231",
+           solicitor_name: "Mr A Lawyer"
           )
 
     create(:rota_slot,
@@ -59,6 +60,7 @@ RSpec.feature "User views rota" do
       expect(page).not_to have_content("Monday, 1 Dec 2014")
       expect(page).to     have_content("Thursday, 1 Jan 2015")
       expect(page).not_to have_content("Sunday, 1 Feb 2015")
+      expect(page).not_to have_content("Mr A Lawyer")
 
       select_date Date.parse("01/02/2015"), from: "rota_filter_ending_date"
       click_button "Filter"
@@ -66,6 +68,7 @@ RSpec.feature "User views rota" do
       expect(page).not_to have_content("Monday, 1 Dec 2014")
       expect(page).to     have_content("Thursday, 1 Jan 2015")
       expect(page).to     have_content("Sunday, 1 Feb 2015")
+      expect(page).to     have_content("Mr A Lawyer")
 
       select_date Date.parse("01/12/2014"), from: "rota_filter_starting_date"
       select_date Date.parse("01/02/2015"), from: "rota_filter_ending_date"
@@ -74,6 +77,7 @@ RSpec.feature "User views rota" do
       expect(page).to have_content("Monday, 1 Dec 2014")
       expect(page).to have_content("Thursday, 1 Jan 2015")
       expect(page).to have_content("Sunday, 1 Feb 2015")
+      expect(page).to have_content("Mr A Lawyer")
     end
   end
 end
