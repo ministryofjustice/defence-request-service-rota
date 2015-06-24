@@ -1,0 +1,22 @@
+.narrow {
+  width: 22%;
+  @include media(mobile) {
+    width: 40%;
+  }
+}
+
+section {
+  clear: left;
+}
+
+.form-group {
+  float: none;
+}
+
+.panel {
+  border: 1px solid #bfc1c3;
+  padding-top: 45px;
+  padding-right: 40px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+}

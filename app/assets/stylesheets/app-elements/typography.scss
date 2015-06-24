@@ -1,0 +1,19 @@
+h1 {
+  @extend .heading-xlarge;
+  margin-right: 6%;
+  span {
+    @extend .heading-secondary;
+  }
+}
+
+h2 {
+  @extend .heading-large;
+  margin-top: 100px;
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid $border-colour;
+  margin-bottom: 40px;
+}
+
+h3 {
+  @extend .heading-medium;
+}

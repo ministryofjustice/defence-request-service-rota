@@ -1,0 +1,41 @@
+select {
+  @extend .form-label;
+}
+
+.inline-time-selects select {
+  display: inline;
+}
+
+label + input {
+  @extend .form-control;
+}
+
+label + textarea {
+  @extend .form-control;
+}
+
+textarea {
+  height: 110px;
+}
+
+[type="text"], [type="password"], textarea {
+  padding: 5px 4px 2px;
+  border: 1px solid $grey-2;
+}
+
+input[disabled="disabled"], input[readonly="readonly"] {
+  opacity: 1;
+  background-color: $grey-4;
+  color: $grey-1;
+  &:focus {
+    outline: none;
+  }
+}
+
+fieldset.time-select select {
+  display: inline;
+}
+
+select.date-picker {
+  display: inline-block;
+}
