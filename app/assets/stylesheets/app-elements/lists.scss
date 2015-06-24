@@ -1,3 +1,31 @@
 ul {
   @extend .list-bullet;
+
+  &.areas {
+    list-style-type: none;
+    margin-left: 0;
+
+    li {
+      border: 1px solid $grey-2;
+      background-color: $grey-4;
+      padding: 20px;
+      margin: 10px 0;
+
+      h3 {
+        margin: 0;
+        float: left;
+      }
+      a.button {
+        float: right;
+        margin: 0;
+      }
+
+    }
+  }
+
+  &.actions {
+    list-style-type: none;
+    margin-left: 0;
+    margin-top: 40px;
+  }
 }
