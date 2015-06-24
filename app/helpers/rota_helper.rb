@@ -4,8 +4,8 @@ module RotaHelper
       org_colour = organisation_colour(org_hsh[:organisation_uid])
 
       content_tag(:span, org_and_solicitor(org_hsh),
-                  class: "rota-slot-organisation",
-                  style: "background-color: ##{org_colour}; color: #{organisation_text_colour(org_colour)};")
+                  class: "rota-slot-organisation #{organisation_text_class(org_colour)}",
+                  style: "background-color: ##{org_colour};")
     end
 
     tags.join("</br>").html_safe
@@ -23,11 +23,11 @@ module RotaHelper
     org_uid.first(6)
   end
 
-  def organisation_text_colour(org_colour)
+  def organisation_text_class(org_colour)
     if luminance(org_colour) > 50
-      return "#000"
+      return "dark_text"
     else
-      return "#fff"
+      return "light_text"
     end
   end
 
