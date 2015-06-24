@@ -1,0 +1,8 @@
+span.hint {
+  @extend .form-hint;
+  margin-top: 0px;
+}
+
+span.hint.inline {
+  display: inline;
+}

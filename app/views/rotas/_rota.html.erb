@@ -15,7 +15,7 @@
       <% @rota.shifts.each do |shift| %>
       <th>
       <%= @rota.location_for_shift(shift).try(:name) %>
-      </br>
+      <br>
       <%= shift.info %>
       </th>
       <% end %>
