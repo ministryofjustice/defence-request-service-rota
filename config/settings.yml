@@ -16,7 +16,7 @@ bank_holidays:
   file_location: <%= ENV.fetch('BANK_HOLIDAYS_FILE', Rails.root.join("data", "bank_holidays.ics")) %>
 
 aws:
-  region: eu-west-1
+  region: <%= ENV.fetch("AWS_REGION") %>
   s3_asset_bucket_name: <%= ENV.fetch("AWS_S3_ASSET_BUCKET_NAME") %>
 
 sentry:
