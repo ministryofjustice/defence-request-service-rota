@@ -1,6 +1,8 @@
 <%= form_for @procurement_area do |form| %>
-  <%= form.label :name %>
-  <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
 
-  <%= form.submit %>
+  <%= form.submit "Create", :class => 'button' %>
 <% end %>
