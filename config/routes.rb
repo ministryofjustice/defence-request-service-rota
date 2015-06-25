@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get "/status" => "status#index"
   get "/ping" => "status#ping"
 
-  scope module: :api, defaults: { format: "json" } do
+  namespace :api, format: "json" do
     namespace :v1 do
       resource :on_duty_firm, only: [:show]
     end

@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "GET /v1/on_duty_firm/:location_uid/:time" do
-  it_behaves_like "a protected endpoint", "/v1/on_duty_firm"
+RSpec.describe "GET /api/v1/on_duty_firm/:location_uid/:time" do
+  it_behaves_like "a protected endpoint", "/api/v1/on_duty_firm"
 
   context "with an authorization token" do
     include_context "valid client token"
@@ -25,7 +25,7 @@ RSpec.describe "GET /v1/on_duty_firm/:location_uid/:time" do
         procurement_area_id: procurement_area.id
       )
 
-      get "/v1/on_duty_firm/", {
+      get "/api/v1/on_duty_firm/", {
         location_uid: court_uid,
         time: Time.parse("01/01/2014 20:00").iso8601
       }, api_request_headers
@@ -53,14 +53,14 @@ RSpec.describe "GET /v1/on_duty_firm/:location_uid/:time" do
              procurement_area_id: procurement_area.id
             )
 
-      get "/v1/on_duty_firm/", {
+      get "/api/v1/on_duty_firm/", {
         location_uid: court_uid,
         time: Time.parse("01/01/2014 10:00").iso8601
       }, api_request_headers
 
       expect(response_json).to eq({ "organisation_uid" => firm_1 })
 
-      get "/v1/on_duty_firm/", {
+      get "/api/v1/on_duty_firm/", {
         location_uid: court_uid,
         time: Time.parse("01/01/2014 11:00").iso8601
       }, api_request_headers
