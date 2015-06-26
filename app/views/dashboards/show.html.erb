@@ -3,14 +3,15 @@
 <% if current_user.name.present? %>
   <p>
     Welcome to your Defence Service Rota dashboard, <%= current_user.name %>.
-    <% if current_user.email.present? %>
-      <small>Logged in as: <%= current_user.email %></small>
-    <% end %>
   </p>
+
+  <% if current_user.email.present? %>
+    <p>Logged in as: <strong><%= current_user.email %></strong></p>
+  <% end %>
 <% else %>
   <p>
     Welcome to your Defence Service Rota dashboard.
   </p>
 <% end %>
 
-<%= link_to "Procurement areas", procurement_areas_path %>
+<%= link_to "Procurement areas", procurement_areas_path, :class => 'button' %>

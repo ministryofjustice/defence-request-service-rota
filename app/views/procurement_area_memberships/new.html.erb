@@ -1,26 +1,33 @@
-<h3>Add members to <%= @procurement_area_membership.name %></h3>
+<h2>Add members to <%= @procurement_area_membership.name %></h2>
 
 <div class="members">
-  <h4>Members</h4>
-  <hr>
-  <% @procurement_area_membership.eligible_members.each do |org| %>
-  <div>
-    <h4><%= org.name %></h4>
+  <h3>Members</h3>
+  <div class="grid-row">
+    <div class="column-half">
+      <p><strong>Current</strong></p>
+    </div>
+    <div class="column-half">
+      <p><strong>Available</strong></p>
+      <% @procurement_area_membership.eligible_members.each do |org| %>
+      <div>
+        <h4><%= org.name %></h4>
 
-    <%= button_to "Add",
-      procurement_area_memberships_path(
-        procurement_area_id: @procurement_area_membership.id,
-        membership_uid: org.uid,
-        membership_type: org.type
-        )
-      %>
+        <%= button_to "Add",
+          procurement_area_memberships_path(
+            procurement_area_id: @procurement_area_membership.id,
+            membership_uid: org.uid,
+            membership_type: org.type
+            )
+          %>
+      </div>
+      <% end %>
+    </div>
   </div>
-  <% end %>
+  
 </div>
-
+<hr>
 <div class="locations">
-  <h4>Locations</h4>
-  <hr>
+  <h3>Locations</h3>
   <% @procurement_area_membership.eligible_locations.each do |org| %>
   <div>
     <h4><%= org.name %></h4>

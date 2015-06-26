@@ -5,7 +5,7 @@
   <% @procurement_areas.each do |procurement_area| %>
     <li class="cf">
       <h3><%= procurement_area.name %></h3>
-      <%= link_to "View", procurement_area_path(procurement_area), :class => 'button' %>
+      <%= link_to "View", procurement_area_path(procurement_area), :class => 'link-list-item' %>
     </li>
   <% end %>
   </ul>
