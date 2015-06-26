@@ -49,7 +49,7 @@ RSpec.feature "User manages procurement areas" do
     click_link "Procurement areas"
     click_link "View"
 
-    expect(page).to have_css "h3", text: "The Dig"
+    expect(page).to have_css "h2", text: "The Dig"
   end
 
   scenario "associating a law firm with a procurement area" do
