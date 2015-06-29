@@ -19,6 +19,7 @@ module Requests
 end
 
 RSpec.configure do |config|
+  config.include Devise::TestHelpers, type: :controller
   config.include Features, type: :feature
   config.include Requests, type: :request
   config.include BankHolidayHelpers, type: :bank_holidays
