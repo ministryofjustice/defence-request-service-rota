@@ -28,8 +28,7 @@ gem "moj_template", "~> 0.23.0"
 gem "govuk_frontend_toolkit", "~> 2.0.1"
 gem "govuk_elements_rails", "~> 0.1.1"
 
-gem "omniauth-oauth2"
-gem "omniauth-dsds", github: "ministryofjustice/defence-request-service-omniauth-dsds", tag: "v0.9.0"
+gem "devise"
 gem "drs-auth_client", github: "ministryofjustice/defence-request-service-auth", tag: "v0.2.2"
 
 # Asset sync - for uploading assets to S3

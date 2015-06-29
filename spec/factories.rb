@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :admin_user, class: Omniauth::Dsds::User do
+  factory :admin_user do
     to_create { |instance| instance }
 
     initialize_with {
