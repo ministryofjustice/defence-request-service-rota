@@ -7,16 +7,34 @@ class ProcurementAreaMembership
     @membership_params = membership_params
   end
 
-  def eligible_members
+  def members
     organisations.
-      select { |org| ProcurementArea::MEMBER_TYPES.include?(org.type) }.
+      select { |org| ProcurementArea::MEMBER_TYPES.include?(org.type) }
+  end
+
+  def eligible_members
+    members.
       reject { |org| procurement_area.members.any? { |member| member["uid"] == org.uid } }
   end
 
-  def eligible_locations
+  def current_members
+    members.
+      reject { |org| eligible_members.include? org }
+  end
+
+  def locations
     organisations.
-      select { |org| ProcurementArea::LOCATION_TYPES.include?(org.type) }.
+      select { |org| ProcurementArea::LOCATION_TYPES.include?(org.type) }
+  end
+
+  def eligible_locations
+    locations.
       reject { |org| procurement_area.locations.any? { |location| location["uid"] == org.uid } }
+  end
+
+  def current_locations
+    locations.
+      reject { |org| eligible_locations.include? org }
   end
 
   def save
