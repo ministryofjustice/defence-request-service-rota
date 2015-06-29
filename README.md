@@ -70,4 +70,10 @@ In order for the rotas to be generated, ```clingo``` will need to be installed (
 view what facts are being written, and what response ```clingo``` returns, simply set the environment variable
 ```ENV[CLINGO_DEBUG]```. Once set, these will be written out to the log file.
 
+### Remote Authentication
+
+The tag `remote-authentication` has been created in order to mark the point at which remote authentication
+with the Auth app is stripped out. Please checkout this tag in order to familiarise yourself with how this
+used to work.
+
 
