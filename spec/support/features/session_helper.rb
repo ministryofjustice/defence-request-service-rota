@@ -5,7 +5,7 @@ module SessionHelpers
     fill_in "Email", with: user.email
     fill_in "Password", with: user.password
 
-    click_button "Log in"
+    click_button "Sign in"
   end
 
   def stub_current_user_with(user)
