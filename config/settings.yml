@@ -5,6 +5,11 @@ rails:
 dsds:
   app_title: Defence Request Service Duty Rota
 
+devise:
+  key: <%= ENV.fetch('DEVISE_KEY') %>
+  salt: <%= ENV.fetch('DEVISE_SALT') %>
+  session_timeout: <%= ENV.fetch('SESSION_TIMEOUT_MINUTES', 60) %>
+
 authentication:
   site_url: <%= ENV.fetch('AUTHENTICATION_SITE_URL') %>
   redirect_uri: <%= ENV.fetch('AUTHENTICATION_REDIRECT_URI') %>
