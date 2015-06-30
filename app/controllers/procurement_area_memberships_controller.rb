@@ -39,7 +39,7 @@ class ProcurementAreaMembershipsController < ApplicationController
   end
 
   def organisations
-    Organisation.where(organisation_type: %w(law_firm law_office court custody_suite))
+    Organisation.all
   end
 
   def procurement_area
