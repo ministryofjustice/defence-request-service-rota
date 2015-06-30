@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root "dashboards#show"
 
   resources :location_shifts
+  resources :organisations
   resources :procurement_areas do
     resources :rotas, only: [:index, :new, :create]
   end

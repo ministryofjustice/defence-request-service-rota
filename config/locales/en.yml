@@ -21,3 +21,8 @@
 
 en:
   sign_out: "Sign out"
+  organisation_types:
+    court: "Court"
+    custody_suite: "Custody suite"
+    law_firm: "Law firm"
+    law_office: "Law office"
