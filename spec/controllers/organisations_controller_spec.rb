@@ -1,9 +1,12 @@
 require "rails_helper"
 
 RSpec.describe OrganisationsController do
+  before do
+    sign_in(create(:admin_user))
+  end
+
   describe "POST create" do
     it "saves the organisation and redirects to index" do
-      stub_signed_in_user
       stub_organisation method: :save, return_value: true
 
       post :create, organisation: organisation_params
@@ -12,7 +15,6 @@ RSpec.describe OrganisationsController do
     end
 
     it "redirects to new if the organisation could not be created" do
-      stub_signed_in_user
       stub_organisation method: :save, return_value: false
 
       post :create, organisation: { name: "" }
@@ -23,7 +25,6 @@ RSpec.describe OrganisationsController do
 
   describe "PATCH update" do
     it "updates the organisation and redirects to index" do
-      stub_signed_in_user
       stub_organisation_lookup
       stub_organisation method: :update_attributes, return_value: true
 
@@ -33,7 +34,6 @@ RSpec.describe OrganisationsController do
     end
 
     it "redirects to edit if the organisation could not be updated" do
-      stub_signed_in_user
       stub_organisation_lookup
       stub_organisation method: :update_attributes, return_value: false
 
@@ -41,11 +41,6 @@ RSpec.describe OrganisationsController do
 
       expect(response).to render_template :edit
     end
-  end
-
-  def stub_signed_in_user
-    allow_any_instance_of(OrganisationsController).
-      to receive(:current_user).and_return(double(:mock_user))
   end
 
   def stub_organisation(method:, return_value:)
