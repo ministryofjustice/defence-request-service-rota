@@ -1,24 +1,20 @@
 require "rails_helper"
 
 RSpec.feature "User manages location shifts" do
-  background { set_data_api_to FakeDataApis::FakeLocationsApi }
-
-  scenario "creating a shift" do
-    locations = [
-      {
-        uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
-        type: "custody_suite"
-      }
-    ]
-    procurement_area = create(
-      :procurement_area,
-      name: "Tatooine",
-      memberships: locations
-    )
+  background {
     admin_user = create :admin_user
     login_with admin_user
+  }
 
-    visit procurement_area_path procurement_area
+  scenario "creating a shift" do
+    procurement_area = create(:procurement_area)
+    create(
+      :organisation,
+      organisation_type: "custody_suite",
+      procurement_area: procurement_area
+    )
+
+    visit procurement_area_path(procurement_area)
     click_link "Manage shifts"
     click_link "Add shift"
     fill_in "Name", with: "Morning shift"
@@ -32,27 +28,20 @@ RSpec.feature "User manages location shifts" do
   end
 
   scenario "editing a shift" do
-    locations = [
-      {
-        uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
-        type: "custody_suite"
-      }
-    ]
-    procurement_area = create(
-      :procurement_area,
-      name: "Tatooine",
-      memberships: locations
+    procurement_area = create(:procurement_area)
+    custody_suite = create(
+      :organisation,
+      organisation_type: "custody_suite",
+      procurement_area: procurement_area
     )
     create(
       :shift,
       name: "The Grind",
-      location_uid: locations.first[:uid],
+      organisation: custody_suite,
       starting_time: "06:00"
     )
-    admin_user = create :admin_user
-    login_with admin_user
 
-    visit procurement_area_path procurement_area
+    visit procurement_area_path(procurement_area)
     click_link "Manage shifts"
     click_link "Edit shift"
     fill_in "Name", with: "No longer the Grind"
@@ -66,25 +55,18 @@ RSpec.feature "User manages location shifts" do
   end
 
   scenario "deleting a shift" do
-    locations = [
-      {
-        uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
-        type: "custody_suite"
-      }
-    ]
-    procurement_area = create(
-      :procurement_area,
-      name: "Tatooine",
-      memberships: locations
+    procurement_area = create(:procurement_area)
+    custody_suite = create(
+      :organisation,
+      organisation_type: "custody_suite",
+      procurement_area: procurement_area
     )
     create(
       :shift,
       name: "The Grind",
-      location_uid: locations.first[:uid],
+      organisation: custody_suite,
       starting_time: "06:00"
     )
-    admin_user = create :admin_user
-    login_with admin_user
 
     visit procurement_area_path procurement_area
     click_link "Manage shifts"
@@ -94,27 +76,21 @@ RSpec.feature "User manages location shifts" do
   end
 
   scenario "managing day requirements for a shift" do
-    create(
-      :procurement_area,
-      name: "Tatooine",
-      memberships: [
-        {
-          uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
-          type: "custody_suite"
-        }
-      ]
+    procurement_area = create(:procurement_area)
+    custody_suite = create(
+      :organisation,
+      organisation_type: "custody_suite",
+      procurement_area: procurement_area
     )
     shift = create(
       :shift,
       name: "Late shift",
-      location_uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
+      organisation: custody_suite,
       starting_time: "08:00",
       ending_time: "16:00"
     )
-    admin_user = create :admin_user
 
-    login_with admin_user
-    visit location_shift_path(shift, location_id: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1")
+    visit location_shift_path(shift, organisation_id: custody_suite.id)
     click_link "Manage daily requirements for shift"
     fill_in "shift_monday", with: 1
     fill_in "shift_thursday", with: 3

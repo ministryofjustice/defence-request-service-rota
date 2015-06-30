@@ -1,7 +1,7 @@
 <h2>Edit a shift</h2>
 
 <%= form_for @location_shift, url: location_shift_path, method: :patch, html: { class: "inline-time-selects" } do |form| %>
-  <%= form.hidden_field :location_uid, value: @location_shift.location_uid %>
+  <%= form.hidden_field :organisation_id, value: @location_shift.organisation_id %>
 
   <%= form.label :name %>
   <%= form.text_field :name %>

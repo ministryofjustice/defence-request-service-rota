@@ -6,6 +6,7 @@ end
 
 RSpec.describe ProcurementArea, "relationships" do
   it { should have_many(:rota_slots) }
+  it { should have_many(:organisations) }
 
   it "removes any rota slots associated with it upon destroying" do
     p = create(:procurement_area)
@@ -33,34 +34,36 @@ RSpec.describe ProcurementArea, ".ordered_by_name" do
   end
 end
 
-RSpec.describe ProcurementArea, "#destroy_membership!" do
-  it "removes the membership with the given member uid" do
-    area = build_stubbed(:procurement_area, memberships: [
-      {
-        uid: "abc123",
-        type: "law_firm"
-      }
-    ])
+RSpec.describe ProcurementArea, "#members" do
+  it "returns all associated organisations with a member type" do
+    p = create(:procurement_area)
 
-    area.destroy_membership!("abc123")
+    law_firm = create(:organisation,
+                      organisation_type: "law_firm",
+                      procurement_area: p)
+    create(:organisation,
+           organisation_type: "custody_suite",
+           procurement_area: p)
+    create(:organisation,
+           organisation_type: "law_firm")
 
-    expect(area.memberships).to be_blank
+    expect(p.members).to eq([law_firm])
   end
 end
 
-RSpec.describe ProcurementArea, "#membership_uids" do
-  it "returns a list of uids for the area memberships" do
-    area = build_stubbed(:procurement_area, memberships: [
-      {
-        uid: "abc123",
-        type: "law_firm"
-      },
-      {
-        uid: "def456",
-        type: "court"
-      }
-    ])
+RSpec.describe ProcurementArea, "#locations" do
+  it "returns all associated organisations with a location type" do
+    p = create(:procurement_area)
 
-    expect(area.membership_uids).to eq %w(abc123 def456)
+    custody_suite = create(:organisation,
+                           organisation_type: "custody_suite",
+                           procurement_area: p)
+    create(:organisation,
+           organisation_type: "law_firm",
+           procurement_area: p)
+    create(:organisation,
+           organisation_type: "custody_suite")
+
+    expect(p.locations).to eq([custody_suite])
   end
 end

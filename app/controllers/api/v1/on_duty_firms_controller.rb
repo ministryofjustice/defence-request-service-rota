@@ -5,7 +5,7 @@ class Api::V1::OnDutyFirmsController < Api::V1::ApiController
       rota_slots_for_location
     ).locate
 
-    render json: { "organisation_uid" => organisation_on_duty }
+    render json: { "organisation_id" => organisation_on_duty }
   end
 
   private
@@ -13,13 +13,13 @@ class Api::V1::OnDutyFirmsController < Api::V1::ApiController
   def rota_slots_for_location
     RotaSlot.joins(:shift)
       .where(
-        shifts: { location_uid: requested_location },
+        shifts: { organisation_id: requested_location },
         starting_time: surrounding_time_window
       ).order(starting_time: :desc)
   end
 
   def requested_location
-    params.fetch(:location_uid)
+    params.fetch(:location_id)
   end
 
   def requested_time

@@ -11,44 +11,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622154137) do
+ActiveRecord::Schema.define(version: 20150629143621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "procurement_areas", force: :cascade do |t|
-    t.string   "name",                     null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.jsonb    "memberships", default: []
+  create_table "organisations", force: :cascade do |t|
+    t.string  "name",                null: false
+    t.string  "organisation_type",   null: false
+    t.string  "tel"
+    t.text    "address"
+    t.string  "postcode"
+    t.string  "email"
+    t.string  "mobile"
+    t.integer "procurement_area_id"
   end
 
-  add_index "procurement_areas", ["memberships"], name: "index_procurement_areas_on_memberships", using: :gin
+  create_table "procurement_areas", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "rota_slots", force: :cascade do |t|
     t.integer  "shift_id",                        null: false
-    t.uuid     "organisation_uid",                null: false
     t.integer  "procurement_area_id"
     t.datetime "starting_time"
     t.datetime "ending_time"
     t.integer  "request_count",       default: 0, null: false
     t.string   "solicitor_name"
+    t.integer  "organisation_id"
   end
 
   add_index "rota_slots", ["procurement_area_id"], name: "index_rota_slots_on_procurement_area_id", using: :btree
 
   create_table "shifts", force: :cascade do |t|
     t.string   "name"
-    t.string   "location_uid",                                     null: false
     t.time     "starting_time"
     t.time     "ending_time"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.jsonb    "allocation_requirements_per_weekday", default: {}
+    t.integer  "organisation_id"
   end
 
   add_index "shifts", ["allocation_requirements_per_weekday"], name: "index_shifts_on_allocation_requirements_per_weekday", using: :gin
-  add_index "shifts", ["location_uid"], name: "index_shifts_on_location_uid", using: :btree
 
   add_foreign_key "rota_slots", "procurement_areas", on_delete: :cascade
 end

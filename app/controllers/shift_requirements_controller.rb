@@ -7,7 +7,7 @@ class ShiftRequirementsController < ApplicationController
     @shift = shift
 
     if @shift.update_attributes(shift_requirements_params)
-      redirect_to location_shift_path(@shift, location_id: @shift.location_uid)
+      redirect_to location_shift_path(@shift, organisation_id: @shift.organisation_id)
     else
       render :edit
     end

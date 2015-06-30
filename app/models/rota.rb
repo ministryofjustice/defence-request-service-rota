@@ -32,7 +32,7 @@ class Rota
   end
 
   def location_for_shift(shift)
-    locations.detect { |l| l.uid == shift.location_uid }
+    shift.organisation
   end
 
   def sorted_slots
@@ -51,10 +51,10 @@ class Rota
 
   def organisations_and_solicitor_names(slots)
     slots.map do |s|
-      organisation = organisations.detect { |o| o.uid == s.organisation_uid }
+      organisation = s.organisation
       {
         organisation_name: organisation.name,
-        organisation_uid: organisation.uid,
+        organisation_id: organisation.id,
         solicitor_name: s.solicitor_name
       }
     end

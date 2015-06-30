@@ -3,9 +3,10 @@ require "rails_helper"
 RSpec.describe LocationShiftForm, "#submit" do
   context "with valid data submission" do
     it "creates a shift from the data submitted" do
+      custody_suite = create(:organisation)
       data = {
         name: "Morning Shift",
-        location_uid: SecureRandom.uuid,
+        organisation_id: custody_suite.id,
         starting_time: Time.parse("08:00"),
         ending_time: Time.parse("10:00"),
       }
@@ -30,13 +31,13 @@ RSpec.describe LocationShiftForm, "#submit" do
 
   context "with invalid data submission" do
     it "does not create a shift" do
-      data = { location_uid: "", starting_time: "" }
+      data = { organisation_id: nil, starting_time: nil }
       form = LocationShiftForm.new(data)
 
       expect(Shift).not_to receive(:create!)
       expect(form.submit).to eq false
       expect(form.errors.full_messages).to eq(
-        ["Location uid can't be blank", "Starting time can't be blank"]
+        ["Organisation can't be blank", "Starting time can't be blank"]
       )
     end
   end

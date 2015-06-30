@@ -6,9 +6,9 @@ module RotaGeneration
     end
 
     def mutate_slots!
-      split_clauses.each do |shift_id, date_of_month, month, year, firm_uid|
+      split_clauses.each do |shift_id, date_of_month, month, year, firm_id|
         matching_slot = detect_matching_slot(build_date(year, month, date_of_month), shift_id)
-        matching_slot.organisation_uid = firm_uid if matching_slot
+        matching_slot.organisation_id = firm_id.to_i if matching_slot
       end
       slots
     end
@@ -20,7 +20,7 @@ module RotaGeneration
     def split_clauses
       solution_clauses.map do |clause|
         clause.
-          match(/allocated\(([^,]*),[^,]*,(\d+),(\d+),(\d+),\"([^,]*)\"\)/).
+          match(/allocated\(([^,]*),[^,]*,(\d+),(\d+),(\d+),(\d+)\)/).
           captures
       end
     end
@@ -33,7 +33,7 @@ module RotaGeneration
       slots.detect do |slot|
         slot.starting_time.to_date == date &&
           slot.shift_id == shift_id.to_i &&
-          slot.organisation_uid == nil
+          slot.organisation_id == nil
       end
     end
   end

@@ -24,7 +24,7 @@ class ProcurementAreaMembershipsController < ApiEnabledController
     @procurement_area_membership = ProcurementAreaMembership.new(
       procurement_area,
       [],
-      { uid: params[:membership_uid] }
+      membership_params
     )
 
     @procurement_area_membership.destroy
@@ -35,13 +35,11 @@ class ProcurementAreaMembershipsController < ApiEnabledController
   private
 
   def membership_params
-    { uid: params.delete(:membership_uid), type: params.delete(:membership_type) }
+    { id: params.delete(:membership_id) }
   end
 
   def organisations
-    all_organisations_by(type: %w(law_firm law_office court custody_suite)).map do |organisation|
-      OrganisationPresenter.new(organisation)
-    end
+    Organisation.where(organisation_type: %w(law_firm law_office court custody_suite))
   end
 
   def procurement_area

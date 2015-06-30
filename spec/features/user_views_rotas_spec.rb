@@ -2,42 +2,35 @@ require "rails_helper"
 require "timecop"
 
 RSpec.feature "User views rota" do
-  background { set_data_api_to FakeDataApis::FullDataStore }
-
   scenario "filtering the rota by date, with the current month as a default" do
     procurement_area = create(
       :procurement_area,
-      name: "Gotham",
-      memberships: [
-        {
-          uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1",
-          name: "Brighton Custody Suite",
-          type: "custody_suite",
-        },
-        {
-          uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231",
-          name: "Guilded Groom & Groom",
-          type: "law_firm",
-        }
-      ]
+      name: "Gotham"
     )
+
+    custody_suite = create(:organisation,
+                           organisation_type: "custody_suite",
+                           procurement_area: procurement_area)
+    law_firm = create(:organisation,
+                      organisation_type: "law_firm",
+                      procurement_area: procurement_area)
 
     shift = create(:shift,
                    name: "Normal shift",
-                   location_uid: "e6256f3b-3920-4e5c-a8e1-5b6277985ca1")
+                   organisation: custody_suite)
 
     create(:rota_slot,
            procurement_area: procurement_area,
            starting_time: Time.parse("01/01/2015 09:00"),
            shift: shift,
-           organisation_uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231"
+           organisation: law_firm
           )
 
     create(:rota_slot,
            procurement_area: procurement_area,
            starting_time: Time.parse("01/02/2015 09:00"),
            shift: shift,
-           organisation_uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231",
+           organisation: law_firm,
            solicitor_name: "Mr A Lawyer"
           )
 
@@ -45,7 +38,7 @@ RSpec.feature "User views rota" do
            procurement_area: procurement_area,
            starting_time: Time.parse("01/12/2014 09:00"),
            shift: shift,
-           organisation_uid: "32252f6a-a6a5-4f52-8ede-58d6127ba231"
+           organisation: law_firm
           )
 
     admin_user = create :admin_user
