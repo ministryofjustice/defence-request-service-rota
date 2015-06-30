@@ -30,7 +30,7 @@ RSpec.describe "GET /api/v1/on_duty_firm/:location_uid/:time" do
       )
 
       get "/api/v1/on_duty_firm/", {
-        location_id: court.id,
+        organisation_id: court.id,
         time: Time.parse("01/01/2014 20:00").iso8601
       }, api_request_headers
 
@@ -58,14 +58,14 @@ RSpec.describe "GET /api/v1/on_duty_firm/:location_uid/:time" do
             )
 
       get "/api/v1/on_duty_firm/", {
-        location_id: court.id,
+        organisation_id: court.id,
         time: Time.parse("01/01/2014 10:00").iso8601
       }, api_request_headers
 
       expect(response_json).to eq({ "organisation_id" => firm_1.id })
 
       get "/api/v1/on_duty_firm/", {
-        location_id: court.id,
+        organisation_id: court.id,
         time: Time.parse("01/01/2014 11:00").iso8601
       }, api_request_headers
 
