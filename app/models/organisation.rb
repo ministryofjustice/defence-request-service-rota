@@ -1,8 +1,5 @@
 class Organisation < ActiveRecord::Base
   ORGANISATION_TYPES = %w{
-    webops
-    drs_call_center
-    laa_rota_team
     court
     custody_suite
     law_firm
