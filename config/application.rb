@@ -42,5 +42,8 @@ module DefenceRequestServiceRota
     config.product_type = "service"
     # Feedback URL (URL for feedback link in phase banner)
     config.feedback_url = config.relative_url_root + "/feedback/new"
+
+    config.action_mailer.default_url_options = Settings.action_mailer.default_url_options.to_h
+    config.action_mailer.smtp_settings = Settings.action_mailer.smtp_settings.to_h
   end
 end
