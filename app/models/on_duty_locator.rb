@@ -5,20 +5,20 @@ class OnDutyLocator
   end
 
   def locate
-    on_duty_organisation_uid
+    on_duty_organisation_id
   end
 
   private
 
   attr_reader :time, :rota_slots
 
-  def on_duty_organisation_uid
+  def on_duty_organisation_id
     slots = slots_with_on_duty_shift
     return nil if slots.empty?
 
     slot = slot_with_least_requests(slots)
     slot.update_request_count!
-    slot.organisation_uid
+    slot.organisation_id
   end
 
   def slots_with_on_duty_shift

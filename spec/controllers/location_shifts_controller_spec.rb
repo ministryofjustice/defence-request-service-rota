@@ -1,18 +1,18 @@
 require "rails_helper"
 
 RSpec.describe LocationShiftsController do
-  include FakeDataApis
-
   it { should be_kind_of(ApiEnabledController) }
+
+  before :each do
+    stub_signed_in_user
+  end
 
   describe "POST create" do
     it "renders new if the shift could not be added" do
-      set_data_api_to FakeDataApis::FakeLocationsApi
-      stub_signed_in_user
       location_shift_params = {
         location_shift_form: {
           name: "",
-          location_uid: "abc"
+          organisation_id: 1
         }
       }
 
@@ -24,15 +24,14 @@ RSpec.describe LocationShiftsController do
 
   describe "PATCH update" do
     it "renders edit if the shift could not be updated" do
-      set_data_api_to FakeDataApis::FakeLocationsApi
-      stub_signed_in_user
       shift = create :shift
+
       location_shift_params = {
         id: shift.id,
         shift: {
           name: "",
           starting_time: nil,
-          location_uid: shift.location_uid
+          organisation_id: shift.organisation_id
         }
       }
 

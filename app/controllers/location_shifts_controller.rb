@@ -1,12 +1,12 @@
 class LocationShiftsController < ApiEnabledController
   def show
-    @location = location
+    @organisation = organisation
 
-    @location_shifts = Shift.for(location.uid).map { |shift| ShiftPresenter.new(shift) }
+    @shifts = organisation.shifts.map { |shift| ShiftPresenter.new(shift) }
   end
 
   def new
-    @location_shift_form = LocationShiftForm.new(location_uid: location.uid)
+    @location_shift_form = LocationShiftForm.new(organisation_id: organisation.id)
   end
 
   def create
@@ -17,7 +17,7 @@ class LocationShiftsController < ApiEnabledController
     if @location_shift_form.submit
       redirect_to location_shift_path(
         @location_shift_form.location_shift,
-        location_id: @location_shift_form.location_uid
+        organisation_id: @location_shift_form.organisation_id
       )
     else
       render :new
@@ -34,7 +34,7 @@ class LocationShiftsController < ApiEnabledController
     if @location_shift.update_attributes(location_shift_params_from params[:shift])
       redirect_to location_shift_path(
         @location_shift,
-        location_id: @location_shift.location_uid
+        organisation_id: @location_shift.organisation_id
       )
     else
       render :edit
@@ -46,13 +46,13 @@ class LocationShiftsController < ApiEnabledController
 
     @location_shift.destroy
 
-    redirect_to location_shift_path(location_id: @location_shift.location_uid)
+    redirect_to location_shift_path(organisation_id: @location_shift.organisation_id)
   end
 
   private
 
-  def location
-    find_organisation_by_uid(uid: params[:location_id])
+  def organisation
+    Organisation.find(params[:organisation_id])
   end
 
   def location_shift
@@ -62,7 +62,7 @@ class LocationShiftsController < ApiEnabledController
   def location_shift_params_from(params_for_action)
     {
       name: params_for_action.fetch(:name),
-      location_uid: params_for_action.fetch(:location_uid),
+      organisation_id: params_for_action.fetch(:organisation_id),
       starting_time: StartingTime.new(params_for_action).build,
       ending_time: EndingTime.new(params_for_action).build,
     }

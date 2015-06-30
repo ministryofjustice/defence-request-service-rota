@@ -8,46 +8,39 @@ class ProcurementAreaMembership
   end
 
   def members
-    organisations.
-      select { |org| ProcurementArea::MEMBER_TYPES.include?(org.type) }
+    organisations.members
   end
 
   def eligible_members
-    members.
-      reject { |org| procurement_area.members.any? { |member| member["uid"] == org.uid } }
+    members.where(procurement_area_id: nil)
   end
 
   def current_members
-    members.
-      reject { |org| eligible_members.include? org }
+    procurement_area.members
   end
 
   def locations
-    organisations.
-      select { |org| ProcurementArea::LOCATION_TYPES.include?(org.type) }
+    organisations.locations
   end
 
   def eligible_locations
-    locations.
-      reject { |org| procurement_area.locations.any? { |location| location["uid"] == org.uid } }
+    locations.where(procurement_area_id: nil)
   end
 
   def current_locations
-    locations.
-      reject { |org| eligible_locations.include? org }
+    procurement_area.locations
   end
 
   def save
     if valid?
-      add_membership_to_procurement_area
-      save_procurement_area!
+      add_membership
     else
       false
     end
   end
 
   def destroy
-    procurement_area.destroy_membership!(membership_params[:uid])
+    destroy_membership
   end
 
   private
@@ -56,8 +49,7 @@ class ProcurementAreaMembership
 
   def valid?
     membership_params_are_present? &&
-      membership_uid_is_present? &&
-      membership_type_is_present?
+      membership_uid_is_present?
   end
 
   def membership_params_are_present?
@@ -65,21 +57,22 @@ class ProcurementAreaMembership
   end
 
   def membership_uid_is_present?
-    membership_params[:uid] != nil && !membership_params[:uid].empty?
+    membership_params[:id] != nil
   end
 
-  def membership_type_is_present?
-    membership_params[:type] != nil && !membership_params[:type].empty?
-  end
-
-  def add_membership_to_procurement_area
-    procurement_area.memberships.push(
-      uid: membership_params.fetch(:uid),
-      type: membership_params.fetch(:type)
+  def add_membership
+    organisation.update_attributes(
+      procurement_area: procurement_area
     )
   end
 
-  def save_procurement_area!
-    procurement_area.save!
+  def destroy_membership
+    organisation.update_attributes(
+      procurement_area: nil
+    )
+  end
+
+  def organisation
+    Organisation.find(membership_params[:id])
   end
 end

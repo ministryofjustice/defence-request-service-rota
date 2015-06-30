@@ -4,7 +4,7 @@ class ProcurementAreasController < ApiEnabledController
   end
 
   def show
-    @procurement_area = ProcurementAreaPresenter.new(procurement_area, organisations)
+    @procurement_area = procurement_area
   end
 
   def new
@@ -43,12 +43,12 @@ class ProcurementAreasController < ApiEnabledController
 
   private
 
-  def procurement_area_params
-    params.require(:procurement_area).permit(:name)
+  def procurement_area
+    ProcurementArea.find(params[:id])
   end
 
-  def procurement_area
-    @_procurement_area ||= ProcurementArea.find(params[:id])
+  def procurement_area_params
+    params.require(:procurement_area).permit(:name)
   end
 
   def organisations

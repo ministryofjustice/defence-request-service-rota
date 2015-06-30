@@ -1,14 +1,14 @@
 module RotaGeneration
   class FactFileWriter
-    def initialize(slots, organisation_uids, fact_file)
+    def initialize(slots, organisation_ids, fact_file)
       @slots = slots
-      @organisation_uids = organisation_uids
+      @organisation_ids = organisation_ids
       @fact_file = fact_file
     end
 
     def write!
       write_formatted_dates
-      write_organisation_uids
+      write_organisation_ids
       write_shift_ids
       write_requirements
       write_constants
@@ -16,7 +16,7 @@ module RotaGeneration
 
     private
 
-    attr_reader :slots, :organisation_uids, :fact_file
+    attr_reader :slots, :organisation_ids, :fact_file
 
     def write(str)
       fact_file.write(str)
@@ -29,9 +29,9 @@ module RotaGeneration
       end
     end
 
-    def write_organisation_uids
-      organisation_uids.each do |o_uid|
-        write("firm(\"#{o_uid}\").\n")
+    def write_organisation_ids
+      organisation_ids.each do |o_id|
+        write("firm(#{o_id}).\n")
       end
     end
 
@@ -83,7 +83,7 @@ module RotaGeneration
     end
 
     def number_of_firms
-      organisation_uids.length
+      organisation_ids.length
     end
 
     def number_of_shifts

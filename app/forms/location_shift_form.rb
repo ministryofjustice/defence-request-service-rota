@@ -1,9 +1,9 @@
 class LocationShiftForm
   include ActiveModel::Model
 
-  attr_accessor :ending_time, :location_uid, :name, :starting_time, :location_shift
+  attr_accessor :ending_time, :organisation_id, :name, :starting_time, :location_shift
 
-  validates :location_uid, presence: true
+  validates :organisation_id, presence: true
   validates :starting_time, presence: true
 
   def submit
@@ -20,7 +20,7 @@ class LocationShiftForm
   def create_shift!
     Shift.create!(
       name: name,
-      location_uid: location_uid,
+      organisation_id: organisation_id,
       ending_time: ending_time,
       starting_time: starting_time,
       allocation_requirements_per_weekday: generate_default_requirements

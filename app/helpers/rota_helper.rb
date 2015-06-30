@@ -1,7 +1,7 @@
 module RotaHelper
   def present_organisations(organisations_with_solicitors)
     tags = organisations_with_solicitors.map do |org_hsh|
-      org_colour = organisation_colour(org_hsh[:organisation_uid])
+      org_colour = organisation_colour(org_hsh[:organisation_id])
 
       content_tag(:span, org_and_solicitor(org_hsh),
                   class: "rota-slot-organisation #{organisation_text_class(org_colour)}",
@@ -20,7 +20,8 @@ module RotaHelper
   end
 
   def organisation_colour(org_uid)
-    org_uid.first(6)
+    x = org_uid % 255
+    (x.to_s(16) * 6).first(6)
   end
 
   def organisation_text_class(org_colour)

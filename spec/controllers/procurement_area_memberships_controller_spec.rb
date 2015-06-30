@@ -6,14 +6,13 @@ RSpec.describe ProcurementAreaMembershipsController do
   it { should be_kind_of(ApiEnabledController) }
 
   describe "POST create" do
-    it "adds a membership to a procurement area" do
-      set_data_api_to FakeDataApis::FakeLawFirmsApi
+    it "adds a member to a procurement area" do
       stub_signed_in_user
-      procurement_area = create :procurement_area
+      procurement_area = create(:procurement_area)
+      new_member = create(:organisation)
       membership_params = {
         procurement_area_id: procurement_area.id,
-        membership_uid: "123abc456",
-        membership_type: "example"
+        membership_id: new_member.id
       }
 
       post :create, membership_params
@@ -22,13 +21,11 @@ RSpec.describe ProcurementAreaMembershipsController do
     end
 
     it "renders new if the membership could not be added" do
-      set_data_api_to FakeDataApis::FakeLawFirmsApi
       stub_signed_in_user
       procurement_area = create :procurement_area
       membership_params = {
         procurement_area_id: procurement_area.id,
-        membership_uid: nil,
-        membership_type: nil
+        membership_id: nil
       }
 
       post :create, membership_params
