@@ -1,4 +1,4 @@
-class ProcurementAreasController < ApiEnabledController
+class ProcurementAreasController < ApplicationController
   def index
     @procurement_areas = ProcurementArea.ordered_by_name
   end
@@ -49,9 +49,5 @@ class ProcurementAreasController < ApiEnabledController
 
   def procurement_area_params
     params.require(:procurement_area).permit(:name)
-  end
-
-  def organisations
-    all_organisations_by(uids: procurement_area.membership_uids)
   end
 end

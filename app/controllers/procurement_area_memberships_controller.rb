@@ -1,4 +1,4 @@
-class ProcurementAreaMembershipsController < ApiEnabledController
+class ProcurementAreaMembershipsController < ApplicationController
   def new
     @procurement_area_membership = ProcurementAreaMembership.new(
       procurement_area,
@@ -39,7 +39,7 @@ class ProcurementAreaMembershipsController < ApiEnabledController
   end
 
   def organisations
-    Organisation.where(organisation_type: %w(law_firm law_office court custody_suite))
+    Organisation.all
   end
 
   def procurement_area

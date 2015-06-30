@@ -1,4 +1,4 @@
-class LocationShiftsController < ApiEnabledController
+class LocationShiftsController < ApplicationController
   def show
     @organisation = organisation
 

@@ -25,9 +25,9 @@
 <%# TODO: convert banner to i18n? %>
 <% content_for :content_override do %>
   <main id="page-container" role="main">
-    <%= render "shared/banner" %>
-    <%= render "shared/flash_message" %>
-    <%= yield %>
+  <%= render "shared/banner" %>
+  <%= flash_messages %>
+  <%= yield %>
   </main>
 <% end %>
 <% content_for :proposition_links do %>

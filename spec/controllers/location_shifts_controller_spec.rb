@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe LocationShiftsController do
-  it { should be_kind_of(ApiEnabledController) }
-
   before do
     sign_in(create(:admin_user))
   end

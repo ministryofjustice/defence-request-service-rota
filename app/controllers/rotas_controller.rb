@@ -1,6 +1,6 @@
 require_relative "../../lib/rota_generation"
 
-class RotasController < ApiEnabledController
+class RotasController < ApplicationController
   def index
     @procurement_area = procurement_area
     @rota = Rota.new(rota_slots, organisations, locations)
