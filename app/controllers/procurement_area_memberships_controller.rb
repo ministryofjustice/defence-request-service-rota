@@ -1,4 +1,4 @@
-class ProcurementAreaMembershipsController < ApiEnabledController
+class ProcurementAreaMembershipsController < ApplicationController
   def new
     @procurement_area_membership = ProcurementAreaMembership.new(
       procurement_area,
