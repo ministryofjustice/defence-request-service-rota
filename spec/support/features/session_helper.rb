@@ -1,22 +1,11 @@
-require "omniauth-dsds/spec/sign_in_helper"
-
 module SessionHelpers
-  include Omniauth::Dsds::Spec::SignInHelper
-
   def login_with(user)
-    mock_token
-    stub_current_user_with user
+    visit "/users/sign_in"
 
-    sign_in_using_dsds_auth
-  end
+    fill_in "Email", with: user.email
+    fill_in "Password", with: user.password
 
-  def unauthorized_login_with(user)
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:defence_request] = :invalid_credentials
-
-    stub_current_user_with user
-
-    sign_in_using_dsds_auth
+    click_button "Sign in"
   end
 
   def stub_current_user_with(user)
@@ -28,10 +17,6 @@ module SessionHelpers
         organisations: user.organisations
       }
     )
-  end
-
-  def sign_in_using_dsds_auth
-    visit root_path
   end
 
   def sign_out

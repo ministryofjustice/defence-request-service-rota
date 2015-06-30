@@ -1,13 +1,16 @@
 require "rails_helper"
 
-RSpec.describe ProcurementAreaMembershipsController do
+RSpec.describe ProcurementAreaMembershipsController, type: :controller do
   include FakeDataApis
 
   it { should be_kind_of(ApiEnabledController) }
 
+  before do
+    sign_in(create(:admin_user))
+  end
+
   describe "POST create" do
     it "adds a member to a procurement area" do
-      stub_signed_in_user
       procurement_area = create(:procurement_area)
       new_member = create(:organisation)
       membership_params = {
@@ -21,7 +24,6 @@ RSpec.describe ProcurementAreaMembershipsController do
     end
 
     it "renders new if the membership could not be added" do
-      stub_signed_in_user
       procurement_area = create :procurement_area
       membership_params = {
         procurement_area_id: procurement_area.id,
@@ -32,10 +34,5 @@ RSpec.describe ProcurementAreaMembershipsController do
 
       expect(response).to render_template :new
     end
-  end
-
-  def stub_signed_in_user
-    allow_any_instance_of(ProcurementAreaMembershipsController).
-      to receive(:current_user).and_return(double(:mock_user))
   end
 end

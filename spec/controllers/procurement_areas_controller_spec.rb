@@ -1,11 +1,14 @@
 require "rails_helper"
 
-RSpec.describe ProcurementAreasController do
+RSpec.describe ProcurementAreasController, type: :controller do
   it { should be_kind_of(ApiEnabledController) }
+
+  before do
+    sign_in(create(:admin_user))
+  end
 
   describe "POST create" do
     it "saves the procurement area and redirects to index" do
-      stub_signed_in_user
       stub_procurement_area method: :save, return_value: true
 
       post :create, procurement_area: procurement_area_params
@@ -14,7 +17,6 @@ RSpec.describe ProcurementAreasController do
     end
 
     it "redirects to new if the procurement area could not be created" do
-      stub_signed_in_user
       stub_procurement_area method: :save, return_value: false
 
       post :create, procurement_area: { name: "" }
@@ -25,7 +27,6 @@ RSpec.describe ProcurementAreasController do
 
   describe "PATCH update" do
     it "updates the procurement area and redirects to index" do
-      stub_signed_in_user
       stub_procurement_area_lookup
       stub_procurement_area method: :update_attributes, return_value: true
 
@@ -35,7 +36,6 @@ RSpec.describe ProcurementAreasController do
     end
 
     it "redirects to new if the procurement area could not be update" do
-      stub_signed_in_user
       stub_procurement_area_lookup
       stub_procurement_area method: :update_attributes, return_value: false
 
@@ -43,11 +43,6 @@ RSpec.describe ProcurementAreasController do
 
       expect(response).to render_template :edit
     end
-  end
-
-  def stub_signed_in_user
-    allow_any_instance_of(ProcurementAreasController).
-      to receive(:current_user).and_return(double(:mock_user))
   end
 
   def stub_procurement_area(method:, return_value:)

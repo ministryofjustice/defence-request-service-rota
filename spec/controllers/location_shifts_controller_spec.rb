@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe LocationShiftsController do
   it { should be_kind_of(ApiEnabledController) }
 
-  before :each do
-    stub_signed_in_user
+  before do
+    sign_in(create(:admin_user))
   end
 
   describe "POST create" do
@@ -39,10 +39,5 @@ RSpec.describe LocationShiftsController do
 
       expect(response).to render_template :edit
     end
-  end
-
-  def stub_signed_in_user
-    allow_any_instance_of(LocationShiftsController).
-      to receive(:current_user).and_return(double(:mock_user))
   end
 end

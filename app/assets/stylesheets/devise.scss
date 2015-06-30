@@ -1,4 +1,3 @@
-
 a.user-links {
   color: white;
   font-size: 0.8em;
@@ -7,23 +6,19 @@ a.user-links {
   text-decoration: none;
 }
 
-h5.user-role {
-  color: white;
-  display: inline;
-  font-weight: 800;
-  float: right;
-  margin: -1px;
-}
-
 label.form-label.remember-me {
   display: inline;
 }
 
-.remember-me-field {
+.field {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
 .panel-default {
   margin-top: 30px;
+}
+
+.user-actions {
+  text-align: right;
 }

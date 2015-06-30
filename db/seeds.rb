@@ -5,3 +5,11 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+(1..5).each do |i|
+  User.where(email: "laa#{i}@example.com").first_or_create!(
+    email: "laa#{i}@example.com",
+    password: "password",
+    name: "LAA #{i}"
+  )
+end

@@ -5,6 +5,11 @@ rails:
 dsds:
   app_title: Defence Request Service Duty Rota
 
+devise:
+  key: <%= ENV.fetch('DEVISE_KEY') %>
+  salt: <%= ENV.fetch('DEVISE_SALT') %>
+  session_timeout: <%= ENV.fetch('SESSION_TIMEOUT_MINUTES', 60) %>
+
 authentication:
   site_url: <%= ENV.fetch('AUTHENTICATION_SITE_URL') %>
   redirect_uri: <%= ENV.fetch('AUTHENTICATION_REDIRECT_URI') %>
@@ -24,3 +29,17 @@ sentry:
   # about the security of your environment. This makes error logging vulnerable
   # to man-in-the-middle attacks.
   ssl_verification: <%= ENV.fetch("SENTRY_SSL_VERIFICATION", true) %>
+
+action_mailer:
+  default_url_options:
+    host: <%= ENV.fetch('MAILER_DEFAULT_URL_HOST') %>
+    port: <%= ENV.fetch('MAILER_DEFAULT_URL_PORT') %>
+    protocol: <%= ENV.fetch('MAILER_DEFAULT_URL_PROTOCOL') %>
+  smtp_settings:
+    address: smtp.sendgrid.net
+    port: 587
+    domain: em.email.dsds.dsd.io
+    authentication: plain
+    user_name: <%= ENV.fetch('MAILER_SMTP_USER_NAME') %>
+    password: <%= ENV.fetch('MAILER_SMTP_PASSWORD') %>
+    enable_starttls_auto: true
