@@ -45,5 +45,11 @@ module DefenceRequestServiceRota
 
     config.action_mailer.default_url_options = Settings.action_mailer.default_url_options.to_h
     config.action_mailer.smtp_settings = Settings.action_mailer.smtp_settings.to_h
+
+    # Use Que to run async jobs
+    config.active_job.queue_adapter = :que
+
+    # Needed to support Que specific config
+    config.active_record.schema_format = :sql
   end
 end

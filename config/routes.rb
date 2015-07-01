@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users, skip: :registrations
 
+  authenticate :user do
+    mount Que::Web, at: "que"
+  end
+
   root "dashboards#show"
 
   resources :location_shifts
