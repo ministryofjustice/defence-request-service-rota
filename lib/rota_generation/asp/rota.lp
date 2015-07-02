@@ -2,7 +2,7 @@
 % LUA %
 %%%%%%%
 
-#begin_lua
+#script (lua)
 
   -----------------------------------------------------------
   -- Lua is necessary here as ASP only deals with integer  --
@@ -41,7 +41,7 @@
     return math.floor(num_firms_required / num_firms)
   end
 
-#end_lua.
+#end.
 
 %%%%%%%%%%%%%%
 % GENERATORS %
@@ -61,44 +61,44 @@ N { allocated(S, Da, D, M, Y, F) : firm(F) } N :-
 % Define a clause which states the total number of
 % slots to fill for the entire rota.
 total_slots(N) :-
-  N = #sum [ slots_per_shift_date(_, _, _, _, _, X) = X].
+  N = #sum { X : slots_per_shift_date(_, _, _, _, _, X) }.
 
 % Define a clause which states how many slots a firm
 % has been allocated in total.
 total_slots_for_firm(F, N) :-
-  N = #count { allocated(_, _, _, _, _, F) },
+  N = #count { 1 : allocated(_, _, _, _, _, F) },
   firm(F).
 
 % Define a clause which states how many slots a firm
 % has on any given date.
 firm_slots_for_date(F, D, M, Y, N) :-
-  N = #count { allocated(_, _, D, M, Y, F) },
+  N = #count { 1 : allocated(_, _, D, M, Y, F) },
   date(_, D, M, Y),
   firm(F).
 
 % Define a clause which states how many slots are required across
 % shifts for a given day of the week.
 total_slots_required_on_date(D, M, Y, N) :-
-  N = #sum [ slots_per_shift_date(_, _, D, M, Y, X) = X],
+  N = #sum { X : slots_per_shift_date(_, _, D, M, Y, X) },
   date(_, D, M, Y).
 
 % Define a clause which states how many slots are required across
 % all days for a specific shift.
 total_slots_for_shift(S, N) :-
-  N = #sum [ slots_per_shift_date(S, _, _, _, _, X) = X],
+  N = #sum { X : slots_per_shift_date(S, _, _, _, _, X) },
   shift(S).
 
 % Define a clause which states how many times a firm has been
 % allocated on a day of the week.
 slots_for_firm_on_day(F, Da, N) :-
-  N = #count { allocated(_, Da, _, _, _, F) },
+  N = #count { 1 : allocated(_, Da, _, _, _, F) },
   date(Da, _, _, _),
   firm(F).
 
 % Define a clause which states how many times a firm
 % appears on a particular shift.
 slots_for_shift_for_firm(F, S, N) :-
-  N = #count { allocated(S, _, _, _, _, F) },
+  N = #count { 1: allocated(S, _, _, _, _, F) },
   firm(F),
   shift(S).
 
@@ -138,7 +138,7 @@ consecutive_dates(1, 1, Y1, 31, 12, Y2) :-
   Y2 + 1 == Y1.
 
 last_day_of_month(M, Y, X) :-
-  X = #max[ date(_, D, M, Y) = D ],
+  X = #max { D : date(_, D, M, Y) },
   date(_, _, M, Y).
 
 % Identify when a firm is on the same shift on two consecutive dates.
@@ -193,13 +193,12 @@ allocated_on_consecutive_dates(F) :-
 % consecutive days. This is a soft constraint to ensure that
 % in small scenarios (for example when num_firms < num_shifts)
 % there is a still a valid solution.
-#minimize { allocated_on_consecutive_dates(_) }.
+#minimize { 1 : allocated_on_consecutive_dates(_) }.
 
 %%%%%%%%%%%%%%%%
 % PRESENTATION %
 %%%%%%%%%%%%%%%%
 
-#hide.
 #show allocated/6.
 % #show total_slots_for_firm/2.
 % #show slots_for_shift_for_firm/3.
