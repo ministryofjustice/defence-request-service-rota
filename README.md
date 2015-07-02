@@ -2,22 +2,10 @@
 [![Code
 Climate](https://codeclimate.com/github/ministryofjustice/defence-request-service-rota/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/defence-request-service-rota)
 
-This application receives content from
-[ministryofjustice/defence-request-service-auth](https://github.com/ministryofjustice/defence-request-service)
-to build solicitor rotas.
-
 ## Environment Variables
 
 See `.example.env`. Add any new Env vars required to this file, setting
 placeholder data for them.
-
-## API documentation
-Written using API Blueprint syntax: https://apiblueprint.org/ into apiary.apib
-
-To generate a new HTML format locally run: ```bin/render_api```
-(requires [aglio](https://github.com/danielgtaylor/aglio))
-
-API docs accessible from /api.html
 
 ## Local Setup
 
@@ -47,14 +35,9 @@ To get the application running locally, you need to:
  		bundle exec rake db:migrate
  		bundle exec rake db:seed
 
- * ### Follow the same steps to set up the auth app
+ * ### Start the server
 
- 	This application uses a corresponding oauth server, which will also need to be running locally. It can be found [here](https://github.com/ministryofjustice/defence-request-service-auth)
-
- * ### Start both servers
-
- 		cd defence-request-service-rota && bundle exec rails server
- 		cd defence-request-service-auth && bundle exec rails server
+ 		bundle exec rails server
 
  * ### Use the app
 
