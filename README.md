@@ -17,31 +17,30 @@ To get the application running locally, you need to:
  * ### Install ruby 2.2.2
  	It is recommended that you use a ruby version manager such as [rbenv](http://rbenv.org/) or [rvm](https://rvm.io/)
 
- * ### Install postgres
+ * ### Install postgres (9.4 or better)
  	http://www.postgresql.org/
- 	
+
  * ### Install clingo
  	This can be downloaded from [here](http://sourceforge.net/projects/potassco/files/clingo/).
- 	
+
   	**Note**: Ensure to download version `3.0.5` and **not** version `4.x`.
 
  * ### Bundle the gems
-       cd defence-request-service
+       cd defence-request-rota
        bundle install
 
  * ### Create and migrate the database; run seeds
 
- 		bundle exec rake db:create
- 		bundle exec rake db:migrate
- 		bundle exec rake db:seed
+ 		bundle exec rake db:reset
 
- * ### Start the server
+ * ### Start server
 
- 		bundle exec rails server
+ 		cd defence-request-service-rota && bundle exec rails s
+>>>>>>> update readme with port changes
 
  * ### Use the app
 
- 	You can find the service app running on `http://localhost:34343`
+ 	You can find the rota app running on `http://localhost:3000`
 
 ### Test setup
 
@@ -49,8 +48,9 @@ To run the tests, you will need to install [PhantomJS](http://phantomjs.org/), t
 
 ### Rota generation
 
-In order for the rotas to be generated, ```clingo``` will need to be installed (as instructed above). In order to
-view what facts are being written, and what response ```clingo``` returns, simply set the environment variable
+In order for the rotas to be generated, ```clingo``` will need to be installed (as instructed above). Clingo must be on the PATH of the user the process if running under.
+
+In order to view what facts are being written, and what response ```clingo``` returns, simply set the environment variable
 ```ENV[CLINGO_DEBUG]```. Once set, these will be written out to the log file.
 
 ### Remote Authentication
