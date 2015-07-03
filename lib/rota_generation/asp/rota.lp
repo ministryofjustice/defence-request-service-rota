@@ -61,44 +61,48 @@ N { allocated(S, Da, D, M, Y, F) : firm(F) } N :-
 % Define a clause which states the total number of
 % slots to fill for the entire rota.
 total_slots(N) :-
-  N = #sum { X : slots_per_shift_date(_, _, _, _, _, X) }.
+  N = #sum { X,D,M,Y : total_slots_required_on_date(D, M, Y, X),
+  date(_, D, M, Y) }.
+
+% Define a clause which states how many slots are required across
+% shifts for a given day of the week.
+%%% e.g: slots_per_shift_date(42,sat,4,7,2015,1).
+total_slots_required_on_date(D, M, Y, N) :-
+  N = #sum { X,S : slots_per_shift_date(S, _, D, M, Y, X), shift(S) },
+  date(_, D, M, Y).
+
 
 % Define a clause which states how many slots a firm
 % has been allocated in total.
+%%% e.g: allocated(S, Da, D, M, Y, F)
 total_slots_for_firm(F, N) :-
-  N = #count { 1 : allocated(_, _, _, _, _, F) },
+  N = #count { 1,S,D,M,Y : allocated(S, _, D, M, Y, F), shift(S), date(_, D, M, Y) },
   firm(F).
 
 % Define a clause which states how many slots a firm
 % has on any given date.
 firm_slots_for_date(F, D, M, Y, N) :-
-  N = #count { 1 : allocated(_, _, D, M, Y, F) },
+  N = #count { 1,S : allocated(S, _, D, M, Y, F), shift(S) },
   date(_, D, M, Y),
   firm(F).
 
 % Define a clause which states how many slots are required across
-% shifts for a given day of the week.
-total_slots_required_on_date(D, M, Y, N) :-
-  N = #sum { X : slots_per_shift_date(_, _, D, M, Y, X) },
-  date(_, D, M, Y).
-
-% Define a clause which states how many slots are required across
 % all days for a specific shift.
 total_slots_for_shift(S, N) :-
-  N = #sum { X : slots_per_shift_date(S, _, _, _, _, X) },
+  N = #sum { X,D,M,Y : slots_per_shift_date(S, _, D, M, Y, X), date(_, D, M, Y) },
   shift(S).
 
 % Define a clause which states how many times a firm has been
 % allocated on a day of the week.
 slots_for_firm_on_day(F, Da, N) :-
-  N = #count { 1 : allocated(_, Da, _, _, _, F) },
+  N = #count { 1,S,D,M,Y : allocated(S, Da, D, M, Y, F), date(_, D, M, Y), shift(S) },
   date(Da, _, _, _),
   firm(F).
 
 % Define a clause which states how many times a firm
 % appears on a particular shift.
 slots_for_shift_for_firm(F, S, N) :-
-  N = #count { 1: allocated(S, _, _, _, _, F) },
+  N = #count { 1,D,M,Y : allocated(S, _, D, M, Y, F), date(_, D, M, Y) },
   firm(F),
   shift(S).
 
