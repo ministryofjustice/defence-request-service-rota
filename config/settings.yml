@@ -24,6 +24,9 @@ aws:
   region: <%= ENV.fetch("AWS_REGION") %>
   s3_asset_bucket_name: <%= ENV.fetch("AWS_S3_ASSET_BUCKET_NAME") %>
 
+que:
+  mode: <%= ENV.fetch("QUE_MODE", "off") %>
+
 sentry:
   # Note that this should only be set to false if you absolutely dont care
   # about the security of your environment. This makes error logging vulnerable
