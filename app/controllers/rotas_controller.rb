@@ -11,14 +11,9 @@ class RotasController < ApplicationController
   end
 
   def create
-    assigned_rota_slots = RotaGeneration::Generator.new(
-      allocated_rota_slots,
-      member_ids
-    ).generate_rota
+    GenerateNewRota.enqueue(params[:rota_generation_form], params[:procurement_area_id])
 
-    if assigned_rota_slots.map(&:save!)
-      redirect_to procurement_area_rotas_path(procurement_area)
-    end
+    redirect_to procurement_area_rotas_path(procurement_area)
   end
 
   private
@@ -27,32 +22,12 @@ class RotasController < ApplicationController
     ProcurementArea.find(params[:procurement_area_id])
   end
 
-  def allocated_rota_slots
-    RotaSlotAllocator.new(
-      date_range: build_date_range,
-      shifts: shifts_for_location,
-      procurement_area: procurement_area
-    ).allocate
-  end
-
-  def build_date_range
-    DateRange.new(params[:rota_generation_form]).build
-  end
-
   def filter_date_range
     if params[:rota_filter].present?
       FilterRange.new(params[:rota_filter]).build
     else
       Range.new Time.now.beginning_of_month, Time.now.end_of_month
     end
-  end
-
-  def shifts_for_location
-    procurement_area.locations.flat_map(&:shifts)
-  end
-
-  def member_ids
-    procurement_area.members.flat_map(&:id)
   end
 
   def locations

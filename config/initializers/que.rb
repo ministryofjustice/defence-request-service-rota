@@ -1,3 +1,3 @@
 Rails.configuration.que.tap do |que|
-  que.mode = :off
+  que.mode = (Settings.que.mode || "off").to_sym
 end
