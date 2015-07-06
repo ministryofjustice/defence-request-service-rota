@@ -66,10 +66,8 @@ tag:
 ifeq (${DOCKER_IMAGE_TAG}, localbuild)
 	@echo Not tagging localbuild containers
 else
-	docker tag -f "${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}" "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}"
-	docker tag -f "${DOCKER_IMAGE}:development_${DOCKER_IMAGE_TAG}" "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:development_${DOCKER_IMAGE_TAG}"
-	docker tag -f "${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}" "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}"
-	docker tag -f "${DOCKER_IMAGE}:test_${DOCKER_IMAGE_TAG}" "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:test_${DOCKER_IMAGE_TAG}"
+	docker tag -f "${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}" "${DOCKER_PUBLISH_PREFIX}:latest"
+	docker tag -f "${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}" "${DOCKER_PUBLISH_PREFIX}:${DOCKER_IMAGE_TAG}"
 	@echo Tagged successfully
 endif
 
@@ -78,10 +76,7 @@ push:
 ifeq (${DOCKER_IMAGE_TAG}, localbuild)
 	@echo Not pushing localbuild containers
 else
-	docker push "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}"
-	docker push "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:development_${DOCKER_IMAGE_TAG}"
-	docker push "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}"
-	docker push "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:test_${DOCKER_IMAGE_TAG}"
-
+	docker push "${DOCKER_PUBLISH_PREFIX}:latest"
+	docker push "${DOCKER_PUBLISH_PREFIX}:${DOCKER_IMAGE_TAG}"
 	@echo Pushed successfully
 endif
