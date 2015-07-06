@@ -19,7 +19,7 @@ class GenerateNewRota < Que::Job
 
     success = false
 
-    RotaSlot.transaction do
+    ActiveRecord::Base.transaction do
       success = empty_rota_slots.all?(&:save)
 
       unless success
