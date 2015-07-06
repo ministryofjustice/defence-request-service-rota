@@ -28,6 +28,8 @@ RSpec.feature "User manages rota" do
     select_date Date.parse("06/01/2015"), from: "rota_generation_form_ending_date"
     click_button "Generate rota"
 
+    wait_to_ensure_generation_has_finished
+
     expect(page).to have_text "Rotas for Gotham"
 
     select_date Date.parse("01/01/2015"), from: "rota_filter_starting_date"
@@ -37,5 +39,9 @@ RSpec.feature "User manages rota" do
     expect(page).to have_content "Monday, 5 Jan 2015"
     expect(page).to have_content "Tuesday, 6 Jan 2015"
     expect(page).to have_content "Best Law Firm", count: 2
+  end
+
+  def wait_to_ensure_generation_has_finished
+    sleep(2)
   end
 end
