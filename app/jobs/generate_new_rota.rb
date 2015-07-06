@@ -1,7 +1,7 @@
 require_relative "../../lib/rota_generation"
 
 class GenerateNewRota < Que::Job
-  def run(date_range_params, procurement_area_id)
+  def run(date_range_params, procurement_area_id, current_user_id)
     @date_range_params = date_range_params
     @procurement_area_id = procurement_area_id
 
@@ -9,7 +9,8 @@ class GenerateNewRota < Que::Job
 
     log_entry = RotaGenerationLogEntry.running!(
       procurement_area_id: procurement_area_id,
-      total_slots: empty_rota_slots.size
+      total_slots: empty_rota_slots.size,
+      user_id: current_user_id
     )
 
     RotaGeneration::Generator.new(

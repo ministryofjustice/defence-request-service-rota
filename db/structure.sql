@@ -148,7 +148,8 @@ CREATE TABLE rota_generation_log_entries (
     total_slots integer NOT NULL,
     start_time timestamp without time zone NOT NULL,
     end_time timestamp without time zone,
-    status character varying
+    status character varying,
+    user_id integer NOT NULL
 );
 
 
@@ -484,4 +485,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150630151128');
 INSERT INTO schema_migrations (version) VALUES ('20150706141631');
 
 INSERT INTO schema_migrations (version) VALUES ('20150706154427');
+
+INSERT INTO schema_migrations (version) VALUES ('20150706193359');
 

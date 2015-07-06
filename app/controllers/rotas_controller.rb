@@ -9,7 +9,7 @@ class RotasController < ApplicationController
   end
 
   def create
-    GenerateNewRota.enqueue(params[:rota_generation_form], params[:procurement_area_id])
+    GenerateNewRota.enqueue(params[:rota_generation_form], params[:procurement_area_id], current_user.id)
 
     redirect_to procurement_area_rotas_path(procurement_area)
   end

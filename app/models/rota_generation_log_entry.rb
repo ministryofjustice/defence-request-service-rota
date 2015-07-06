@@ -5,13 +5,14 @@ class RotaGenerationLogEntry < ActiveRecord::Base
 
   ENTRY_STATES = [RUNNING, FAILED, SUCCESSFUL]
 
-  validates :procurement_area_id, :total_slots, :start_time, :status, presence: true
+  validates :procurement_area_id, :user_id, :total_slots, :start_time, :status, presence: true
   validates :status, inclusion: { in: ENTRY_STATES }
   validate :end_time_after_start_time
 
-  def self.running!(procurement_area_id:, total_slots:)
+  def self.running!(procurement_area_id:, total_slots:, user_id:)
     create(
       procurement_area_id: procurement_area_id,
+      user_id: user_id,
       total_slots: total_slots,
       start_time: Time.now,
       status: RUNNING

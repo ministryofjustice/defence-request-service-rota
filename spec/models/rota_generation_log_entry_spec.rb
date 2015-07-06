@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe RotaGenerationLogEntry, "validations" do
   it { should validate_presence_of(:procurement_area_id) }
+  it { should validate_presence_of(:user_id) }
   it { should validate_presence_of(:total_slots) }
   it { should validate_presence_of(:start_time) }
   it { should validate_presence_of(:status) }
@@ -13,6 +14,7 @@ RSpec.describe RotaGenerationLogEntry, "validations" do
     expect(
       RotaGenerationLogEntry.new(
         procurement_area_id: 1,
+        user_id: 1,
         total_slots: 100,
         start_time: Time.now,
         end_time: (Time.now - 1.second),

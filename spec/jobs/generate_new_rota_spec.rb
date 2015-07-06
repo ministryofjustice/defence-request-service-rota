@@ -24,6 +24,10 @@ RSpec.describe RotaGenerationLogEntry do
       double("generator", generate_rota: [rota_slot])
     }
 
+    let(:user) {
+      create(:admin_user)
+    }
+
     before :each do
       expect(DateRange).to receive(:new).and_return(date_range)
       expect(RotaSlotAllocator).to receive(:new).and_return(allocator)
@@ -33,7 +37,7 @@ RSpec.describe RotaGenerationLogEntry do
     context "when the rota slots save successfully" do
       before :each do
         Timecop.freeze(2015, 1, 1, 1, 1, 1) do
-          GenerateNewRota.enqueue("date_params", procurement_area.id)
+          GenerateNewRota.enqueue("date_params", procurement_area.id, user.id)
         end
       end
 
@@ -41,6 +45,7 @@ RSpec.describe RotaGenerationLogEntry do
         expect(RotaGenerationLogEntry.count).to eq 1
 
         expect(RotaGenerationLogEntry.last.procurement_area_id).to eq procurement_area.id
+        expect(RotaGenerationLogEntry.last.user_id).to eq user.id
         expect(RotaGenerationLogEntry.last.status).to eq "successful"
         expect(RotaGenerationLogEntry.last.total_slots).to eq 1
         expect(RotaGenerationLogEntry.last.start_time).to eq Time.parse("01-01-2015 01:01:01")
@@ -57,7 +62,7 @@ RSpec.describe RotaGenerationLogEntry do
         expect(rota_slot).to receive(:save).and_return(false)
 
         Timecop.freeze(2015, 2, 2, 2, 2, 2) do
-          GenerateNewRota.enqueue("date_params", procurement_area.id)
+          GenerateNewRota.enqueue("date_params", procurement_area.id, user.id)
         end
       end
 
@@ -65,6 +70,7 @@ RSpec.describe RotaGenerationLogEntry do
         expect(RotaGenerationLogEntry.count).to eq 1
 
         expect(RotaGenerationLogEntry.last.procurement_area_id).to eq procurement_area.id
+        expect(RotaGenerationLogEntry.last.user_id).to eq user.id
         expect(RotaGenerationLogEntry.last.status).to eq "failed"
         expect(RotaGenerationLogEntry.last.total_slots).to eq 1
         expect(RotaGenerationLogEntry.last.start_time).to eq Time.parse("02-02-2015 02:02:02")
