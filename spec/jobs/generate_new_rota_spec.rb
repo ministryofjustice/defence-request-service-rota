@@ -2,7 +2,7 @@ require "rails_helper"
 require "timecop"
 require_relative "../../lib/rota_generation"
 
-RSpec.describe GenerateNewRota do
+RSpec.describe RotaGenerationLogEntry do
   describe "#run" do
     let(:procurement_area) {
       create(:procurement_area)
@@ -38,13 +38,13 @@ RSpec.describe GenerateNewRota do
       end
 
       it "creates a successful journal entry" do
-        expect(JournalEntry.count).to eq 1
+        expect(RotaGenerationLogEntry.count).to eq 1
 
-        expect(JournalEntry.last.procurement_area_id).to eq procurement_area.id
-        expect(JournalEntry.last.status).to eq "successful"
-        expect(JournalEntry.last.total_slots).to eq 1
-        expect(JournalEntry.last.start_time).to eq Time.parse("01-01-2015 01:01:01")
-        expect(JournalEntry.last.end_time).to be_present
+        expect(RotaGenerationLogEntry.last.procurement_area_id).to eq procurement_area.id
+        expect(RotaGenerationLogEntry.last.status).to eq "successful"
+        expect(RotaGenerationLogEntry.last.total_slots).to eq 1
+        expect(RotaGenerationLogEntry.last.start_time).to eq Time.parse("01-01-2015 01:01:01")
+        expect(RotaGenerationLogEntry.last.end_time).to be_present
       end
 
       it "puts the rota slots into the database" do
@@ -62,13 +62,13 @@ RSpec.describe GenerateNewRota do
       end
 
       it "creates a failed journal entry" do
-        expect(JournalEntry.count).to eq 1
+        expect(RotaGenerationLogEntry.count).to eq 1
 
-        expect(JournalEntry.last.procurement_area_id).to eq procurement_area.id
-        expect(JournalEntry.last.status).to eq "failed"
-        expect(JournalEntry.last.total_slots).to eq 1
-        expect(JournalEntry.last.start_time).to eq Time.parse("02-02-2015 02:02:02")
-        expect(JournalEntry.last.end_time).to be_present
+        expect(RotaGenerationLogEntry.last.procurement_area_id).to eq procurement_area.id
+        expect(RotaGenerationLogEntry.last.status).to eq "failed"
+        expect(RotaGenerationLogEntry.last.total_slots).to eq 1
+        expect(RotaGenerationLogEntry.last.start_time).to eq Time.parse("02-02-2015 02:02:02")
+        expect(RotaGenerationLogEntry.last.end_time).to be_present
       end
 
       it "does not put the rota slots into the database" do

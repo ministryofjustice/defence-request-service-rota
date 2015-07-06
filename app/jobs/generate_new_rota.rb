@@ -7,7 +7,7 @@ class GenerateNewRota < Que::Job
 
     empty_rota_slots = allocated_rota_slots
 
-    journal_entry = JournalEntry.running!(
+    log_entry = RotaGenerationLogEntry.running!(
       procurement_area_id: procurement_area_id,
       total_slots: empty_rota_slots.size
     )
@@ -34,7 +34,7 @@ class GenerateNewRota < Que::Job
       destroy
     end
 
-    success ? journal_entry.success! : journal_entry.fail!
+    success ? log_entry.success! : log_entry.fail!
   end
 
   private

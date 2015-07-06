@@ -30,39 +30,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: journal_entries; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE journal_entries (
-    id integer NOT NULL,
-    procurement_area_id integer NOT NULL,
-    total_slots integer NOT NULL,
-    start_time timestamp without time zone NOT NULL,
-    end_time timestamp without time zone,
-    status character varying
-);
-
-
---
--- Name: journal_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE journal_entries_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: journal_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE journal_entries_id_seq OWNED BY journal_entries.id;
-
-
---
 -- Name: organisations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -169,6 +136,39 @@ CREATE SEQUENCE que_jobs_job_id_seq
 --
 
 ALTER SEQUENCE que_jobs_job_id_seq OWNED BY que_jobs.job_id;
+
+
+--
+-- Name: rota_generation_log_entries; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE rota_generation_log_entries (
+    id integer NOT NULL,
+    procurement_area_id integer NOT NULL,
+    total_slots integer NOT NULL,
+    start_time timestamp without time zone NOT NULL,
+    end_time timestamp without time zone,
+    status character varying
+);
+
+
+--
+-- Name: rota_generation_log_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE rota_generation_log_entries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: rota_generation_log_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE rota_generation_log_entries_id_seq OWNED BY rota_generation_log_entries.id;
 
 
 --
@@ -295,13 +295,6 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY journal_entries ALTER COLUMN id SET DEFAULT nextval('journal_entries_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY organisations ALTER COLUMN id SET DEFAULT nextval('organisations_id_seq'::regclass);
 
 
@@ -317,6 +310,13 @@ ALTER TABLE ONLY procurement_areas ALTER COLUMN id SET DEFAULT nextval('procurem
 --
 
 ALTER TABLE ONLY que_jobs ALTER COLUMN job_id SET DEFAULT nextval('que_jobs_job_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY rota_generation_log_entries ALTER COLUMN id SET DEFAULT nextval('rota_generation_log_entries_id_seq'::regclass);
 
 
 --
@@ -341,14 +341,6 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: journal_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY journal_entries
-    ADD CONSTRAINT journal_entries_pkey PRIMARY KEY (id);
-
-
---
 -- Name: organisations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -370,6 +362,14 @@ ALTER TABLE ONLY procurement_areas
 
 ALTER TABLE ONLY que_jobs
     ADD CONSTRAINT que_jobs_pkey PRIMARY KEY (queue, priority, run_at, job_id);
+
+
+--
+-- Name: rota_generation_log_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY rota_generation_log_entries
+    ADD CONSTRAINT rota_generation_log_entries_pkey PRIMARY KEY (id);
 
 
 --
@@ -482,4 +482,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150630103226');
 INSERT INTO schema_migrations (version) VALUES ('20150630151128');
 
 INSERT INTO schema_migrations (version) VALUES ('20150706141631');
+
+INSERT INTO schema_migrations (version) VALUES ('20150706154427');
 

@@ -1,4 +1,4 @@
-class JournalEntry < ActiveRecord::Base
+class RotaGenerationLogEntry < ActiveRecord::Base
   RUNNING     = "running"
   FAILED      = "failed"
   SUCCESSFUL = "successful"

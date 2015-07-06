@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe JournalEntry, "validations" do
+RSpec.describe RotaGenerationLogEntry, "validations" do
   it { should validate_presence_of(:procurement_area_id) }
   it { should validate_presence_of(:total_slots) }
   it { should validate_presence_of(:start_time) }
@@ -11,7 +11,7 @@ RSpec.describe JournalEntry, "validations" do
 
   it "does not allow a end time before the start time" do
     expect(
-      JournalEntry.new(
+      RotaGenerationLogEntry.new(
         procurement_area_id: 1,
         total_slots: 100,
         start_time: Time.now,
