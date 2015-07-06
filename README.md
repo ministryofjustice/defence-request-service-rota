@@ -59,4 +59,31 @@ The tag `remote-authentication` has been created in order to mark the point at w
 with the Auth app is stripped out. Please checkout this tag in order to familiarise yourself with how this
 used to work.
 
+## Docker
+
+### Building containers
+
+We use different containers depending on the environment - in dev and test we have test gems and phantomjs included while in production the assets get precompiled
+
+Build all containers:
+
+```make all```
+
+or build each container seperately:
+
+```
+make development_container
+make test_container
+make production_container
+```
+
+### Running tests locally
+
+```
+docker run -d -e POSTGRES_PASSWORD=postgres --name "test-db" postgres:9.4.1
+docker run -t -e RAILS_ENV=test --link "test-db:db" --name "rota-test" laa-rota:test_localbuild bash -c 'export DATABASE_URL="postgres://postgres:postgres@${DB_PORT_5432_TCP_ADDR}:${DB_PORT_5432_TCP_PORT}/laa_rota" && bundle exec rake db:create && bundle exec rake db:reset && bundle exec rake --trace'
+```
+
+
+
 

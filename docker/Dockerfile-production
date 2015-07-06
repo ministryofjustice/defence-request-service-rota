@@ -1,4 +1,4 @@
-FROM defence-request-service-rota:base_localbuild
+FROM laa-rota:base_localbuild
 
 ###############################################################################
 # Runit setup
