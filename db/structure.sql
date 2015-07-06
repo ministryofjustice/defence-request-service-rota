@@ -30,6 +30,39 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: journal_entries; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE journal_entries (
+    id integer NOT NULL,
+    procurement_area_id integer NOT NULL,
+    total_slots integer NOT NULL,
+    start_time timestamp without time zone NOT NULL,
+    end_time timestamp without time zone,
+    status character varying
+);
+
+
+--
+-- Name: journal_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE journal_entries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: journal_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE journal_entries_id_seq OWNED BY journal_entries.id;
+
+
+--
 -- Name: organisations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -262,6 +295,13 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY journal_entries ALTER COLUMN id SET DEFAULT nextval('journal_entries_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY organisations ALTER COLUMN id SET DEFAULT nextval('organisations_id_seq'::regclass);
 
 
@@ -298,6 +338,14 @@ ALTER TABLE ONLY shifts ALTER COLUMN id SET DEFAULT nextval('shifts_id_seq'::reg
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: journal_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY journal_entries
+    ADD CONSTRAINT journal_entries_pkey PRIMARY KEY (id);
 
 
 --
@@ -432,4 +480,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150629143621');
 INSERT INTO schema_migrations (version) VALUES ('20150630103226');
 
 INSERT INTO schema_migrations (version) VALUES ('20150630151128');
+
+INSERT INTO schema_migrations (version) VALUES ('20150706141631');
 

@@ -1,5 +1,3 @@
-require_relative "../../lib/rota_generation"
-
 class RotasController < ApplicationController
   def index
     @procurement_area = procurement_area
