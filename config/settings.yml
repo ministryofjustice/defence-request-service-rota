@@ -2,20 +2,13 @@ rails:
   secret_key_base: <%= ENV.fetch('SECRET_KEY_BASE') %>
   force_ssl: <%= ENV.fetch("FORCE_SSL", true) %>
 
-dsds:
+rota:
   app_title: Defence Request Service Duty Rota
 
 devise:
   key: <%= ENV.fetch('DEVISE_KEY') %>
   salt: <%= ENV.fetch('DEVISE_SALT') %>
   session_timeout: <%= ENV.fetch('SESSION_TIMEOUT_MINUTES', 60) %>
-
-authentication:
-  site_url: <%= ENV.fetch('AUTHENTICATION_SITE_URL') %>
-  redirect_uri: <%= ENV.fetch('AUTHENTICATION_REDIRECT_URI') %>
-  token_info_uri: <%= ENV.fetch('AUTHENTICATION_SITE_URL') %>/oauth/token/info
-  application_id: <%= ENV.fetch('AUTHENTICATION_APPLICATION_ID') %>
-  application_secret: <%= ENV.fetch('AUTHENTICATION_APPLICATION_SECRET') %>
 
 bank_holidays:
   file_location: <%= ENV.fetch('BANK_HOLIDAYS_FILE', Rails.root.join("data", "bank_holidays.ics")) %>
