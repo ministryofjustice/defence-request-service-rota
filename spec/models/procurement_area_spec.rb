@@ -7,6 +7,7 @@ end
 RSpec.describe ProcurementArea, "relationships" do
   it { should have_many(:rota_slots) }
   it { should have_many(:organisations) }
+  it { should have_many(:rota_generation_log_entries) }
 
   it "removes any rota slots associated with it upon destroying" do
     p = create(:procurement_area)

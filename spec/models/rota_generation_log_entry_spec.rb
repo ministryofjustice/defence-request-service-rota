@@ -23,3 +23,8 @@ RSpec.describe RotaGenerationLogEntry, "validations" do
     ).not_to be_valid
   end
 end
+
+RSpec.describe RotaGenerationLogEntry, "relationships" do
+  it { should belong_to(:user) }
+  it { should belong_to(:procurement_area) }
+end

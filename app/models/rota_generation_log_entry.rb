@@ -9,6 +9,9 @@ class RotaGenerationLogEntry < ActiveRecord::Base
   validates :status, inclusion: { in: ENTRY_STATES }
   validate :end_time_after_start_time
 
+  belongs_to :user
+  belongs_to :procurement_area
+
   def self.running!(procurement_area_id:, total_slots:, user_id:)
     create(
       procurement_area_id: procurement_area_id,
