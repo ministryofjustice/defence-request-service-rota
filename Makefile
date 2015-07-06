@@ -6,7 +6,7 @@
 .PHONY: base_container production_container docker
 
 # The name of the image created by this project
-DOCKER_IMAGE = defence-request-service-rota
+DOCKER_IMAGE = laa-rota
 
 # Whether to remove intermediate layers - it's useful to keep them if we are doing
 # lots of rebuilds with differing input data
