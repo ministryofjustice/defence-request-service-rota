@@ -12,6 +12,9 @@ class RotaGenerationLogEntry < ActiveRecord::Base
   belongs_to :user
   belongs_to :procurement_area
 
+  scope :newest_first, -> { order(start_time: :desc) }
+  scope :latest, -> { newest_first.limit(5) }
+
   def self.running!(procurement_area_id:, total_slots:, user_id:)
     create(
       procurement_area_id: procurement_area_id,

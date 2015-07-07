@@ -6,6 +6,7 @@ class RotasController < ApplicationController
 
   def new
     @rota_generation_form = RotaGenerationForm.new(procurement_area)
+    @log_entries = procurement_area.rota_generation_log_entries.latest
   end
 
   def create

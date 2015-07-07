@@ -11,3 +11,18 @@ span.rota-slot-organisation {
 .dark_text {
   color: #000;
 }
+
+.log-entry {
+  &.successful {
+    background-color: #3c3;
+  }
+
+  &.failed {
+    @extend .light_text;
+    background-color: #f00;
+  }
+
+  &.running {
+    background-color: #ff0;
+  }
+}

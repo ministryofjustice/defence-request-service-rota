@@ -28,3 +28,30 @@ RSpec.describe RotaGenerationLogEntry, "relationships" do
   it { should belong_to(:user) }
   it { should belong_to(:procurement_area) }
 end
+
+RSpec.describe RotaGenerationLogEntry, "scopes" do
+  describe ".newest_first" do
+    it "returns entries in reverse start_time order" do
+      p1 = create(:rota_generation_log_entry, start_time: 4.hours.ago)
+      p2 = create(:rota_generation_log_entry, start_time: 4.days.ago)
+      p3 = create(:rota_generation_log_entry, start_time: 4.minutes.ago)
+
+      expect(RotaGenerationLogEntry.newest_first).to eq [p3, p1, p2]
+    end
+  end
+
+  describe ".latest" do
+    it "returns at most five of the most recent entries" do
+      p1 = create(:rota_generation_log_entry, start_time: 4.years.ago)
+      p2 = create(:rota_generation_log_entry, start_time: 4.days.ago)
+      p3 = create(:rota_generation_log_entry, start_time: 4.minutes.ago)
+      p4 = create(:rota_generation_log_entry, start_time: 4.hours.ago)
+      p5 = create(:rota_generation_log_entry, start_time: 40.years.ago)
+      p6 = create(:rota_generation_log_entry, start_time: 4.seconds.ago)
+      p7 = create(:rota_generation_log_entry, start_time: 4.months.ago)
+
+      expect(RotaGenerationLogEntry.latest).to eq [p6, p3, p4, p2, p7]
+      expect(RotaGenerationLogEntry.latest).not_to include(p1, p5)
+    end
+  end
+end
