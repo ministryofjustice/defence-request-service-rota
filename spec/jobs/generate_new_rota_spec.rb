@@ -37,7 +37,7 @@ RSpec.describe RotaGenerationLogEntry do
     context "when the rota slots save successfully" do
       before :each do
         Timecop.freeze(2015, 1, 1, 1, 1, 1) do
-          GenerateNewRota.enqueue("date_params", procurement_area.id, user.id)
+          GenerateNewRota.perform_later("date_params", procurement_area.id, user.id)
         end
       end
 
@@ -62,7 +62,7 @@ RSpec.describe RotaGenerationLogEntry do
         expect(rota_slot).to receive(:save).and_return(false)
 
         Timecop.freeze(2015, 2, 2, 2, 2, 2) do
-          GenerateNewRota.enqueue("date_params", procurement_area.id, user.id)
+          GenerateNewRota.perform_later("date_params", procurement_area.id, user.id)
         end
       end
 
