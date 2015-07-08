@@ -79,7 +79,7 @@ module RotaGeneration
     end
 
     def firm_count(shift_id, date)
-      slots.select { |slot| slot.shift_id == shift_id && slot.starting_time.to_date == date }.count
+      slots.detect { |slot| slot.shift_id == shift_id && slot.starting_time.to_date == date }.number_of_firms_required
     end
 
     def number_of_firms

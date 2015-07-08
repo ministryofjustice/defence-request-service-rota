@@ -14,13 +14,14 @@ RSpec.describe RotaGeneration::Allocator do
       solution_clauses = %w{
         allocated(1,thu,1,1,2015,76).
         allocated(2,thu,1,1,2015,85).
+        allocated(2,thu,1,1,2015,96).
         allocated(1,fri,2,1,2015,45).
         allocated(3,mon,5,1,2015,76).
       }
 
       mutated_slots = RotaGeneration::Allocator.new(slots, solution_clauses).mutate_slots!
 
-      expect(mutated_slots.map(&:organisation_ids)).to eq [[76], [85], [45]]
+      expect(mutated_slots.map(&:organisation_ids)).to eq [[76], [85, 96], [45]]
     end
   end
 end
