@@ -10,6 +10,7 @@ AllCops:
     - 'vendor/**/*'
     - 'db/schema.rb'
     - 'lib/rota_generation/asp/**/*.rb'
+    - 'spec/support/**/*.rb'
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
