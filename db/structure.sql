@@ -182,9 +182,7 @@ CREATE TABLE rota_slots (
     procurement_area_id integer,
     starting_time timestamp without time zone,
     ending_time timestamp without time zone,
-    request_count integer DEFAULT 0 NOT NULL,
-    solicitor_name character varying,
-    organisation_id integer
+    organisation_ids integer[] DEFAULT '{}'::integer[] NOT NULL
 );
 
 
@@ -487,4 +485,8 @@ INSERT INTO schema_migrations (version) VALUES ('20150706141631');
 INSERT INTO schema_migrations (version) VALUES ('20150706154427');
 
 INSERT INTO schema_migrations (version) VALUES ('20150706193359');
+
+INSERT INTO schema_migrations (version) VALUES ('20150708093429');
+
+INSERT INTO schema_migrations (version) VALUES ('20150708101544');
 

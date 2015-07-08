@@ -12,6 +12,7 @@ RSpec.feature "User views rota" do
                            organisation_type: "custody_suite",
                            procurement_area: procurement_area)
     law_firm = create(:organisation,
+                      name: "Best Law Firm",
                       organisation_type: "law_firm",
                       procurement_area: procurement_area)
 
@@ -23,22 +24,21 @@ RSpec.feature "User views rota" do
            procurement_area: procurement_area,
            starting_time: Time.parse("01/01/2015 09:00"),
            shift: shift,
-           organisation: law_firm
+           organisation_ids: [law_firm.id]
           )
 
     create(:rota_slot,
            procurement_area: procurement_area,
            starting_time: Time.parse("01/02/2015 09:00"),
            shift: shift,
-           organisation: law_firm,
-           solicitor_name: "Mr A Lawyer"
+           organisation_ids: [law_firm.id]
           )
 
     create(:rota_slot,
            procurement_area: procurement_area,
            starting_time: Time.parse("01/12/2014 09:00"),
            shift: shift,
-           organisation: law_firm
+           organisation_ids: [law_firm.id]
           )
 
     admin_user = create :admin_user
@@ -53,7 +53,7 @@ RSpec.feature "User views rota" do
       expect(page).not_to have_content("Monday, 1 Dec 2014")
       expect(page).to     have_content("Thursday, 1 Jan 2015")
       expect(page).not_to have_content("Sunday, 1 Feb 2015")
-      expect(page).not_to have_content("Mr A Lawyer")
+      expect(page).to     have_content("Best Law Firm", count: 1)
 
       select_date Date.parse("01/02/2015"), from: "rota_filter_ending_date"
       click_button "Filter"
@@ -61,7 +61,7 @@ RSpec.feature "User views rota" do
       expect(page).not_to have_content("Monday, 1 Dec 2014")
       expect(page).to     have_content("Thursday, 1 Jan 2015")
       expect(page).to     have_content("Sunday, 1 Feb 2015")
-      expect(page).to     have_content("Mr A Lawyer")
+      expect(page).to     have_content("Best Law Firm", count: 2)
 
       select_date Date.parse("01/12/2014"), from: "rota_filter_starting_date"
       select_date Date.parse("01/02/2015"), from: "rota_filter_ending_date"
@@ -70,7 +70,7 @@ RSpec.feature "User views rota" do
       expect(page).to have_content("Monday, 1 Dec 2014")
       expect(page).to have_content("Thursday, 1 Jan 2015")
       expect(page).to have_content("Sunday, 1 Feb 2015")
-      expect(page).to have_content("Mr A Lawyer")
+      expect(page).to have_content("Best Law Firm", count: 3)
     end
   end
 end

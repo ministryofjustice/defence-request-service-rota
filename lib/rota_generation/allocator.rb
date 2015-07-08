@@ -8,7 +8,7 @@ module RotaGeneration
     def mutate_slots!
       split_clauses.each do |shift_id, date_of_month, month, year, firm_id|
         matching_slot = detect_matching_slot(build_date(year, month, date_of_month), shift_id)
-        matching_slot.organisation_id = firm_id.to_i if matching_slot
+        matching_slot.organisation_ids << firm_id.to_i if matching_slot
       end
       slots
     end
@@ -32,8 +32,7 @@ module RotaGeneration
     def detect_matching_slot(date, shift_id)
       slots.detect do |slot|
         slot.starting_time.to_date == date &&
-          slot.shift_id == shift_id.to_i &&
-          slot.organisation_id == nil
+          slot.shift_id == shift_id.to_i
       end
     end
   end

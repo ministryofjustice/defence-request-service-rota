@@ -6,9 +6,9 @@ RSpec.describe RotaGeneration::Allocator do
   describe "#mutate_slots!" do
     it "updates the slots to contain the correct organisation UIDs" do
       slots = [
-        OpenStruct.new(shift_id: 1, starting_time: Time.parse("01-01-2015 09:00"), organisation_id: nil),
-        OpenStruct.new(shift_id: 2, starting_time: Time.parse("01-01-2015 17:00"), organisation_id: nil),
-        OpenStruct.new(shift_id: 1, starting_time: Time.parse("02-01-2015 09:00"), organisation_id: nil)
+        OpenStruct.new(shift_id: 1, starting_time: Time.parse("01-01-2015 09:00"), organisation_ids: []),
+        OpenStruct.new(shift_id: 2, starting_time: Time.parse("01-01-2015 17:00"), organisation_ids: []),
+        OpenStruct.new(shift_id: 1, starting_time: Time.parse("02-01-2015 09:00"), organisation_ids: [])
       ]
 
       solution_clauses = %w{
@@ -20,7 +20,7 @@ RSpec.describe RotaGeneration::Allocator do
 
       mutated_slots = RotaGeneration::Allocator.new(slots, solution_clauses).mutate_slots!
 
-      expect(mutated_slots.map(&:organisation_id)).to eq [76, 85, 45]
+      expect(mutated_slots.map(&:organisation_ids)).to eq [[76], [85], [45]]
     end
   end
 end

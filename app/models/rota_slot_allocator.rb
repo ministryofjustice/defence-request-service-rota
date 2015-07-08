@@ -14,12 +14,14 @@ class RotaSlotAllocator
   attr_reader :date_range, :shifts, :procurement_area
 
   def allocation_requirements_per_shift
-    shifts.inject([]) do |result, shift|
+    slots = []
+    shifts.inject(slots) do |result, shift|
       date_range.each do |date|
-        result.concat(allocations_for_shift_date(shift, date))
+        result << allocations_for_shift_date(shift, date)
       end
       result
     end
+    slots.compact
   end
 
   def allocations_for_shift_date(shift, date)
@@ -28,21 +30,21 @@ class RotaSlotAllocator
     else
       slot_count = shift.public_send(date.strftime("%A").downcase.to_sym).to_i
     end
-    slots = []
-    slot_count.times do
-      slots << RotaSlot.new(
-        new_slot_attributes(date, shift)
+
+    unless slot_count.zero?
+      RotaSlot.new(
+        new_slot_attributes(date, shift, slot_count)
       )
     end
-    slots
   end
 
-  def new_slot_attributes(date, shift)
+  def new_slot_attributes(date, shift, slot_count)
     {
       shift_id: shift.id,
       starting_time: rota_slot_start_time(date, shift),
       ending_time: rota_slot_end_time(date, shift),
-      procurement_area: procurement_area
+      procurement_area: procurement_area,
+      number_of_firms_required: slot_count
     }
   end
 
