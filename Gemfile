@@ -32,7 +32,7 @@ gem "govuk_elements_rails", "~> 0.1.1"
 gem "devise"
 gem "devise-async"
 gem "drs-auth_client", github: "ministryofjustice/defence-request-service-auth", tag: "v0.2.2"
-gem "que"
+gem "que", github: "chanks/que", ref: "4e83b0"
 gem "que-web"
 
 # Asset sync - for uploading assets to S3
