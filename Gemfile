@@ -4,6 +4,7 @@ ruby "2.2.2"
 
 gem "dotenv-rails", "~> 2.0.0", require: "dotenv/rails-now"
 
+gem "chronic_duration"
 gem "coffee-rails", "~> 4.1.0"
 gem "fog-aws", "= 0.1.2"          # See https://github.com/fog/fog-aws/issues/130
 gem "httparty"

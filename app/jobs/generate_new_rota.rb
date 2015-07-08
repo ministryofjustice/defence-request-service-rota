@@ -1,23 +1,34 @@
-class GenerateNewRota < Que::Job
-  def run(date_range_params, procurement_area_id)
+require_relative "../../lib/rota_generation"
+
+class GenerateNewRota < ActiveJob::Base
+  def perform(date_range_params, procurement_area_id, current_user_id)
     @date_range_params = date_range_params
     @procurement_area_id = procurement_area_id
 
-    assigned_rota_slots = RotaGeneration::Generator.new(
-      allocated_rota_slots,
+    empty_rota_slots = allocated_rota_slots
+
+    log_entry = RotaGenerationLogEntry.running!(
+      procurement_area_id: procurement_area_id,
+      total_slots: empty_rota_slots.size,
+      user_id: current_user_id
+    )
+
+    RotaGeneration::Generator.new(
+      empty_rota_slots,
       member_ids
     ).generate_rota
 
-    RotaSlot.transaction do
-      assigned_rota_slots.map(&:save!)
+    success = false
 
-      # It's best to destroy the job in the same transaction as any other
-      # changes you make. Que will destroy the job for you after the run
-      # method if you don't do it yourself, but if your job writes to the
-      # DB but doesn't destroy the job in the same transaction, it's
-      # possible that the job could be repeated in the event of a crash.
-      destroy
+    ActiveRecord::Base.transaction do
+      success = empty_rota_slots.all?(&:save)
+
+      unless success
+        raise ActiveRecord::Rollback, "Failed to update all rota slots."
+      end
     end
+
+    success ? log_entry.success! : log_entry.fail!
   end
 
   private

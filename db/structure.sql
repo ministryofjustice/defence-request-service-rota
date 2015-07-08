@@ -139,6 +139,40 @@ ALTER SEQUENCE que_jobs_job_id_seq OWNED BY que_jobs.job_id;
 
 
 --
+-- Name: rota_generation_log_entries; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE rota_generation_log_entries (
+    id integer NOT NULL,
+    procurement_area_id integer NOT NULL,
+    total_slots integer NOT NULL,
+    start_time timestamp without time zone NOT NULL,
+    end_time timestamp without time zone,
+    status character varying,
+    user_id integer NOT NULL
+);
+
+
+--
+-- Name: rota_generation_log_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE rota_generation_log_entries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: rota_generation_log_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE rota_generation_log_entries_id_seq OWNED BY rota_generation_log_entries.id;
+
+
+--
 -- Name: rota_slots; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -283,6 +317,13 @@ ALTER TABLE ONLY que_jobs ALTER COLUMN job_id SET DEFAULT nextval('que_jobs_job_
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY rota_generation_log_entries ALTER COLUMN id SET DEFAULT nextval('rota_generation_log_entries_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY rota_slots ALTER COLUMN id SET DEFAULT nextval('rota_slots_id_seq'::regclass);
 
 
@@ -322,6 +363,14 @@ ALTER TABLE ONLY procurement_areas
 
 ALTER TABLE ONLY que_jobs
     ADD CONSTRAINT que_jobs_pkey PRIMARY KEY (queue, priority, run_at, job_id);
+
+
+--
+-- Name: rota_generation_log_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY rota_generation_log_entries
+    ADD CONSTRAINT rota_generation_log_entries_pkey PRIMARY KEY (id);
 
 
 --
@@ -432,4 +481,10 @@ INSERT INTO schema_migrations (version) VALUES ('20150629143621');
 INSERT INTO schema_migrations (version) VALUES ('20150630103226');
 
 INSERT INTO schema_migrations (version) VALUES ('20150630151128');
+
+INSERT INTO schema_migrations (version) VALUES ('20150706141631');
+
+INSERT INTO schema_migrations (version) VALUES ('20150706154427');
+
+INSERT INTO schema_migrations (version) VALUES ('20150706193359');
 

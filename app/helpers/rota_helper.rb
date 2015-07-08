@@ -38,6 +38,18 @@ module RotaHelper
     str
   end
 
+  def format_date_time(datetime)
+    datetime.strftime("%A, %-d %b %Y, %H:%M")
+  end
+
+  def generation_duration(log_entry)
+    if log_entry.end_time.present?
+      ChronicDuration.output((log_entry.end_time - log_entry.start_time).to_i, format: :short)
+    else
+      "-"
+    end
+  end
+
   # Calculates the luminance of the provided colour
   # in order to work out whether to put white or
   # black text over it. Calculation from

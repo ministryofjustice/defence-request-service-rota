@@ -1,5 +1,3 @@
-require_relative "../../lib/rota_generation"
-
 class RotasController < ApplicationController
   def index
     @procurement_area = procurement_area
@@ -8,10 +6,11 @@ class RotasController < ApplicationController
 
   def new
     @rota_generation_form = RotaGenerationForm.new(procurement_area)
+    @log_entries = procurement_area.rota_generation_log_entries.latest
   end
 
   def create
-    GenerateNewRota.enqueue(params[:rota_generation_form], params[:procurement_area_id])
+    GenerateNewRota.perform_later(params[:rota_generation_form], params[:procurement_area_id], current_user.id)
 
     redirect_to procurement_area_rotas_path(procurement_area)
   end
