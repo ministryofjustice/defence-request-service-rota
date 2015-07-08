@@ -403,6 +403,13 @@ CREATE INDEX index_rota_slots_on_procurement_area_id ON rota_slots USING btree (
 
 
 --
+-- Name: index_rota_slots_on_shift_id_and_starting_time; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_rota_slots_on_shift_id_and_starting_time ON rota_slots USING btree (shift_id, starting_time);
+
+
+--
 -- Name: index_shifts_on_allocation_requirements_per_weekday; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -489,4 +496,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150706193359');
 INSERT INTO schema_migrations (version) VALUES ('20150708093429');
 
 INSERT INTO schema_migrations (version) VALUES ('20150708101544');
+
+INSERT INTO schema_migrations (version) VALUES ('20150708150342');
 

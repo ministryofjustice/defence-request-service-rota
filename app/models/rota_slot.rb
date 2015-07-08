@@ -2,6 +2,7 @@ class RotaSlot < ActiveRecord::Base
   attr_accessor :number_of_firms_required
 
   validates :starting_time, :shift, presence: true
+  validates :starting_time, uniqueness: { scope: :shift, message: "must be unique within a shift" }
 
   belongs_to :shift
   belongs_to :procurement_area
