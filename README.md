@@ -59,6 +59,26 @@ The tag `remote-authentication` has been created in order to mark the point at w
 with the Auth app is stripped out. Please checkout this tag in order to familiarise yourself with how this
 used to work.
 
+## Job Processing
+
+Laa Rota uses [Que](https://github.com/chanks/que) to process jobs asychronously.
+
+Que is configured not to process jobs in the same process as the web process, but in a seperate dedicated process.
+
+All jobs are enqueued to the 'default' queue.
+
+Run the que job processor with ```bundle exec que ./config/environment.rb```
+
+```
+usage: que [options] file/to/require ...
+    -w, --worker-count [COUNT]       Set number of workers in process (default: 4)
+    -i, --wake-interval [INTERVAL]   Set maximum interval between polls of the job queue (in seconds) (default: 0.1)
+    -l, --log-level [LEVEL]          Set level of Que's logger (debug, info, warn, error, fatal) (default: info)
+    -q, --queue-name [NAME]          Set the name of the queue to work jobs from (default: the default queue)
+    -v, --version                    Show Que version
+    -h, --help                       Show help text
+```
+
 ## Docker
 
 ### Building containers

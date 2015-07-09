@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/chanks/que.git
+  revision: 4e83b02c8f6bb553dfe97bd3f2771f78f8d77433
+  ref: 4e83b0
+  specs:
+    que (0.10.0)
+
+GIT
   remote: git://github.com/ministryofjustice/defence-request-service-auth.git
   revision: 87e835adb75522c3cf2115ffc860eb46188128cd
   tag: v0.2.2
@@ -276,7 +283,6 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.3)
       pry (>= 0.9.10)
-    que (0.10.0)
     que-web (0.4.0)
       erubis
       que (~> 0.8)
@@ -442,7 +448,7 @@ DEPENDENCIES
   pg
   poltergeist
   pry-rails
-  que
+  que!
   que-web
   quiet_assets (~> 1.1)
   rack-timeout
