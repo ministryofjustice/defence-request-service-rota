@@ -182,9 +182,7 @@ CREATE TABLE rota_slots (
     procurement_area_id integer,
     starting_time timestamp without time zone,
     ending_time timestamp without time zone,
-    request_count integer DEFAULT 0 NOT NULL,
-    solicitor_name character varying,
-    organisation_id integer
+    organisation_ids integer[] DEFAULT '{}'::integer[] NOT NULL
 );
 
 
@@ -405,6 +403,13 @@ CREATE INDEX index_rota_slots_on_procurement_area_id ON rota_slots USING btree (
 
 
 --
+-- Name: index_rota_slots_on_shift_id_and_starting_time; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_rota_slots_on_shift_id_and_starting_time ON rota_slots USING btree (shift_id, starting_time);
+
+
+--
 -- Name: index_shifts_on_allocation_requirements_per_weekday; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -487,4 +492,10 @@ INSERT INTO schema_migrations (version) VALUES ('20150706141631');
 INSERT INTO schema_migrations (version) VALUES ('20150706154427');
 
 INSERT INTO schema_migrations (version) VALUES ('20150706193359');
+
+INSERT INTO schema_migrations (version) VALUES ('20150708093429');
+
+INSERT INTO schema_migrations (version) VALUES ('20150708101544');
+
+INSERT INTO schema_migrations (version) VALUES ('20150708150342');
 

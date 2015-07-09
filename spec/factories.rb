@@ -34,8 +34,8 @@ FactoryGirl.define do
   factory :rota_slot do
     starting_time { Time.now }
     shift
-    organisation
     procurement_area
+    organisation_ids { [] }
   end
 
   factory :shift do

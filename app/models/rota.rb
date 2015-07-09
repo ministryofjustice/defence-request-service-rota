@@ -20,7 +20,7 @@ class Rota
   end
 
   def on_duty(date, shift)
-    organisations_and_solicitor_names(slots_on_duty(date, shift))
+    organisations_and_solicitor_names(slot_on_duty(date, shift))
   end
 
   def procurement_area_name
@@ -45,18 +45,18 @@ class Rota
 
   private
 
-  def slots_on_duty(date, shift)
+  def slot_on_duty(date, shift)
     rota_slots.select { |s| s.starting_time.to_date == date && s.shift_id == shift.id }
   end
 
   def organisations_and_solicitor_names(slots)
-    slots.map do |s|
-      organisation = s.organisation
-      {
-        organisation_name: organisation.name,
-        organisation_id: organisation.id,
-        solicitor_name: s.solicitor_name
-      }
+    slots.map do |slot|
+      slot.organisation_ids.map do |org_id|
+        {
+          organisation_name: Organisation.find(org_id).name,
+          organisation_id: org_id
+        }
+      end
     end
   end
 
