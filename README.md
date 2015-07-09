@@ -23,7 +23,7 @@ To get the application running locally, you need to:
  * ### Install clingo
  	This can be downloaded from [here](http://sourceforge.net/projects/potassco/files/clingo/).
 
-  	**Note**: Ensure to download version `3.0.5` and **not** version `4.x`.
+  	**Note**: Ensure to download version `4.5.0`.
 
  * ### Bundle the gems
        cd defence-request-rota
