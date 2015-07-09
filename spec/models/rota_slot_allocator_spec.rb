@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe RotaSlotAllocator, "#allocate", type: :bank_holidays do
   before :each do
-    stub_bank_holidays!(bank_holidays_file)
+    stub_bank_holidays!([Date.new(2015, 1, 5)])
   end
 
   it "instantiates the necessary number of rota slots per shift weekday requirement" do
